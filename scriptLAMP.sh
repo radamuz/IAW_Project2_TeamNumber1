@@ -48,5 +48,8 @@ sudo /etc/init.d/mysql start
 # To enter to mysql: sudo mysql -p
 # Pass: 1234
 
+
 # Install and configure PHP
-#sudo apt install php libapache2-mod-php 
+sudo apt install php libapache2-mod-php php-mysql -y
+# php -v to see the version
+
