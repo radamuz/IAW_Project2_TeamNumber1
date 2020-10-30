@@ -35,3 +35,18 @@ EOF
 
 # Reset apache
 sudo /etc/init.d/apache2 restart
+
+
+# Install and configure MySQL
+sudo apt install mysql-server -y
+
+# Configure MySQL
+sudo mysql_secure_installation
+
+# Start mysql server
+sudo /etc/init.d/mysql start
+# To enter to mysql: sudo mysql -p
+# Pass: 1234
+
+# Install and configure PHP
+#sudo apt install php libapache2-mod-php 
