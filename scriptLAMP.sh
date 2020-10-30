@@ -14,5 +14,24 @@ fi
 # Install apache2
 sudo apt install apache2 -y
 
+# Configure port 8080
+sudo rm /etc/apache2/ports.conf
+sudo cat > /etc/apache2/ports.conf <<EOF 
 # 
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
 
+Listen 8080
+
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+EOF
+
+# Reset apache
+sudo /etc/init.d/apache2 restart
