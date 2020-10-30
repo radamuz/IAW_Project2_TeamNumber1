@@ -11,6 +11,9 @@ then
         exit 1;
 fi
 
+# Updating repositories
+sudo apt update
+
 # Install apache2
 sudo apt install apache2 -y
 
@@ -50,6 +53,12 @@ sudo /etc/init.d/mysql start
 
 
 # Install and configure PHP
-sudo apt install php libapache2-mod-php php-mysql -y
+sudo apt install php libapache2-mod-php php-mysql php-mbstring -y
 # php -v to see the version
 
+
+# Install and configure phpMyAdmin
+sudo apt install phpmyadmin -y
+
+
+exit 0;
