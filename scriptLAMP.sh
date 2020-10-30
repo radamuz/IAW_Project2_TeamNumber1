@@ -60,5 +60,7 @@ sudo apt install php libapache2-mod-php php-mysql php-mbstring -y
 # Install and configure phpMyAdmin
 sudo apt install phpmyadmin -y
 
+# Restart apache2
+sudo service apache2 restart
 
 exit 0;
