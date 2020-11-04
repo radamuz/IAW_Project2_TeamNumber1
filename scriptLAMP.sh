@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start the script with root privileges.
-# This script is used to create a LAMP (Linux+Apache+MySQL+PHP) server in Google CloudShell
+# This script is used to create a LAMP (Linux+Apache+MySQL+PHP) server in Google CloudShell (with Debian 10 buster)
 
 # Checking number of parameters. It does not have to receive any parameters.
 if `test $# -lt 0` || `test $# -gt 0`
@@ -12,15 +12,24 @@ then
         exit 1;
 fi
 
+# Check that is executed with sudo
+if [`whoami`! = root]
+then
+     echo "This script requires administrator permissions to run.";
+     echo "Usage: sudo $ 0"
+     exit 1;
+fi
+
+
 # Updating repositories
-sudo apt update
+apt update
 
 # Install apache2
-sudo apt install apache2 -y
+apt install apache2 -y
 
 # Configure port 8080
-sudo rm /etc/apache2/ports.conf
-sudo cat > /etc/apache2/ports.conf <<EOF 
+rm /etc/apache2/ports.conf
+cat > /etc/apache2/ports.conf <<EOF 
 # 
 # If you just change the port or add more ports here, you will likely also
 # have to change the VirtualHost statement in
@@ -38,33 +47,33 @@ Listen 8080
 EOF
 
 # Reset apache
-sudo /etc/init.d/apache2 restart
+/etc/init.d/apache2 restart
 
 
 # Install and configure MySQL
-sudo apt install mysql-server -y
+apt install mysql-server -y
 
 # Configure MySQL
-sudo mysql_secure_installation
+mysql_secure_installation
 
 # Start mysql server
-sudo /etc/init.d/mysql start
+/etc/init.d/mysql start
 # To enter to mysql: sudo mysql -p
 # Pass: 1234
 
 
 # Install and configure PHP
-sudo apt install php libapache2-mod-php php-mysql php-mbstring -y
+apt install php libapache2-mod-php php-mysql php-mbstring -y
 # php -v to see the version
 
 
 # Install and configure phpMyAdmin
-sudo apt install phpmyadmin -y
+apt install phpmyadmin -y
 
 # Create new VirtualHost configuration file for phpMyAdmin.
 # Configure port 8081
-sudo rm /etc/apache2/sites-available/phpmyadmin.conf
-sudo cat > /etc/apache2/sites-available/phpmyadmin.conf <<EOF 
+rm /etc/apache2/sites-available/phpmyadmin.conf
+cat > /etc/apache2/sites-available/phpmyadmin.conf <<EOF 
 Listen 8081
 
 <VirtualHost *:8081>
@@ -87,27 +96,27 @@ Listen 8081
 EOF
 
 # Switch Apache's configuration and restart it.
-sudo a2disconf phpmyadmin
-sudo a2ensite phpmyadmin
+a2disconf phpmyadmin
+a2ensite phpmyadmin
 
 
 # Restart apache2
-sudo service apache2 restart
+service apache2 restart
 
 
 # Download wordpress and give it permissions
 cd /tmp/
 wget -c https://wordpress.org/latest.tar.gz
 tar -xvzf latest.tar.gz
-sudo mv wordpress/ /var/www/html/
-sudo chown -R www-data:www-data /var/www/html/wordpress/
-sudo chmod 755 -R /var/www/html/wordpress/
+mv wordpress/ /var/www/html/
+chown -R www-data:www-data /var/www/html/wordpress/
+chmod 755 -R /var/www/html/wordpress/
 
 # Configuring VirtualHost for WordPress
 # Create new VirtualHost configuration file for phpMyAdmin.
 # Configure port 8082
-sudo rm /etc/apache2/sites-available/wordpress.conf
-sudo cat > /etc/apache2/sites-available/wordpress.conf <<EOF 
+rm /etc/apache2/sites-available/wordpress.conf
+cat > /etc/apache2/sites-available/wordpress.conf <<EOF 
 Listen 8082
 <VirtualHost *:8082>
       DocumentRoot /var/www/html/wordpress
@@ -126,11 +135,11 @@ Listen 8082
 EOF
 
 # Switch WordPress configuration and restart it.
-sudo ln -s /etc/apache2/sites-available/wordpress.conf /etc/apache2/sites-enabled/wordpress.conf
-sudo a2enmod rewrite
+ln -s /etc/apache2/sites-available/wordpress.conf /etc/apache2/sites-enabled/wordpress.conf
+a2enmod rewrite
 
 # Restart apache2
-sudo service apache2 restart
+service apache2 restart
 
 
 exit 0;
