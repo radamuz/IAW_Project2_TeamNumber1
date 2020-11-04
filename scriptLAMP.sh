@@ -6,17 +6,17 @@
 # Checking number of parameters. It does not have to receive any parameters.
 if `test $# -lt 0` || `test $# -gt 0`
 then
-        echo "Incorrect number of parameters.";
-        echo "This script does not support parameters.";
-        echo "Use: $0";
-        exit 1;
+    echo "Incorrect number of parameters.";
+    echo "This script does not support parameters.";
+    echo "Use: $0";
+    exit 1;
 fi
 
 # Check that is executed with sudo
-if [`whoami`! = root]
+if [ `whoami` != root ]
 then
      echo "This script requires administrator permissions to run.";
-     echo "Usage: sudo $ 0"
+     echo "Usage: sudo $0"
      exit 1;
 fi
 
@@ -137,6 +137,8 @@ EOF
 # Switch WordPress configuration and restart it.
 ln -s /etc/apache2/sites-available/wordpress.conf /etc/apache2/sites-enabled/wordpress.conf
 a2enmod rewrite
+
+
 
 # Restart apache2
 service apache2 restart
