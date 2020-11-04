@@ -94,4 +94,43 @@ sudo a2ensite phpmyadmin
 # Restart apache2
 sudo service apache2 restart
 
+
+# Download wordpress and give it permissions
+cd /tmp/
+wget -c https://wordpress.org/latest.tar.gz
+tar -xvzf latest.tar.gz
+sudo mv wordpress/ /var/www/html/
+sudo chown -R www-data:www-data /var/www/html/wordpress/
+sudo chmod 755 -R /var/www/html/wordpress/
+
+# Configuring VirtualHost for WordPress
+# Create new VirtualHost configuration file for phpMyAdmin.
+# Configure port 8082
+sudo rm /etc/apache2/sites-available/wordpress.conf
+sudo cat > /etc/apache2/sites-available/wordpress.conf <<EOF 
+Listen 8082
+<VirtualHost *:8082>
+      DocumentRoot /var/www/html/wordpress
+     ServerName localhost
+
+     <Directory /var/www/html/wordpress>
+          Options FollowSymlinks
+          AllowOverride All
+          Require all granted
+     </Directory>
+
+     ErrorLog ${APACHE_LOG_DIR}/your-domain.com_error.log
+     CustomLog ${APACHE_LOG_DIR}/your-domain.com_access.log combined
+
+</VirtualHost>
+EOF
+
+# Switch WordPress configuration and restart it.
+sudo ln -s /etc/apache2/sites-available/wordpress.conf /etc/apache2/sites-enabled/wordpress.conf
+sudo a2enmod rewrite
+
+# Restart apache2
+sudo service apache2 restart
+
+
 exit 0;
