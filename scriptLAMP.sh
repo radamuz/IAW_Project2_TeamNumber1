@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Start the script with root privileges.
 # This script is used to create a LAMP (Linux+Apache+MySQL+PHP) server in Google CloudShell
 
 # Checking number of parameters. It does not have to receive any parameters.
