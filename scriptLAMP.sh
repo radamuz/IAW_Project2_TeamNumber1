@@ -61,6 +61,36 @@ sudo apt install php libapache2-mod-php php-mysql php-mbstring -y
 # Install and configure phpMyAdmin
 sudo apt install phpmyadmin -y
 
+# Create new VirtualHost configuration file for phpMyAdmin.
+# Configure port 8081
+sudo rm /etc/apache2/sites-available/phpmyadmin.conf
+sudo cat > rm /etc/apache2/sites-available/phpmyadmin.conf <<EOF 
+Listen 8081
+
+<VirtualHost *:8081>
+
+        ServerName localhost
+
+        <Directory /usr/share/phpmyadmin>
+                AllowOverride None
+                Require all granted
+        </Directory>
+
+        DocumentRoot /usr/share/phpmyadmin
+
+        Include /etc/phpmyadmin/apache.conf
+
+        ErrorLog ${APACHE_LOG_DIR}/phpmyadmin.error.log
+        CustomLog ${APACHE_LOG_DIR}/phpmyadmin.access.log combined
+
+</VirtualHost>
+EOF
+
+# Switch Apache's configuration and restart it.
+sudo a2disconf phpmyadmin
+sudo a2ensite phpmyadmin
+
+
 # Restart apache2
 sudo service apache2 restart
 
