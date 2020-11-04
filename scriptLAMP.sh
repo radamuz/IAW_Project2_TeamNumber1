@@ -64,7 +64,7 @@ sudo apt install phpmyadmin -y
 # Create new VirtualHost configuration file for phpMyAdmin.
 # Configure port 8081
 sudo rm /etc/apache2/sites-available/phpmyadmin.conf
-sudo cat > rm /etc/apache2/sites-available/phpmyadmin.conf <<EOF 
+sudo cat > /etc/apache2/sites-available/phpmyadmin.conf <<EOF 
 Listen 8081
 
 <VirtualHost *:8081>
