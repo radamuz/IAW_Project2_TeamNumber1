@@ -139,9 +139,10 @@ ln -s /etc/apache2/sites-available/wordpress.conf /etc/apache2/sites-enabled/wor
 a2enmod rewrite
 
 # Modify the wp-config.php file, and we add this lines.
-echo "$_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];" >> /var/www/html/wordpress/wp-config-sample.php
 echo "define('WP_HOME','https://8082-cs-11892738707-default.europe-west1.cloudshell.dev');" >> /var/www/html/wordpress/wp-config-sample.php
 echo "define('WP_SITEURL','https://8082-cs-11892738707-default.europe-west1.cloudshell.dev');" >> /var/www/html/wordpress/wp-config-sample.php
+echo "$_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];" >> /var/www/html/wordpress/wp-config-sample.php
+
 
 # Restart apache2
 service apache2 restart
