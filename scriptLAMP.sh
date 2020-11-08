@@ -119,7 +119,7 @@ rm /etc/apache2/sites-available/wordpress.conf
 cat > /etc/apache2/sites-available/wordpress.conf <<EOF 
 Listen 8082
 <VirtualHost *:8082>
-      DocumentRoot /var/www/html/wordpress
+     DocumentRoot /var/www/html/wordpress
      ServerName localhost
 
      <Directory /var/www/html/wordpress>
