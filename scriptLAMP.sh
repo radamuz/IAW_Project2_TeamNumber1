@@ -59,7 +59,7 @@ mysql_secure_installation
 # Start mysql server
 /etc/init.d/mysql start
 # To enter to mysql: sudo mysql -p
-# Pass: 1234
+# Pass: Alumne1234*
 
 
 # Install and configure PHP
@@ -120,7 +120,7 @@ cat > /etc/apache2/sites-available/wordpress.conf <<EOF
 Listen 8082
 <VirtualHost *:8082>
       DocumentRoot /var/www/html/wordpress
-     ServerName 8082-cs-11892738707-default.europe-west1.cloudshell.dev
+     ServerName localhost
 
      <Directory /var/www/html/wordpress>
           Options FollowSymlinks

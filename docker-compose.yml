@@ -42,6 +42,12 @@ services:
       WORDPRESS_DB_PASSWORD: Alumne1234*
     networks:
       - wpsite
+  # Apache
+  apache:
+    image: php:7.3-apache
+    ports:
+     - "8080:80"
+    volumes: ['./www:/var/www']
 networks:
   wpsite:
 volumes:
