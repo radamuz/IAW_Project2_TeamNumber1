@@ -120,7 +120,7 @@ cat > /etc/apache2/sites-available/wordpress.conf <<EOF
 Listen 8082
 <VirtualHost *:8082>
       DocumentRoot /var/www/html/wordpress
-     ServerName localhost
+     ServerName 8082-cs-11892738707-default.europe-west1.cloudshell.dev
 
      <Directory /var/www/html/wordpress>
           Options FollowSymlinks
@@ -139,9 +139,9 @@ ln -s /etc/apache2/sites-available/wordpress.conf /etc/apache2/sites-enabled/wor
 a2enmod rewrite
 
 # Modify the wp-config.php file, and we add this lines.
-#echo "define('WP_HOME','https://8082-cs-11892738707-default.europe-west1.cloudshell.dev');" >> /var/www/html/wordpress/wp-config-sample.php
-echo "define('WP_SITEURL','https://8082-cs-11892738707-default.europe-west1.cloudshell.dev');" >> /var/www/html/wordpress/wp-config-sample.php
-#echo "$_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];" >> /var/www/html/wordpress/wp-config-sample.php
+echo "define('WP_HOME','https://8082-cs-11892738707-default.europe-west1.cloudshell.dev/');" >> /var/www/html/wordpress/wp-config-sample.php
+echo "define('WP_SITEURL','https://8082-cs-11892738707-default.europe-west1.cloudshell.dev/');" >> /var/www/html/wordpress/wp-config-sample.php
+echo "$_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];" >> /var/www/html/wordpress/wp-config-sample.php
 
 
 # Restart apache2
