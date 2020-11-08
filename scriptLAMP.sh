@@ -53,13 +53,13 @@ EOF
 # Install and configure MySQL
 apt install mysql-server -y
 
-# Configure MySQL
-mysql_secure_installation
-
 # Start mysql server
 /etc/init.d/mysql start
 # To enter to mysql: sudo mysql -p
 # Pass: Alumne1234*
+
+# Configure MySQL
+mysql_secure_installation
 
 
 # Install and configure PHP
@@ -139,10 +139,11 @@ ln -s /etc/apache2/sites-available/wordpress.conf /etc/apache2/sites-enabled/wor
 a2enmod rewrite
 
 # Modify the wp-config.php file, and we add this lines.
-echo "define('WP_HOME','https://8082-cs-862474600027-default.europe-west1.cloudshell.dev/');" >> /var/www/html/wordpress/wp-config-sample.php
-echo "define('WP_SITEURL','https://8082-cs-862474600027-default.europe-west1.cloudshell.dev/');" >> /var/www/html/wordpress/wp-config-sample.php
-echo "$_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];" >> /var/www/html/wordpress/wp-config-sample.php
-
+cat >> /var/www/html/wordpress/wp-config-sample.php <<EOF 
+define('WP_HOME','https://8082-cs-862474600027-default.europe-west1.cloudshell.dev/');
+define('WP_SITEURL','https://8082-cs-862474600027-default.europe-west1.cloudshell.dev/');
+$_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];
+EOF
 
 # Restart apache2
 service apache2 restart
