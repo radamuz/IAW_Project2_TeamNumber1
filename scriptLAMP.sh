@@ -142,7 +142,7 @@ a2enmod rewrite
 cat >> /var/www/html/wordpress/wp-config-sample.php <<EOF 
 define('WP_HOME','https://8082-cs-862474600027-default.europe-west1.cloudshell.dev');
 define('WP_SITEURL','https://8082-cs-862474600027-default.europe-west1.cloudshell.dev');
-$_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];
+\$_SERVER['HTTP_HOST'] = \$_SERVER['HTTP_X_FORWARDED_HOST'];
 EOF
 
 # Restart apache2
