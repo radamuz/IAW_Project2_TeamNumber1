@@ -113,7 +113,6 @@ chown -R www-data:www-data /var/www/html/wordpress/
 chmod 755 -R /var/www/html/wordpress/
 
 # Configuring VirtualHost for WordPress
-# Create new VirtualHost configuration file for phpMyAdmin.
 # Configure port 8082
 rm /etc/apache2/sites-available/wordpress.conf
 cat > /etc/apache2/sites-available/wordpress.conf <<EOF 
