@@ -3,11 +3,14 @@
 |            Main information        ||
 | :---        |    :----:   | 
 | Authors     | Raúl Adamuz   |
-|             | Jordi Álvarez              |
-| Email       | <radamuz@cifpfbmoll.eu> |
-| Title       | Markdown and Git |
-| Project num. |    1         |
-| Date        | 12/10/2020    |
+|             | Jordi Álvarez |
+|             | Carlos Aguilar |
+| Emails      | <radamuz@cifpfbmoll.eu> |
+|             | <jalvarez@cifpfbmoll.eu>|
+|             | <caguilar@cifpfbmoll.eu>|
+| Title       | Online clothing store |
+| Project num. |    2         |
+| Date        | 26/10/2020    |
 | Professional family | Computers and Communications |
 | Training Cycle |       CFGS     |
 | Course      | 2nd ASIX      |
