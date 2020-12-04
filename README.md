@@ -19,6 +19,12 @@
   
 ---
 
+## The project
+### Short description
+We must create the website of an online clothing store with a Content Management System (CMS).
+For this purpose, we will need to install the Wordpress CMS and the WooCommerce e-commerce plugin, installed on a LAMP stack, and deploy it with Docker.
+
+### Docker deployment
 To manage the deployment correctly follow the following points:
 
 * In order to start the container in Docker Compose, we launch the following command:
