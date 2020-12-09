@@ -7322,7 +7322,7 @@ jQuery(function($) {
 			}
 		};
 		
-console.log(options);
+
 
 		return WPGMZA.restAPI.call(route, options);
 	}

@@ -1,18 +1,20 @@
 === WP Google Maps ===
-Contributors: WPGMaps, NickDuncan, CodeCabin_, DylanAuty, PerryRylance
+Contributors: WPGMaps, NickDuncan, CodeCabin_, DylanAuty
 Donate link: https://www.wpgmaps.com
-Tags: google maps, maps, map, map markers, google map, google maps plugin, wp google maps, wp google map, map plugin, directions, google map plugin, map widget
+Tags: google maps, maps, map, map markers, google map, google maps plugin, wp google maps, wp google map, map plugin, store locator, google map plugin, map widget, open layers,
 Requires at least: 3.5
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.3
 Stable tag: trunk
 License: GPLv2
 
-The easiest to use Google maps plugin! Create a custom Google map with high quality markers containing categories, descriptions, images and links.
+The easiest to use Google maps plugin! Create a custom Google map or Store Locator with high quality markers containing categories, descriptions, images and links.
 
 == Description ==
 
-The easiest to use Google maps plugin! Add a customized Google map to your WordPress posts and/or pages quickly and easily with the supplied shortcode. No fuss. No iFrames and super easy to use! Perfect for contact page maps, routes, maps showing delivery areas and any other use you can think of!
+The easiest to use Google Maps and Open Layers Maps plugin!
+
+Add a customized Google map or Store Locator to your WordPress posts and/or pages quickly and easily with the supplied shortcode. No fuss. No iFrames and super easy to use! Perfect for contact page maps, routes, maps showing delivery areas and any other use you can think of!
 
 While the free version of WP Google Maps allows you to create a Google map with as many markers as you like, the Pro version allows you to do so much more! 
 
@@ -20,6 +22,7 @@ The [WP Google Maps Pro Version](https://www.wpgmaps.com/purchase-professional-v
 
 = Lite Version (Free) =
 * The most popular Google Maps plugin on WordPress
+* Choose between Google Maps or Open Layers Maps
 * Super easy to use, no coding required!
 * Create as many map markers as you need by simply typing in the address
 * Responsive maps
@@ -212,6 +215,10 @@ Please update your WP Google Maps version to 6.3.14 to ensure you are using the 
 Please update your WP Google Maps version to 6.2.1 to ensure you are using the latest security enhancements.
 
 == Changelog ==
+
+= 8.0.28 - 2020-11-26 - Low priority =
+* Tested the plugin with WP5.6 RC1 - All seems in order
+* Modified the Google Places Autocomplete functionality to reduce the amount of API calls originating from basic users
 
 = 8.0.27 - 2020-10-15 - Medium priority =
 * Changes have been made to limit the amount of API calls we process for users using our API key (for new users). For more information please see https://www.wpgmaps.com/documentation/autocomplete-disabled/
@@ -1487,6 +1494,7 @@ Please update your WP Google Maps version to 6.2.1 to ensure you are using the l
 
 
 For more, please view the WP Google Maps site
+
 
 
 

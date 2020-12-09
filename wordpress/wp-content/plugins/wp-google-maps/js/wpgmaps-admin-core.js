@@ -173,6 +173,15 @@ jQuery(function($) {
 
 		var ajaxRequest = false;
 		var wpgmzaAjaxTimeout = false;
+
+		var wpgmzaStartTyping = false;
+		var wpgmzaKeyStrokeCount = 1;
+		var wpgmzaAvgTimeBetweenStrokes = 300; //300 ms by default (equates to 40wpm which is the average typing speed of a person)
+		var wpgmzaTotalTimeForKeyStrokes = 0;
+		var wpgmzaTmp = '';
+		var wpgmzaIdentifiedTypingSpeed = false;
+
+
 		jQuery('body').on('keyup', '#wpgmza_add_address', function(e) {
 			if (wpgmza_autoCompleteDisabled) { return; }
 
@@ -188,11 +197,57 @@ jQuery(function($) {
 			        return;
 			    }
 
+			    if (!wpgmzaIdentifiedTypingSpeed) {
+					//determine duration between key strokes to determine when we should send the request to the autocomplete server
+					//doing this avoids sending API calls for slow typers.
+					var d = new Date();
+					
+
+					// set a timer to reset the delay counter
+					clearTimeout(wpgmzaTmp);
+					wpgmzaTmp = setTimeout(function(){ 
+							wpgmzaStartTyping = false;
+							wpgmzaAvgTimeBetweenStrokes = 300;
+							wpgmzaTotalTimeForKeyStrokes = 0;
+						},1500
+					); // I'm pretty sure no one types one key stroke per 1.5 seconds. This should be safe.
+					if (!wpgmzaStartTyping) {
+						// first character press, set start time.
+						
+						wpgmzaStartTyping = d.getTime();
+						wpgmzaKeyStrokeCount++;
+					} else {
+						if (wpgmzaKeyStrokeCount == 1) {
+							// do nothing because its the first key stroke
+						} else {
+
+
+							wpgmzaCurrentTimeBetweenStrokes = d.getTime() - wpgmzaStartTyping;
+							wpgmzaTotalTimeForKeyStrokes = wpgmzaTotalTimeForKeyStrokes + wpgmzaCurrentTimeBetweenStrokes;
+
+							wpgmzaAvgTimeBetweenStrokes = (wpgmzaTotalTimeForKeyStrokes / (wpgmzaKeyStrokeCount-1)); // we cannot count the first key as that was the starting point
+							wpgmzaStartTyping = d.getTime();
+
+							if (wpgmzaKeyStrokeCount >= 3) {
+								// we only need 3 keys to know how fast they type
+								wpgmzaIdentifiedTypingSpeed = (wpgmzaAvgTimeBetweenStrokes);
+								
+
+							}
+						}
+						wpgmzaKeyStrokeCount++;
+						
+
+
+					}
+					return;
+				}
+
 			    
 			    // clear the previous timer
 			    clearTimeout(wpgmzaAjaxTimeout);
 
-			    $('#wpgmza_autocomplete_search_results').html('Searching...');
+			    $('#wpgmza_autocomplete_search_results').html('Searching... Stop typing to see results');
 			    $('#wpgmza_autocomplete_search_results').show();
 
 				
@@ -248,7 +303,7 @@ jQuery(function($) {
 					            
 					        }
 					    });
-		            },400)
+		            },(wpgmzaIdentifiedTypingSpeed*2))
 	                
 
 					
