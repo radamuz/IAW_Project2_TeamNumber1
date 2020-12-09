@@ -1,0 +1,3285 @@
+# Translation of Plugins - WP Activity Log - Stable (latest release) in Spanish (Spain)
+# This file is distributed under the same license as the Plugins - WP Activity Log - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-11-04 14:56:40+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/3.0.0-alpha.2\n"
+"Language: es\n"
+"Project-Id-Version: Plugins - WP Activity Log - Stable (latest release)\n"
+
+#: classes/Views/SetupWizard.php:644
+msgid "The plugin stores the data in the WordPress database in a very efficient way, though the more data you keep the more hard disk space it will consume. If you need need to retain a lot of data we would recommend you to <a href=\"https://wpactivitylog.com/features/?utm_source=plugin&utm_medium=referral&utm_campaign=WSAL&utm_content=wizard+configuration\" target=\"_blank\">upgrade to Premium</a> and use the Database tools to store the WordPress activity log in an external database."
+msgstr "El plugin almacena los datos en la base de datos de WordPress de un modo muy eficaz, pero cuantos más datos guardes más espacio en el disco duro consumirá. Si necesitas retener un montón de datos te recomendamos que <a href=\"https://wpactivitylog.com/features/?utm_source=plugin&utm_medium=referral&utm_campaign=WSAL&utm_content=wizard+configuration\" target=\"_blank\">actualices a la versión Premium</a> y uses las herramientas de base de datos para almacenar el registro de actividad de WordPress en una base de datos externa."
+
+#: classes/Settings.php:1814
+msgid "Contact Support"
+msgstr "Contactar con soporte"
+
+#: classes/Settings.php:1811
+msgid "Increase maximum file size limit"
+msgstr "Aumenta el límite máximo del tamaño de archivo"
+
+#: classes/Settings.php:1714
+msgid "User profile page"
+msgstr "Página de perfil del usuario"
+
+#: classes/Settings.php:1710
+msgid "View tag"
+msgstr "Ver etiqueta"
+
+#: classes/Settings.php:1707
+msgid "View category"
+msgstr "Ver categoría"
+
+#: classes/Settings.php:1699
+msgid "View post in the editor"
+msgstr "Ver entrada en el editor"
+
+#: classes/Settings.php:1694
+msgid "View the content changes"
+msgstr "Ver los cambios en el contenido"
+
+#: classes/AuditLogGridView.php:607
+msgid "Event Type:"
+msgstr "Tipo de evento:"
+
+#: classes/AuditLogGridView.php:603
+msgid "Object:"
+msgstr "Objeto:"
+
+#: classes/AuditLogGridView.php:599
+msgid "IP:"
+msgstr "IP:"
+
+#: classes/AuditLogGridView.php:595
+msgid "User:"
+msgstr "Usuario:"
+
+#: classes/AuditLogGridView.php:591
+msgid "Time:"
+msgstr "Hora:"
+
+#: classes/AuditLogGridView.php:587
+msgid "Date:"
+msgstr "Fecha:"
+
+#: classes/AuditLogGridView.php:434
+msgid "Message:"
+msgstr "Mensaje:"
+
+#: classes/AuditLogGridView.php:344
+msgid "Grid"
+msgstr "Cuadrícula"
+
+#: classes/AuditLogGridView.php:316
+msgid "Info"
+msgstr "Información"
+
+#: classes/Views/ToggleAlerts.php:441 classes/ConstantManager.php:166
+msgid "Informational"
+msgstr "Información"
+
+#: classes/Views/ToggleAlerts.php:439 classes/ConstantManager.php:164
+msgid "Low"
+msgstr "Bajo"
+
+#: classes/Views/ToggleAlerts.php:437 classes/ConstantManager.php:162
+msgid "Medium"
+msgstr "Medio"
+
+#: classes/Views/ToggleAlerts.php:435 classes/ConstantManager.php:160
+msgid "High"
+msgstr "Alto"
+
+#: classes/AuditLogListView.php:327 classes/AuditLogListView.php:370
+msgid "Event Type"
+msgstr "Tipo de evento"
+
+#: classes/AuditLogListView.php:326 classes/AuditLogListView.php:367
+msgid "Object"
+msgstr "Objeto"
+
+#: classes/AuditLogListView.php:325 classes/AuditLogListView.php:361
+msgid "IP"
+msgstr "IP"
+
+#: classes/AuditLogGridView.php:314 classes/AuditLogGridView.php:338
+#: classes/AuditLogListView.php:321 classes/AuditLogListView.php:349
+msgid "ID"
+msgstr "ID"
+
+#: classes/AuditLogGridView.php:168 classes/AuditLogListView.php:174
+msgid "Grid View"
+msgstr "Vista de cuadrícula"
+
+#: classes/AuditLogGridView.php:167 classes/AuditLogListView.php:173
+msgid "List View"
+msgstr "Vista de lista"
+
+#: classes/AlertManager.php:1225
+msgid "Unblocked"
+msgstr "Sin bloquear"
+
+#: classes/AlertManager.php:1224
+msgid "Removed"
+msgstr "Eliminado"
+
+#: classes/AlertManager.php:1223
+msgid "Stopped"
+msgstr "Frenado"
+
+#: classes/AlertManager.php:1222
+msgid "Started"
+msgstr "Iniciado"
+
+#: classes/AlertManager.php:1221
+msgid "Viewed"
+msgstr "Visto"
+
+#: classes/AlertManager.php:1220
+msgid "Opened"
+msgstr "Abierto"
+
+#: classes/AlertManager.php:1219
+msgid "Restored"
+msgstr "Restaurado"
+
+#: classes/AlertManager.php:1218
+msgid "Uploaded"
+msgstr "Subido"
+
+#: classes/AlertManager.php:1217
+msgid "Blocked"
+msgstr "Bloqueado"
+
+#: classes/AlertManager.php:1216
+msgid "Failed Login"
+msgstr "Acceso fallido"
+
+#: classes/AlertManager.php:1215
+msgid "Added"
+msgstr "Añadido"
+
+#: classes/AlertManager.php:1212
+msgid "Unapproved"
+msgstr "Rechazado"
+
+#: classes/AlertManager.php:1211
+msgid "Approved"
+msgstr "Aprobado"
+
+#: classes/AlertManager.php:1210
+msgid "Published"
+msgstr "Publicado"
+
+#: classes/AlertManager.php:1209
+msgid "Deleted"
+msgstr "Borrado"
+
+#: classes/AlertManager.php:1208
+msgid "Modified"
+msgstr "Modificado"
+
+#: classes/AlertManager.php:1207
+msgid "Created"
+msgstr "Creado"
+
+#: classes/AlertManager.php:1206
+msgid "Updated"
+msgstr "Actualizado"
+
+#: classes/AlertManager.php:1205
+msgid "Uninstalled"
+msgstr "Desinstalado"
+
+#: classes/AlertManager.php:1204
+msgid "Deactivated"
+msgstr "Desactivado"
+
+#: classes/AlertManager.php:1203
+msgid "Activated"
+msgstr "Activado"
+
+#: classes/AlertManager.php:1202
+msgid "Installed"
+msgstr "Instalado"
+
+#: classes/AlertManager.php:1201
+msgid "Logout"
+msgstr "Salir"
+
+#: classes/AlertManager.php:1200
+msgid "Login"
+msgstr "Acceder"
+
+#: classes/AlertManager.php:1143
+msgid "Theme"
+msgstr "Tema"
+
+#: classes/AlertManager.php:1142
+msgid "Menu"
+msgstr "Menú"
+
+#: classes/AlertManager.php:1141
+msgid "Widget"
+msgstr "Widget"
+
+#: classes/AlertManager.php:1140
+msgid "Custom Field"
+msgstr "Campo personalizado"
+
+#: classes/AlertManager.php:1139
+msgid "Category"
+msgstr "Categoría"
+
+#: classes/AlertManager.php:1138
+msgid "MainWP"
+msgstr "MainWP"
+
+#: classes/AlertManager.php:1137
+msgid "MainWP Network"
+msgstr "Red de MainWP"
+
+#: classes/AlertManager.php:1136
+msgid "System Setting"
+msgstr "Ajuste del sistema"
+
+#: classes/AlertManager.php:1134
+msgid "Setting"
+msgstr "Ajuste"
+
+#: classes/AlertManager.php:1133
+msgid "Comment"
+msgstr "Comentario"
+
+#: classes/AlertManager.php:1132
+msgid "Tag"
+msgstr "Etiqueta"
+
+#: classes/AlertManager.php:1131 classes/AlertManager.php:1135
+msgid "File"
+msgstr "Archivo"
+
+#: classes/AlertManager.php:1130
+msgid "Post"
+msgstr "Entrada"
+
+#: classes/ThirdPartyExtensions/BBPressExtension.php:29
+msgid "BBPress"
+msgstr "bbPress"
+
+#: wp-security-audit-log.php:1031
+msgid "Activate the licence key now"
+msgstr "Activa ahora la clave de licencia"
+
+#: wp-security-audit-log.php:1030
+msgid "You need to activate the licence key to use WP Activity Log Premium. %2$s"
+msgstr "Tienes que activar la clave de licencia para usar WP Activity Log Premium. %2$s"
+
+#: defaults.php:316
+msgid "Changed the last name of the user %TargetUsername% %LineBreak% Previous last name: %old_lastname% %LineBreak% New last name: %new_lastname% %LineBreak% Role: %Roles% %LineBreak% First name: %FirstName% %LineBreak% %EditUserLink%"
+msgstr "Cambiado el apellido del usuario %TargetUsername% %LineBreak% Apellido anterior: %old_lastname% %LineBreak% Nuevo apellido: %new_lastname% %LineBreak% Rol: %Roles% %LineBreak% Nombre: %FirstName% %LineBreak% %EditUserLink%"
+
+#: classes/Views/Settings.php:1029
+msgid "Show Milliseconds in list view"
+msgstr "Mostrar los milisegundos en la vista de lista"
+
+#: classes/Views/Settings.php:1022
+msgid "Show Milliseconds"
+msgstr "Mostrar los milisegundos"
+
+#: classes/Models/Occurrence.php:84 classes/AuditLogListView.php:441
+msgid "Alert description not found."
+msgstr "Descripción de la alerta no encontrada"
+
+#: classes/Models/Occurrence.php:83 classes/AuditLogListView.php:440
+msgid "Alert message not found."
+msgstr "Mensaje de alerta no encontrado."
+
+#: wp-security-audit-log.php:1234
+msgid "You can enable this alert again from the Enable/Disable Alerts node in the plugin menu."
+msgstr "Puedes volver a activar esta alerta desde el nodo «Activar/desactivar alertas» en el menú."
+
+#: wp-security-audit-log.php:1234
+msgid "Alert %1$s is no longer being monitored.<br /> %2$s"
+msgstr "La alerta «%1$s» ya no está siendo seguida.<br />%2$s"
+
+#: wp-security-audit-log.php:1197
+msgid " tab in the plugin settings"
+msgstr " pestaña en los ajustes del plugin"
+
+#: wp-security-audit-log.php:1196
+msgid "Excluded Objects"
+msgstr "Objetos excluidos"
+
+#: wp-security-audit-log.php:1193
+msgid "Custom Field <strong>%1$s</strong> is no longer being monitored.<br />Enable the monitoring of this custom field again from the"
+msgstr "El campo personalizado «<strong>%1$s</strong>» ya no está siendo seguido.<br />Vuelve a activar el seguimiento de este campo personalizado desde la"
+
+#: classes/Views/SetupWizard.php:569
+msgid "If you are not sure about this setting, check if the Membership setting in the WordPress General settings is checked or not. If it is not checked (default) select No."
+msgstr "Si no estás seguro sobre este ajuste, comprueba si, en los ajustes generales de WordPress, está marcado o no el ajuste del registro de miembros. Si no está marcado (por defecto), selecciona «No»."
+
+#: classes/Views/SetupWizard.php:558
+msgid "Can visitors register for a user on your website?"
+msgstr "¿Pueden registrarse como usuarios los visitantes de tu web?"
+
+#: classes/Views/SetupWizard.php:520
+msgid "If your website is a membership or ecommerce website most probably you have more than one area from where the users can login. If you are not sure, select Yes."
+msgstr "Si tu web es una web para miembros o de comercio electrónico, lo más probable es que tengas más de un área desde la que los usuarios pueden acceder. Si no estás seguro, selecciona «Sí»."
+
+#: classes/Views/SetupWizard.php:518
+msgid "No, we only use the default WordPress login page."
+msgstr "No, solo usamos la página de acceso por defecto de WordPress."
+
+#: classes/Views/SetupWizard.php:513
+msgid "Yes, we use other pages to login to WordPress."
+msgstr "Sí, usamos otras páginas para acceder a WordPress."
+
+#: classes/Views/SetupWizard.php:509
+msgid "Do you or your users use other pages to log in to WordPress other than the default login page ( /wp-admin/ )?"
+msgstr "¿Tú o tus usuarios usáis otras páginas para acceder a WordPress distintas de la página de acceso por defecto ( /wp-admin / )?"
+
+#: classes/Views/SetupWizard.php:192
+msgid "User Registrations"
+msgstr "Registros de usuarios"
+
+#: classes/Views/SetupWizard.php:187
+msgid "Log In"
+msgstr "Acceder"
+
+#: classes/Views/ToggleAlerts.php:457
+msgid "Keep a log when users login to the website from other login pages / forms other than the default WordPress login page."
+msgstr "Mantén un registro cuando los usuarios acceden a la web desde otras páginas de acceso / formularios distintos de la página de acceso por defecto de WordPress."
+
+#: classes/Views/ToggleAlerts.php:470
+msgid "Keep a log when a visitor registers a user on the website. Only enable this if you allow visitors to register as users on your website. User registration is disabled by default in WordPress."
+msgstr "Mantén un registro cuando un visitante registra un usuario en la web. Actívalo solo si permites a los visitantes registrarse como usuarios en tu web. El registro de usuarios está desactivado por defecto en WordPress."
+
+#: classes/AlertManager.php:1875 classes/AlertManager.php:1887
+msgid "Unknown Site"
+msgstr "Sitio desconocido"
+
+#: classes/Views/Help.php:285
+msgid "LEARN MORE"
+msgstr "APRENDE MÁS"
+
+#: classes/Views/Help.php:274
+msgid "Our other WordPress plugins"
+msgstr "Nuestros otros plugins WordPress"
+
+#: classes/Views/Help.php:268
+msgid "See the child sites activity logs from the central MainWP dashboard"
+msgstr "Ve los registros de actividad de los sitios hijo desde el escritorio central de MainWP"
+
+#: classes/Views/Help.php:256
+msgid "Automatically identify unauthorized file changes on WordPress"
+msgstr "Identifica automáticamente cambios no autorizados de archivos en WordPress"
+
+#: classes/Views/Help.php:250
+msgid "Enforce strong password policies on WordPress"
+msgstr "Refuerza las políticas de contraseñas fuertes en WordPress"
+
+#. Translators: %s: Getting started guide hyperlink
+#: wp-security-audit-log.php:1323
+msgid "getting started guide"
+msgstr "guía de primeros pasos"
+
+#. Translators: %s: Getting started guide hyperlink
+#: wp-security-audit-log.php:1323
+msgid "The WP Activity Log should be installed on the child sites only. Refer to the %s for more information."
+msgstr "El registro de WP Activity Log debería instalarse solo en los sitios hijo. Echa un vistazo a la %s para más información."
+
+#. Translators: %s: Activity Log for MainWP plugin hyperlink
+#: wp-security-audit-log.php:1321
+msgid "Activity Log for MainWP"
+msgstr "Registro de actividad para MainWP"
+
+#. Translators: %s: Activity Log for MainWP plugin hyperlink
+#: wp-security-audit-log.php:1321
+msgid "Please install the %s plugin on the MainWP dashboard."
+msgstr "Por favor, instala el plugin %s en el escritorio de MainWP."
+
+#: classes/Views/AuditLog.php:236
+msgid "No, thank you"
+msgstr "No, gracias"
+
+#: classes/Views/AuditLog.php:235
+msgid "Sure, opt-in"
+msgstr "Por supuesto, acepto"
+
+#: classes/Views/AuditLog.php:233
+msgid "Read more about what we collect."
+msgstr "Lee más acerca de lo que recopilamos."
+
+#: classes/Views/AuditLog.php:233
+msgid "Gathering non-sensitive diagnostic data about the plugin install helps us improve the plugin. When you opt-in, you also subscribe to our announcements (you can opt-out at any time). If you would rather opt-out, we will not collect any data."
+msgstr "La recogida de datos de diagnóstico no sensibles sobre la instalación del plugin nos ayuda a mejorar el plugin. Cuando aceptas también te suscribes a nuestras noticias (puedes anular la suscripción en cualquier momento). Si prefieres no aceptar no recopilaremos ningún dato. "
+
+#: classes/Connector/MySQLDB.php:60
+msgid "Error establishing a database connection. DB username or password are not valid."
+msgstr "Error al establecer una conexión a la base de datos. El nombre de usuario o la contraseña de la BD no son válidos."
+
+#: classes/Connector/wp-db-custom.php:303
+msgid "https://wordpress.org/support/forums/"
+msgstr "https://es.wordpress.org/support/forums/"
+
+#. translators: %s: support forums URL
+#: classes/Connector/wp-db-custom.php:302
+msgid "If you don&#8217;t know how to set up a database you should <strong>contact your host</strong>. If all else fails you may find help at the <a href=\"%s\">WordPress Support Forums</a>."
+msgstr "Si no sabes cómo configurar una base de datos deberías <strong>contactar con tu servidor</strong>. Si todo falla puedes encontrar ayuda en los  <a href=\"%s\">foros de soporte de WordPress</a>."
+
+#. translators: %s: database name
+#: classes/Connector/wp-db-custom.php:294
+msgid "On some systems the name of your database is prefixed with your username, so it would be like <code>username_%1$s</code>. Could that be the problem?"
+msgstr "En algunos sistemas el nombre de tu base de datos tiene el prefijo de tu nombre de usuario, así que podría ser algo como <code>nombreusuario_%1$s</code>. ¿Podría ser ese el problema?"
+
+#. translators: 1: database user, 2: database name
+#: classes/Connector/wp-db-custom.php:287
+msgid "Does the user %1$s have permission to use the %2$s database?"
+msgstr "¿Tiene el usuario %1$s permisos para usar la base de datos %2$s?"
+
+#: classes/Connector/wp-db-custom.php:283
+msgid "Are you sure it exists?"
+msgstr "¿Estás seguro de que existe?"
+
+#. translators: %s: database name
+#: classes/Connector/wp-db-custom.php:278
+msgid "We were able to connect to the database server (which means your username and password is okay) but not able to select the %s database."
+msgstr "Hemos podido conectar con el servidor de la base de datos (lo que significa que tu nombre de usuario y contraseña están bien) pero no hemos podido seleccionar la base de datos %s."
+
+#: classes/Connector/wp-db-custom.php:274
+msgid "Can&#8217;t select database"
+msgstr "No se puede seleccionar la base de datos"
+
+#: classes/Views/SetupWizard.php:432
+msgid "This wizard helps you configure the basic plugin settings. All these settings can be changed at a later stage from the plugin settings."
+msgstr "Este asistente te ayuda a configurar los ajustes básicos del plugin. Todos estos ajustes se pueden cambiar posteriormente en los ajustes del plugin."
+
+#: classes/Views/Settings.php:1269
+msgid "You can exclude an individual IP address or a range of IP addresses. To exclude a range use the following format: [first IP]-[last octet of the last IP]. Example: 172.16.180.6-127."
+msgstr "Puedes excluir una dirección IP individual o un rango de direcciones IP. Para excluir un rango utiliza el siguiente formato: [primera IP]-[último octeto de la última IP]. Ejemplo: 172.16.180.6-12"
+
+#: classes/Views/AuditLog.php:589
+msgid "Thank you for installing WP Activity Log. Do you want to run the wizard to configure the basic plugin settings?"
+msgstr "Gracias por instalar WP Activity Log. ¿Quieres ejecutar el asistente para configurar los ajustes básicos del pugin?"
+
+#: classes/Views/AuditLog.php:107
+msgid "Unlock these and other powerful features with WP Activity Log Premium."
+msgstr "Desbloquea estas y otras potentes características con WP Activity Log Premium."
+
+#: classes/Views/AuditLog.php:106
+msgid "See who logged in on your site in real-time, generate reports, get SMS & email alerts of critical changes and more!"
+msgstr "¡Ve quién accedió a tu sitio en tiempo real, crea informes, obtén alertas por SMS y correo electrónico de cambios críticos y más!"
+
+#: classes/Views/AuditLog.php:103
+msgid "Upgrade to premium to get more out of your activity logs!"
+msgstr "¡Actualiza a la versión premium para sacar más partido de tus registros de actividad!"
+
+#: classes/Views/AuditLog.php:102
+msgid "Instant SMS & email alerts, search & filters, reports, users sessions management and much more!"
+msgstr "¡Alertas instantáneas por SMS y correo electrónico, búsquedas y filtros, informes, gestión de sesiones de usuarios y mucho más!"
+
+#: classes/Views/AuditLog.php:98
+msgid "Get instantly alerted of critical changes via SMS & email, search the activity log, generate user reports, see who is logged in and more!"
+msgstr "¡Recibe alertas instantáneas de cambios críticos por SMS y correo electrónico, busca en el registro de actividad, crea informes de usuarios, ve quién está conectado y más!"
+
+#. Translators: Number of sites
+#: wp-security-audit-log.php:1048
+msgid "The license is limited to %s sub-sites. You need to upgrade your license to cover all the sub-sites on this network."
+msgstr "La licencia está limitada a %s sub-sitios. Tienes que actualizar tu licencia para cubrir todos los sub-sitios de esta red."
+
+#: classes/Views/Search.php:135
+msgid "Save search terms and filters to run the searches again in the future with just a single click."
+msgstr "Guarda los términos y filtros de búsqueda para volver a ejecutar en el futuro las búsquedas con un solo clic."
+
+#: classes/Views/Search.php:131
+msgid "Configure any filter you need to fine tune the search results and find what you are looking for with much less effort."
+msgstr "Configura cualquier filtro que necesites para afinar los resultados de búsqueda y encontrar, con mucho menos esfuerzo, lo que estés buscando."
+
+#: classes/Views/Search.php:127
+msgid "Use the text search to find a specific change."
+msgstr "Usa la búsqueda de texto para encontrar un cambio específico."
+
+#: classes/Views/Search.php:122
+msgid "Save search terms and filters for future use and improved productivity"
+msgstr "Guarda los términos y filtros de búsqueda para usarlos en el futuro y mejorar la productividad"
+
+#: classes/Views/Search.php:121
+msgid "Search for the cause of a problem and ease troubleshooting"
+msgstr "Busca la causa de un problema y facilita su diagnóstico"
+
+#: classes/Views/Search.php:120
+msgid "Easily identify and track back suspicious user behaviour"
+msgstr "Identifica y rastrea fácilmente el comportamiento sospechoso de los usuarios"
+
+#: classes/Views/Search.php:119
+msgid "Easily find when and who did a specific change on your site"
+msgstr "Encuentra fácilmente cuándo y quién ha hecho un cambio específico en tu sitio"
+
+#: classes/Views/Search.php:118
+msgid "Do text searches and use filters to fine tune the search results"
+msgstr "Haz búsquedas de texto y usa filtros para afinar los resultados de búsqueda"
+
+#: classes/Views/Search.php:115
+msgid "You can find all the information you want in the activity log, if you know what you are looking for and have the right tools. Upgrade to premium so you can:"
+msgstr "En el registro de actividad puedes encontrar toda la información que quieras si sabes qué estás buscando y tienes las herramientas adecuadas. Actualiza a premium para que puedas:"
+
+#: classes/Views/Search.php:114
+msgid "Search & Filters for the Activity Log"
+msgstr "Búsqueda y filtros del registro de actividad"
+
+#: classes/Views/EmailNotifications.php:140
+msgid "All email and SMS templates are configurable, allowing you to personalize them."
+msgstr "Todas las plantillas de SMS y correo electrónico son configurables, permitiéndote personalizarlas."
+
+#: classes/Views/EmailNotifications.php:136
+msgid "Use the trigger builder to configure any type of email and SMS notification to get instantly alerted of site changes that are important to you and your business."
+msgstr "Usa el generador de avisos para configurar cualquier tipo de correo electrónico y aviso por SMS para recibir alertas instantáneas de los cambios en el sitio que son importantes para ti y tu negocio."
+
+#: classes/Views/EmailNotifications.php:132
+msgid "Easily enable any of the built-in security and user management notifications."
+msgstr "Activa fácilmente cualquiera de los avisos incorporados de seguridad y gestión de usuarios."
+
+#: classes/Views/EmailNotifications.php:128
+msgid "Email and SMS notifications instantly alert you of important changes on your WordPress site."
+msgstr "Los avisos por correo electrónico y SMS te alertan al instante de cambios importantes en tu sitio WordPress."
+
+#: classes/Views/EmailNotifications.php:125
+msgid "Getting started is really easy. You can use one of the plugin’s built-in notifications or create your own using the easy to use trigger builder."
+msgstr "Comenzar es realmente fácil. Puedes usar uno de los avisos incorporados en el plugin o crear el tuyo propio usando el sencillo generador de avisos."
+
+#: classes/Views/EmailNotifications.php:123
+msgid "Use the trigger builder to configure any type of notification criteria!"
+msgstr "Usa el generador de avisos para configurar ¡cualquier tipo de condición para los avisos!"
+
+#: classes/Views/EmailNotifications.php:122
+msgid "Personalize all email and SMS templates"
+msgstr "Personaliza todas las plantillas de correo electrónico y SMS."
+
+#: classes/Views/EmailNotifications.php:121
+msgid "Enable built-in security email notifications of suspicious user activity"
+msgstr "Activar los avisos de seguridad por correo electrónico incorporados de actividad sospechosa de los usuarios"
+
+#: classes/Views/EmailNotifications.php:120
+msgid "Get alerted of site changes like plugin installs, theme changes etc"
+msgstr "Recibe alertas de los cambios en el sitio, como instalación de plugins, cambios de tema, etc."
+
+#: classes/Views/EmailNotifications.php:119
+msgid "Receive notifications for when users login, change their password or change content"
+msgstr "Recibe avisos cuando los usuarios accedan, cambien su contraseña o cambien el contenido"
+
+#: classes/Views/EmailNotifications.php:118
+msgid "Configure any type of SMS & email notifications"
+msgstr "Configura cualquier tipo de aviso por SMS y correo electrónico"
+
+#: classes/Views/EmailNotifications.php:115
+msgid "Get instantly alerted of important changes on your site via SMS and email notifications. Upgrade to premium and:"
+msgstr "Recibe alertas instantáneas de cambios importantes en tu sitio a través avisos SMS y correo electrónico. Actualiza a premium y:"
+
+#: classes/Views/EmailNotifications.php:114
+msgid "SMS & Email Notifications"
+msgstr "Avisos por SMS y correo electrónico"
+
+#: classes/Views/EmailNotifications.php:42
+msgid "Notifications &#8682;"
+msgstr "Avisos &#8682;"
+
+#: classes/Views/LogInUsers.php:132
+msgid "Limit, manage and block multiple same user sessions easily."
+msgstr "Limita, gestiona y bloquea fácilmente sesiones múltiples de un mismo usuario. "
+
+#: classes/Views/LogInUsers.php:128
+msgid "See who is logged in to your WordPress site and multisite network in real-time."
+msgstr "Mira quién está conectado en tu sitio WordPress y tu red multisitio en tiempo real."
+
+#: classes/Views/LogInUsers.php:124
+msgid "Get alerted of multiple same user sessions"
+msgstr "Recibe alertas de sesiones múltiples del mismo usuario"
+
+#: classes/Views/LogInUsers.php:123
+msgid "Limit or block multiple sessions for the same user"
+msgstr "Limita o bloquea sesiones múltiples del mismo usuario"
+
+#: classes/Views/LogInUsers.php:122
+msgid "Terminate any users’ session with a click of a button"
+msgstr "Termina la sesión de cualquier usuario con el clic de un botón"
+
+#: classes/Views/LogInUsers.php:121
+msgid "The last change they have done in real-time"
+msgstr "El último cambio que han hecho en tiempo real"
+
+#: classes/Views/LogInUsers.php:119
+msgid "See who is logged in to your site"
+msgstr "Mira quién está conectado en tu sitio"
+
+#: classes/Views/LogInUsers.php:115
+msgid "Better manage your users’ logins and sessions. Upgrade to premium and:"
+msgstr "Mejor gestión de los accesos y sesiones de tus usuarios. Actualiza a la versión premium y:"
+
+#: classes/Views/LogInUsers.php:114
+msgid "Real-Time Users Sessions Management"
+msgstr "Gestión de sesiones de usuarios en tiempo real"
+
+#: classes/Views/addons/html-view.php:121
+msgid "Start Free 14-Day Premium Trial"
+msgstr "Empieza el periodo de prueba gratuito de 14 días de la versión premium"
+
+#: classes/Views/Reports.php:134
+msgid "Schedule reports that are sent to you by email automatically."
+msgstr "Programa informes que se te envían automáticamente por correo electrónico."
+
+#: classes/Views/Reports.php:130
+msgid "Easily configure a criteria for your reports."
+msgstr "Configura fácilmente un criterio para tus informes."
+
+#: classes/Views/Reports.php:126
+msgid "Generate a HTML or CSV report."
+msgstr "Genera un informe en HTML o CSV."
+
+#: classes/Views/Reports.php:123
+msgid "Reports are vital to the success of your business and management of your site."
+msgstr "Los informes son vitales para el éxito de tu negocio y la gestión de tu sitio."
+
+#: classes/Views/Reports.php:121
+msgid "Create statistics reports about users’ views, logins, activity from IP addresses & more"
+msgstr "Crea informes de estadísticas sobre qué ven los usuarios, sus accesos, la actividad desde las direcciones IP y más"
+
+#: classes/Views/Reports.php:120
+msgid "Received reports automatically via email"
+msgstr "Recibe automáticamente los informes por correo electrónico"
+
+#: classes/Views/Reports.php:119
+msgid "Automate and schedule daily, weekly, monthly and quarterly reports"
+msgstr "Automatiza y programa los informes diaria, semanal, mensual y trimestralmente."
+
+#: classes/Views/Reports.php:118
+msgid "Generate any type of user and site (in multisite) activity report"
+msgstr "Genera cualquier informe de actividad de los usuarios y los sitios (en multisitio)"
+
+#: classes/Views/Reports.php:115
+msgid "Many are not fans of reports, however reports are vital in business. With them you can make informed decisions that allow you to improve user productivity and the business. Upgrade to Premium so you can:"
+msgstr "Muchos no son partidarios de los informes, sin embargo, los informes son vitales en los negocios. Con ellos puedes tomar decisiones informadas que te permiten mejorar la productividad de los usuarios y del negocio. Actualiza a premium para que puedas:"
+
+#: classes/Views/Reports.php:114
+msgid "Individual, Scheduled & Automated Reports"
+msgstr "Informes individuales, programados y automatizados"
+
+#: classes/Views/AuditLog.php:185
+msgid "UPGRADE NOW"
+msgstr "ACTUALIZA AHORA"
+
+#: classes/Views/Settings.php:397
+msgid "Send Message"
+msgstr "Enviar mensaje"
+
+#: classes/Views/Settings.php:338
+msgid "Message sent successfully."
+msgstr "Mensaje enviado correctamente."
+
+#: classes/Views/ExternalDB.php:134
+msgid "Configure an unlimited number of connections to different databases and third party services."
+msgstr "Configurar un número ilimitado de conexiones a diferentes bases de datos y servicios de terceros."
+
+#: classes/Views/ExternalDB.php:130
+msgid "Configure activity log filters for third party services connections."
+msgstr "Configurar filtros de registro de actividad para conexiones con servicios de terceros."
+
+#: classes/Views/ExternalDB.php:126
+msgid "Easily configure integration and database connections thanks to a user friendly wizard."
+msgstr "Configurar fácilmente la integración y las conexiones a la base de datos gracias a un amigable asistente."
+
+#: classes/Views/ExternalDB.php:121
+msgid "Configure filters to filter what is mirrored and archived in the databases and services"
+msgstr "Configurar filtros para filtrar qué es copiado y archivado en las bases de datos y servicios"
+
+#: classes/Views/ExternalDB.php:120
+msgid "Mirror the logs to syslog, Slack, Papertrail and central business communication services"
+msgstr "Copiar los registros al sistema de registro («syslog»), a Slack, Papertrail y a servicios centrales de comunicación empresarial"
+
+#: classes/Views/ExternalDB.php:119
+msgid "Configuring archiving and store older log data in a segregated database"
+msgstr "Configurar el archivo y almacenamiento de los datos de registro más antiguos en una base de datos separada"
+
+#: classes/Views/ExternalDB.php:118
+msgid "Store the audit logs of your sites on an external database"
+msgstr "Almacena los registros de auditoría de tus sitios en una base de datos externa"
+
+#: classes/Views/ExternalDB.php:115
+msgid "There are several benefits to segregating the logs from the main site database, and to be able to mirror the logs to third party and centralized business solutions. Upgrade to premium and:"
+msgstr "Hay varios beneficios en separar los registros de la base de datos principal del sitio y ser capaz de copiar los registros en terceros y en soluciones centralizadas empresariales. Actualiza a premium y:"
+
+#: classes/Views/AuditLog.php:186
+msgid "Start Free Trial"
+msgstr "Empezar periodo de prueba gratuito"
+
+#: classes/ViewManager.php:283
+msgid "Free Premium Trial"
+msgstr "Prueba premium gratuita"
+
+#: defaults.php:96
+msgid "Switched to another user"
+msgstr "Cambió a otro usuario"
+
+#: classes/AuditLogGridView.php:208 classes/AuditLogListView.php:214
+msgid "— End of Activity Log —"
+msgstr "– Fin del registro de actividad –"
+
+#: classes/Views/Settings.php:471
+msgid "Pagination"
+msgstr "Paginación"
+
+#: classes/Views/Settings.php:466
+msgid "Infinite Scroll (Recommended)"
+msgstr "Scroll infinito (recomendado)"
+
+#: classes/Views/Settings.php:461
+msgid "Select event viewer view type:"
+msgstr "Selecciona el tipo de vista del visor de eventos:"
+
+#: classes/Views/Settings.php:454
+msgid "(Premium feature)"
+msgstr "(Característica premium)"
+
+#. translators: Learn more link.
+#: classes/Views/Settings.php:453
+msgid "When using infinite scroll the event viewer and search results %s load up much faster and require less resources."
+msgstr "Al usar el scroll infinito el visor de eventos y los resultados de búsqueda %s cargan mucho más rápido y requieren menos recursos."
+
+#: classes/Views/Settings.php:448
+msgid "Use infinite scroll or pagination for the event viewer?"
+msgstr "¿Usar el scroll infinito o la paginación para el visor de eventos?"
+
+#: classes/Views/AuditLog.php:1165
+msgid "Access Denied"
+msgstr "Acceso denegado"
+
+#: classes/Views/Settings.php:586
+msgid "Update only on page refreshes"
+msgstr "Actualizar solo al recargar la página"
+
+#: classes/Views/Settings.php:581
+msgid "Update in near real time"
+msgstr "Actualizar casi en tiempo real"
+
+#: classes/Views/Settings.php:572
+msgid "Admin Bar Notification Updates (Premium)"
+msgstr "Actualizaciones de avisos en la barra de administración (Premium)"
+
+#: classes/Views/Settings.php:569
+msgid "Admin Bar Notification Updates"
+msgstr "Actualizaciones de avisos en la barra de administración"
+
+#: classes/Settings.php:1702
+msgid "View Order"
+msgstr "Ver pedido"
+
+#. Translators: 1. User display name, 2. Home URL, 3. Date and time
+#: classes/Utilities/Emailer.php:61
+msgid "This is a notification to let you know that the user %1$s has deactivated the plugin WP Activity Log on the website %2$s on %3$s."
+msgstr "Esto es un aviso para hacerte saber que el usuario %1$s ha desactivado el plugin WP Activity Log en la web %2$s el %3$s."
+
+#: classes/Utilities/Emailer.php:56
+msgid "Hello admin,"
+msgstr "Hola admin,"
+
+#. Translators: %s: Support Hyperlink
+#: wp-security-audit-log.php:1393
+msgid "support@wpsecurityauditlog.com"
+msgstr "support@wpsecurityauditlog.com"
+
+#. Translators: %s: Support Hyperlink
+#: wp-security-audit-log.php:1393
+msgid "If after doing so you still have issues, please send us an email on %s for assistance."
+msgstr "Si después de hacerlo aún tienes problemas, por favor, envíanos un correo electrónico a %s para obtener ayuda"
+
+#: wp-security-audit-log.php:1391
+msgid "This could happen because the database user does not have the right privileges to create the tables in the database. We recommend you to update the privileges and try enabling the plugin again."
+msgstr "Esto pudo ocurrir debido a que el usuario de la base de datos no tiene los privilegios adecuados para crear tablas en la base de datos. Te recomendamos que actualices los privilegios y trates de activar de nuevo el plugin."
+
+#: wp-security-audit-log.php:1389
+msgid "This plugin uses 3 tables in the WordPress database to store the activity log and settings. It seems that these tables were not created."
+msgstr "Este plugin utiliza 3 tablas en la base de datos de WordPress en las que almacena los ajustes y registro de actividad. Parece que no se han creado estas tablas."
+
+#: wp-security-audit-log.php:1936
+msgid "Every 15 minutes"
+msgstr "Cada 15 minutos"
+
+#: wp-security-audit-log.php:1924
+msgid "Every 6 hours"
+msgstr "Cada 6 horas"
+
+#: classes/Settings.php:2054
+msgid "contact our support"
+msgstr "contacta con nuestro soporte"
+
+#: classes/Settings.php:2051
+msgid "plugin settings"
+msgstr "ajustes del plugin"
+
+#: classes/Views/Settings.php:734
+msgid "All superadmins"
+msgstr "Todos los superadministradores"
+
+#: classes/Views/AuditLog.php:189
+msgid "Close"
+msgstr "Cerrar"
+
+#: defaults.php:285
+msgid "Modified the content of draft page %PostTitle%.%RevisionLink% %EditorLinkPage%."
+msgstr "Modificado el contenido de la página en borrador %PostTitle%.%RevisionLink% %EditorLinkPage%."
+
+#: defaults.php:283
+msgid "Changed the custom field name from %MetaKeyOld% to %MetaKeyNew% in the page %PostTitle% %EditorLinkPage%.<br>%MetaLink%."
+msgstr "Cambiado el nombre del campo personalizado de %MetaKeyOld% a %MetaKeyNew% en la página %PostTitle% %EditorLinkPage%.<br>%MetaLink%."
+
+#: defaults.php:282
+msgid "Deleted the custom field %MetaKey% with id %MetaID% from page %PostTitle% %EditorLinkPage%.<br>%MetaLink%."
+msgstr "Borrado el campo personalizado %MetaKey% con el id %MetaID% de la página %PostTitle% %EditorLinkPage%.<br>%MetaLink%."
+
+#: defaults.php:281
+msgid "Modified the value of the custom field %MetaKey% from %MetaValueOld% to %MetaValueNew% in the page %PostTitle% %EditorLinkPage%.<br>%MetaLink%."
+msgstr "Modificado el valor del campo personalizado %MetaKey% de %MetaValueOld% a %MetaValueNew% en la página %PostTitle% %EditorLinkPage%.<br>%MetaLink%."
+
+#: defaults.php:280
+msgid "Created a new custom field called %MetaKey% with value %MetaValue% in the page %PostTitle% %EditorLinkPage%.<br>%MetaLink%."
+msgstr "Creado un nuevo campo personalizado llamado %MetaKey% con el valor %MetaValue% en la página %PostTitle% %EditorLinkPage%.<br>%MetaLink%."
+
+#: defaults.php:249
+msgid "Modified the content of post %PostTitle% which is submitted for review.%RevisionLink% %EditorLinkPost%."
+msgstr "Modificado el contenido de la entrada %PostTitle% enviada para revisión.%RevisionLink% %EditorLinkPost%."
+
+#: defaults.php:248
+msgid "Modified the content of the draft custom post type %PostTitle%.%EditorLinkPost%."
+msgstr "Modificado el contenido del borrador del tipo de contenido personalizado %PostTitle%.%EditorLinkPost%."
+
+#: defaults.php:247
+msgid "Modified the content of the draft post %PostTitle%.%RevisionLink% %EditorLinkPost%."
+msgstr "Modificado el contenido del borrador de la entrada %RevisionLink%.%EditorLinkPost%."
+
+#: defaults.php:246
+msgid "Modified the content of the published custom post type %PostTitle%. Post URL is %PostUrl%.%EditorLinkPost%."
+msgstr "Modificado el contenido del tipo de contenido personalizado publicado %PostTitle%. La URL es %PostUrl%.%EditorLinkPost%."
+
+#: defaults.php:245
+msgid "Changed the custom field name from %MetaKeyOld% to %MetaKeyNew% in custom post %PostTitle% of type %PostType% %EditorLinkPost%.<br>%MetaLink%."
+msgstr "Cambiado el nombre del campo personalizado de %MetaKeyOld% a %MetaKeyNew% en el contenido personalizado %PostTitle% del tipo %PostType% %EditorLinkPost%.<br>%MetaLink%."
+
+#: defaults.php:244
+msgid "Deleted the custom field %MetaKey% with id %MetaID% from custom post %PostTitle% of type %PostType% %EditorLinkPost%.<br>%MetaLink%."
+msgstr "Borrado el campo personalizado %MetaKey% con el id %MetaID% del contenido personalizado %PostTitle% del tipo %PostType% %EditorLinkPost%.<br>%MetaLink%."
+
+#: defaults.php:243
+msgid "Modified the value of the custom field %MetaKey% from %MetaValueOld% to %MetaValueNew% in custom post %PostTitle% of type %PostType% %EditorLinkPost%.<br>%MetaLink%."
+msgstr "Modificado el valor del campo personalizado %MetaKey% de %MetaValueOld% a %MetaValueNew% en el contenido personalizado %PostTitle% del tipo %PostType% %EditorLinkPost%.<br>%MetaLink%."
+
+#: defaults.php:242
+msgid "Created a new custom field %MetaKey% with value %MetaValue% in custom post %PostTitle% of type %PostType%. %EditorLinkPost%.<br>%MetaLink%."
+msgstr "Creado un nuevo campo personalizado %MetaKey% con valor %MetaValue% en un contenido personalizado %PostTitle% del tipo %PostType%. %EditorLinkPost%.<br>%MetaLink%."
+
+#: defaults.php:145
+msgid "User changed category slug"
+msgstr "Un usuario ha cambiado el slug de la categoría"
+
+#: defaults.php:144
+msgid "User changed category name"
+msgstr "Un usuario ha cambiado el nombre de la categoría"
+
+#: defaults.php:386
+msgid "Purged the activity log"
+msgstr "Se ha vaciado el registro de actividad"
+
+#: defaults.php:385
+msgid "Reset the plugin's settings to default"
+msgstr "Restablecer los ajustes del plugin a los valores por defecto"
+
+#: classes/Views/Settings.php:545
+msgid "Admin Bar Notification (Premium)"
+msgstr "Aviso en la barra de administración (Premium)"
+
+#: classes/Views/Settings.php:542
+msgid "Admin Bar Notification"
+msgstr "Aviso en la barra de admimistración"
+
+#. translators: Max number of dashboard widget alerts.
+#: classes/Views/Settings.php:513
+msgid "The events widget displays the latest %d security events in the dashboard and the admin bar notification displays the latest event."
+msgstr "El widget de eventos muestra los %d últimos eventos de seguridad en el escritorio y el aviso en la barra de administración muestra el último evento."
+
+#: classes/Views/Settings.php:508
+msgid "Display latest events widget in Dashboard & Admin bar"
+msgstr "Muestra el widget de últimos eventos en el escritorio y en la barra de administración"
+
+#: classes/Views/AuditLog.php:1097 classes/Views/AuditLog.php:1207
+msgid "You do not have sufficient permissions to dismiss this notice."
+msgstr "No tienes suficientes permisos para descartar este aviso."
+
+#: classes/Views/AuditLog.php:189
+msgid "Dismiss the banner"
+msgstr "Descartar el banner"
+
+#: classes/Views/AuditLog.php:187
+msgid "Tell me more"
+msgstr "Cuéntame más"
+
+#: classes/Views/AuditLog.php:99
+msgid "Upgrade to premium to unlock these powerful activity log features & more!"
+msgstr "Mejora a premium para desbloquear estas potentes características del registro de actividad y más."
+
+#: classes/AlertManager.php:518
+msgid "Contact us"
+msgstr "Contáctanos"
+
+#: classes/AlertManager.php:516
+msgid "ERROR:"
+msgstr "ERROR:"
+
+#. Translators: 1.CSS classes, 2. Notice, 3. Contact us link
+#: classes/AlertManager.php:514
+msgid "%4$s to help you solve this issue."
+msgstr "%4$s nos ayuda a resolver este problema."
+
+#: classes/AlertManager.php:511
+msgid "You have custom events that are using the same ID or IDs which are already registered in the plugin, so they have been disabled."
+msgstr "Tienes eventos personalizados que están usando el mismo ID o IDs ya registrados en el plugin, así que se han desactivado."
+
+#. Author URI of the plugin
+msgid "http://www.wpwhitesecurity.com/"
+msgstr "http://www.wpwhitesecurity.com/"
+
+#. translators: 1. Deprecated method name 2. Version since deprecated
+#: wp-security-audit-log.php:1958
+msgid "Method %1$s is deprecated since version %2$s!"
+msgstr "¡El método %1$s está obsoleto desde la versión %2$s!"
+
+#: wp-security-audit-log.php:962
+msgid "Start free trial"
+msgstr "Comenzar la prueba gratuita"
+
+#: defaults.php:345
+msgid "Themes"
+msgstr "Temas"
+
+#: classes/Views/ToggleAlerts.php:558
+msgid "OK"
+msgstr "Vale"
+
+#. translators: Alerts log level.
+#: classes/Views/ToggleAlerts.php:554
+msgid "The %s log level has been successfully loaded and applied."
+msgstr "El nivel de registro %s se ha cargado y aplicado con éxito."
+
+#: classes/Views/ToggleAlerts.php:550
+msgid "Log Level Updated"
+msgstr "Nivel de registro actualizado"
+
+#: defaults.php:139
+msgid "Categories"
+msgstr "Categorías"
+
+#: defaults.php:129
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: classes/Views/ToggleAlerts.php:388
+msgid "Post Settings"
+msgstr "Ajustes de entradas"
+
+#: classes/Views/ToggleAlerts.php:385
+msgid "Files"
+msgstr "Archivos"
+
+#: classes/Views/ToggleAlerts.php:382
+msgid "User Sessions"
+msgstr "Sesiones de usuario"
+
+#: classes/Views/ToggleAlerts.php:341
+msgid "Logins & Logouts"
+msgstr "Accesos y desconexiones"
+
+#: classes/Views/ToggleAlerts.php:327
+msgid "Post Changes"
+msgstr "Cambios en entradas"
+
+#: classes/Views/ToggleAlerts.php:321
+msgid "Products"
+msgstr "Productos"
+
+#: classes/Views/ToggleAlerts.php:310 classes/Views/ToggleAlerts.php:318
+msgid "WooCommerce Products"
+msgstr "Productos de WooCommerce"
+
+#: classes/Views/SetupWizard.php:264
+msgid "Specified value in not an IP address."
+msgstr "El valor especificado no es una dirección IP."
+
+#: classes/Views/Settings.php:1548
+msgid "MainWP Child plugin is not active on this website."
+msgstr "El plugin MainWP Child no está activo en esta web."
+
+#: classes/Views/Settings.php:1444
+msgid "Enable MainWP Child Site Stealth Mode"
+msgstr "Activa el modo oculto de MainWP Child"
+
+#: classes/Views/Settings.php:1440
+msgid "This option is enabled automatically when the plugin detects the MainWP Child plugin on the site. When this setting is enabled plugin access is restricted to the administrator who installs the plugin, the plugin is not shown in the list of installed plugins and no admin notifications are shown. Disable this option to change the plugin to the default setup."
+msgstr "Esta opción se activa automáticamente cuando el plugin detecta el plugin MainWP Child en el sitio. Cuando este ajuste está activo el acceso al plugin se restringe al administrador que instala el plugin, el plugin no se muestra en la lista de plugins instalados y no se muestran avisos de administración. Desactiva esta opción para cambiar la configuración por defecto del plugin."
+
+#: classes/Views/Settings.php:1439
+msgid "MainWP Child Site Stealth Mode"
+msgstr "Modo oculto de MainWP Child"
+
+#: classes/Views/Settings.php:366
+msgid "No data is old enough to be purged."
+msgstr "Ningún dato es lo suficientemente antiguo para vaciarse."
+
+#: classes/Views/Settings.php:360
+msgid "Old data successfully purged."
+msgstr "Datos antiguos vaciados con éxito."
+
+#. translators: Mailto link for support.
+#: classes/AuditLogGridView.php:763 classes/AuditLogListView.php:759
+#: classes/Settings.php:1799 classes/Settings.php:2039
+msgid "Contact us on %s for assistance"
+msgstr "Contáctanos en %s para ayudarte"
+
+#. translators: Plugin name
+#: wp-security-audit-log.php:957
+msgid "Get a free 7-day trial of the premium edition of %s. No credit card required, no commitments!"
+msgstr "Consigue una prueba gratuita de 7 días de la edición premium de %s. ¡No se requiere tarjeta de crédito, sin compromisos!"
+
+#: classes/Views/ToggleAlerts.php:198
+msgid "Third party plugins"
+msgstr "Plugins de terceros"
+
+#: classes/AlertManager.php:1146
+msgid "Multisite Network"
+msgstr "Red multisitio"
+
+#: classes/Views/ToggleAlerts.php:188
+msgid "Use the Log level drop down menu above to use one of our preset log levels. Alternatively you can enable or disable any of the individual events from the below tabs. Refer to <a href=\"https://wpactivitylog.com/support/kb/list-wordpress-activity-log-event-ids/\" target=\"_blank\">the complete list of WordPress activity log event IDs</a> for reference on all the events the plugin can keep a log of."
+msgstr "Utiliza el menú desplegable del nivel de registro de arriba para usar uno de nuestros niveles de registro prestablecidos. Altenativamente, puedes activar o desactivar cualquiera de los eventos individuales de las pestañas de abajo. Echa un vistazo a <a href=\"https://wpactivitylog.com/support/kb/list-wordpress-activity-log-event-ids/\" target=\"_blank\">la lista completa de IDs de eventos de registros de actividad de WordPress</a> para tener la referencia de todos los eventos de los que puede guardar registro el plugin."
+
+#: classes/Views/ToggleAlerts.php:184
+msgid "Custom"
+msgstr "Personalizado"
+
+#: classes/Views/ToggleAlerts.php:181
+msgid "Geek"
+msgstr "Geek"
+
+#: classes/Views/ToggleAlerts.php:176
+msgid "Basic"
+msgstr "Básico"
+
+#: classes/Views/ToggleAlerts.php:171
+msgid "Log Level: "
+msgstr "Nivel de registro:"
+
+#: classes/Views/SetupWizard.php:723
+msgid "Benefits of keeping a WordPress activity log"
+msgstr "Beneficios de mantener un registro de actividad de WordPress"
+
+#: classes/Views/SetupWizard.php:718
+msgid "Knowledge Base & Support Documents"
+msgstr "Base de conocimiento y documentos de ayuda"
+
+#: classes/Views/SetupWizard.php:708
+msgid "Below are a few useful links you might need to refer to:"
+msgstr "A continuación tienes unos pocos enlaces útiles que puede necesites revisar:"
+
+#: classes/Views/SetupWizard.php:707
+msgid "Your plugin is all set and it is ready to start keeping a record of everything that is happening on your WordPress in a WordPress activity log."
+msgstr "Tu plugin ya está configurado y listo para empezar a guardar un registro de todo lo que pasa en tu WordPress en un registro de actividad de WordPress."
+
+#: classes/Views/SetupWizard.php:523 classes/Views/SetupWizard.php:572
+#: classes/Views/SetupWizard.php:626
+msgid "Note: You can change the WordPress activity log retention settings at any time from the plugin settings later on."
+msgstr "Observación: Puedes cambiar los ajustes de retención del registro de actividad de WordPress en cualquier posterior desde los ajustes del plugin."
+
+#: classes/Views/SetupWizard.php:623
+msgid "Keep all data."
+msgstr "Guardar todos los datos."
+
+#: classes/Views/SetupWizard.php:618
+msgid "12 months (data older than 12 months will be deleted)"
+msgstr "12 meses (los datos de más de 12 meses se borrarán)"
+
+#: classes/Views/SetupWizard.php:613
+msgid "6 months (data older than 6 months will be deleted)"
+msgstr "6 meses (los datos de más de 6 meses se borrarán)"
+
+#: classes/Views/SetupWizard.php:608
+msgid "How long do you want to keep the data in the WordPress activity Log?"
+msgstr "¿Cuánto tiempo quieres guardar los datos en el registro de actividad de WordPress?"
+
+#: classes/Views/SetupWizard.php:468 classes/Views/SetupWizard.php:525
+#: classes/Views/SetupWizard.php:574 classes/Views/SetupWizard.php:634
+#: classes/Views/SetupWizard.php:635 classes/Views/SetupWizard.php:851
+#: classes/Views/SetupWizard.php:852
+msgid "Next"
+msgstr "Siguiente"
+
+#: classes/Views/SetupWizard.php:465
+msgid "Note: You can change the WordPress logging level from the plugin’s settings anytime."
+msgstr "Observación: Puedes cambiar el nivel de registro de WordPress en cualquier momento desde los ajustes del plugin."
+
+#: classes/Views/SetupWizard.php:463
+msgid "Geek (I want to know everything that is happening on my WordPress)"
+msgstr "Geek (Quiero saber todo lo que pasa en mi WordPress)"
+
+#: classes/Views/SetupWizard.php:458
+msgid "Basic (I want a high level overview and I am not interested in the detail)"
+msgstr "Básico (Quiero un vistazo de alto nivel pero no estoy interesado en los detalles)"
+
+#: classes/Views/SetupWizard.php:454
+msgid "Please select the level of detail for your WordPress activity logs:"
+msgstr "Por favor, elige el nivel de detalle de tus registros de actividad de WordPress:"
+
+#: classes/Views/SetupWizard.php:441
+msgid "Exit Wizard"
+msgstr "Salir del asistente"
+
+#: classes/Views/SetupWizard.php:437
+msgid "Start Configuring the Plugin"
+msgstr "Empieza configurando el plugin"
+
+#: classes/Views/SetupWizard.php:322
+msgid "Close Wizard"
+msgstr "Cerrar asistente"
+
+#: classes/Views/SetupWizard.php:263
+msgid "Specified value in not a role."
+msgstr "El valor especificado no es un perfil."
+
+#: classes/Views/SetupWizard.php:262
+msgid "Specified value in not a user."
+msgstr "El valor especificado no es un usuario."
+
+#: classes/Views/SetupWizard.php:202 classes/Views/SetupWizard.php:736
+#: classes/Views/SetupWizard.php:737
+msgid "Finish"
+msgstr "Terminar"
+
+#: classes/Views/SetupWizard.php:197
+msgid "Log Retention"
+msgstr "Retención del registro"
+
+#: classes/Views/SetupWizard.php:182
+msgid "Log Details"
+msgstr "Detalles del registro"
+
+#: classes/Views/SetupWizard.php:178
+msgid "Welcome"
+msgstr "Bienvenida"
+
+#: classes/Views/Settings.php:1825
+msgid "Reset query failed."
+msgstr "Fallo restablecer la solicitud."
+
+#: classes/Views/Settings.php:1823
+msgid "Tables has been reset."
+msgstr "Se han restablecido las tablas."
+
+#: classes/Views/Settings.php:1662
+msgid "Directory cannot be added because it contains invalid characters."
+msgstr "No se puede añadir el directorio porque contiene caracteres no válidos,"
+
+#: classes/Views/Settings.php:1661
+msgid "File extension cannot be added because it contains invalid characters."
+msgstr "No se puede añadir la extensión de archivo porque contiene caracteres no válidos."
+
+#: classes/Views/Settings.php:1660
+msgid "Filename cannot be added because it contains invalid characters."
+msgstr "No se puede añadir el nombre de archivo porque contiene caracteres no válidos."
+
+#: classes/Views/Settings.php:1659
+msgid "The specified value is not a user nor a role!"
+msgstr "¡El valor especificado no es ni un usuario ni un perfil!"
+
+#: classes/Views/Settings.php:1658
+msgid "The specified value is not a valid IP address!"
+msgstr "¡El valor especificado no es una dirección IP válida!"
+
+#: classes/Views/Settings.php:1657
+msgid "The specified value is not a valid post type!"
+msgstr "¡El valor especificado no es un tipo de contenido válido!"
+
+#: classes/Views/Settings.php:1656
+msgid "The specified value is not a valid URL!"
+msgstr "¡El valor especificado no es una URL válida!"
+
+#: classes/Views/Settings.php:1518
+msgid "Are you sure you want to purge all the activity log data?"
+msgstr "¿Estás seguro de querer vaciar todos los datos del registro de actividad?"
+
+#: classes/Views/Settings.php:1479
+msgid "The plugin saves the activity log data and settings in the WordPress database. By default upon uninstalling the plugin the data is kept in the database so if it is installed again, you can still access the data. If the data is deleted it is not possible to recover it so you won't be able to access it again even when you reinstall the plugin."
+msgstr "El plugin guarda los datos del registro de actividad y sus ajustes en la base de datos de WordPress. Por defecto, al desinstalar el plugin los datos se guardan en la base de datos para que si lo vuelves a instalar de nuevo puedas aún acceder a los datos. Si se borran los datos no es posible recuperarlos, así que no podrás acceder a ellos de nuevo cuando reinstales el plugin. "
+
+#: classes/Views/Settings.php:1478
+msgid "Do you want to delete the plugin data from the database upon uninstall?"
+msgstr "¿Quieres borrar los datos del plugin de la base de datos al desinstalarlo?"
+
+#: classes/Views/Settings.php:1432
+msgid "PURGE"
+msgstr "VACIAR"
+
+#: classes/Views/Settings.php:1430
+msgid "Purge Activity Log"
+msgstr "Vaciar el registro de actividad"
+
+#: classes/Views/Settings.php:1426
+msgid "Click the Purge button below to delete all the data from the WordPress activity log and start afresh."
+msgstr "Haz clic en el botón VACIAR de abajo para borrar todos los datos del registro de actividad de WordPress y empezar de cero."
+
+#: classes/Views/Settings.php:1425
+msgid "Purge the WordPress activity log"
+msgstr "Vacía el registro de actividad de WordPress"
+
+#: classes/Views/Settings.php:1419
+msgid "RESET"
+msgstr "RESTABLECER"
+
+#: classes/Views/Settings.php:1417
+msgid "Reset Settings"
+msgstr "Restablecer ajustes"
+
+#: classes/Views/Settings.php:1412
+msgid "Reset plugin settings to default"
+msgstr "Restablece los ajustes del plugin a los valores por defecto"
+
+#: classes/Views/Settings.php:1400
+msgid "<strong>Note:</strong> The requests debug log file is saved as request.log.php in the /wp-content/uploads/wp-activity-log/ directory."
+msgstr "<strong>Nota:</strong> El archivo de registro de depuración de solicitudes se guarda como «request.log.php» en el directorio «/wp-content/uploads/wp-activity-log/»."
+
+#: classes/Views/Settings.php:1378
+msgid "Only enable the request log on testing, staging and development website. Never enable logging on a live website unless instructed to do so. Enabling request logging on a live website may degrade the performance of the website."
+msgstr "Solo activa el registro de solicitudes en webs de prueba, ensayo y desarrollo. Nunca actives el registro en una web activa a menos que sepas lo que estás haciendo. Activar el registro de solicitudes en una web activa puede degradar el rendimiento de la web."
+
+#: classes/Views/Settings.php:1377
+msgid "Troubleshooting setting: Keep a debug log of all the requests this website receives"
+msgstr "Ajuste de solución de problemas: Mantiene un registro de depuración de todas las solicitudes que recibe esta web"
+
+#: classes/Views/Settings.php:1344
+msgid "These settings are for advanced users."
+msgstr "Estos ajustes son para usuarios avanzados."
+
+#: classes/Views/Settings.php:1313
+msgid "You can use the * wildcard to exclude multiple matching custom fields. For example to exclude all custom fields starting with wp123 enter wp123*"
+msgstr "Puedes usar el comodín * para excluir varios campos personalizados que coincidan. Por ejemplo, para excluir todos los campos personalizados que empiecen con wp123 introduce wp123*"
+
+#: classes/Views/Settings.php:1291
+msgid "WordPress has the post and page post types by default though your website might use more post types (custom post types). You can exclude all post types, including the default WordPress ones."
+msgstr "WordPress tiene por defecto los tipos de contenido entrada y página, pero tu web puede usar más tipos de contenido (tipos de contenido personalizados). Puedes excluir todos los tipos de contenido, incluidos los por defecto de WordPress."
+
+#: classes/Views/Settings.php:1275
+msgid "Exclude Post Type:"
+msgstr "Excluir tipos de contenido:"
+
+#: classes/Views/Settings.php:1207
+msgid "By default the plugin keeps a log of all user changes done on your WordPress website. Use the setting below to exclude any objects from the activity log. When an object is excluded from the activity log, any event in which that object is referred will not be logged in the activity log."
+msgstr "Por defecto, el plugin guarda un registro de todos los cambios de usuario hechos en tu web WordPress. Utiliza el siguiente ajuste para excluir cualquier objeto del registro de actividad. Cuando se excluye un objeto del registro de actividad cualquier evento al que se refiera ese objeto no se registrará en el registro de actividad."
+
+#: classes/Views/Settings.php:1112
+msgid "WordPress does a lot of things in the background that you do not necessarily need to know about, such as; deletion of post revisions, deletion of auto saved drafts etc. By default the plugin does not report them since there might be a lot and are irrelevant to the user."
+msgstr "WordPress hace montones de cosas de fondo que no tienes necesariamente conocer, tales como: borrado de revisiones de entradas, borrado de guardados automáticos de borradores, etc. Por defecto, el plugin no informa de ellos ya que podría ser demasiado y son irrelevantes para el usuario."
+
+#: classes/Views/Settings.php:1110
+msgid "Do you want to keep a log of WordPress background activity?"
+msgstr "¿Quieres guardar un registro de la actividad de fondo de WordPress?"
+
+#: classes/Views/Settings.php:498
+msgid "Do not auto refresh"
+msgstr "No hacer recarga automática"
+
+#: classes/Views/Settings.php:493
+msgid "Auto refresh"
+msgstr "Recarga automática"
+
+#: classes/Views/Settings.php:483
+msgid "The activity log viewer auto refreshes every 30 seconds when opened so you can see the latest events as they happen almost in real time."
+msgstr "El visor del registro de actividad se recarga automáticamente cada 30 segundos cuando está abierto para que puedas ver los últimos eventos a medida que suceden, casi en tiempo real."
+
+#: classes/Views/Settings.php:482
+msgid "Do you want the activity log viewer to auto refresh?"
+msgstr "¿Quieres que el visor del registro de actividad se recargue automáticamente?"
+
+#: classes/Views/Settings.php:1092
+msgid "Source IP Address"
+msgstr "Dirección IP de origen"
+
+#: classes/Views/Settings.php:1088
+msgid "Date & Time"
+msgstr "Fecha y hora"
+
+#: classes/Views/Settings.php:1070
+msgid "Select the columns to be displayed in the WordPress activity log"
+msgstr "Selecciona las columnas a mostrar en el registro de actividad de WordPress"
+
+#: classes/Views/Settings.php:1060
+msgid "Configured public display name"
+msgstr "Nombre configurado para mostrar públicamente"
+
+#: classes/Views/Settings.php:1050
+msgid "WordPress username"
+msgstr "Nombre de usuario de WordPress"
+
+#: classes/Views/Settings.php:1040
+msgid "Usernames might not be the same as a user's first and last name so it can be difficult to recognize whose user was that did a change. When there is no first & last name or public display name configured the plugin will revert back to the WordPress username."
+msgstr "Los nombres de usuario no pueden coincidir con el nombre y apellidos del usuario para que sea difícil reconocer qué usuario fue el que hizo un cambio. Cuando no están configurados el nombre y apellidos o el nombre a mostrar el plugin volverá al nombre de usuario de WordPress."
+
+#: classes/Views/Settings.php:1039
+msgid "What user information should be displayed in the WordPress activity log?"
+msgstr "¿Qué información de usuario debería mostrarse en el registro de actividad de WordPress?"
+
+#: classes/Views/Settings.php:1015
+msgid "Timezone configured on this WordPress website"
+msgstr "Zona horaria configurada en esta web WordPress"
+
+#: classes/Views/Settings.php:985
+msgid "Note that the WordPress' timezone might be different from that configured on the server so when you switch from UTC to WordPress timezone or vice versa you might notice a big difference."
+msgstr "Date cuenta de que la zona horaria de WordPress podría ser distinta de la configurada en el servidor así que cuando cambias de UTC a la zona horaria de WordPress o viceversa podrías observar una gran diferencia"
+
+#: classes/Views/Settings.php:984
+msgid "What timestamp you would like to see in the WordPress activity log?"
+msgstr "¿Qué zona horaria te gustaría ver en el registro de actividad de WordPress?"
+
+#: classes/Views/Settings.php:1899
+msgid "Purge Old Data"
+msgstr "Vaciar datos antiguos"
+
+#: classes/Views/Settings.php:1895
+msgid "You can run the purging process now by clicking the button below."
+msgstr "Puedes ejecutar ahora el proceso de vaciado haciendo clic en el siguiente botón."
+
+#: classes/Views/Settings.php:1888
+msgid "The next scheduled purging of activity log data that is older than "
+msgstr "El siguiente vaciado programado de los datos del registro de actividad será dentro de"
+
+#: classes/Views/Settings.php:1880
+msgid "Years"
+msgstr "Años"
+
+#: classes/Views/Settings.php:1844
+msgid "Keep all data"
+msgstr "Guardar todos los datos"
+
+#: classes/Views/Settings.php:961
+msgid "The plugin uses an efficient way to store the activity log data in the WordPress database, though the more data you keep the more disk space will be required. "
+msgstr "El plugin utiliza un modo eficaz de almacenar los datos del registro de actividad en la base de datos de WordPress, a pesar de ello cuantos más datos guardes más espacio en disco se requerirá. "
+
+#: classes/Views/Settings.php:958
+msgid "For how long do you want to keep the activity log events (Retention settings) ?"
+msgstr "¿Durante cuánto tiempo quieres guardar los eventos del registro de actividad (ajustes de retención)?"
+
+#: classes/Views/Settings.php:892
+msgid "No, do not hide the plugin"
+msgstr "No, no ocultes el plugin"
+
+#: classes/Views/Settings.php:887
+msgid "Yes, hide the plugin from the list of installed plugins"
+msgstr "Sí, oculta el plugin de la lista de plugins instalados"
+
+#: classes/Views/Settings.php:878
+msgid "By default all installed plugins are listed in the plugins page. If you do not want other administrators to see that you installed this plugin set this option to Yes so the WP Activity Log is not listed as an installed plugin on this website."
+msgstr "Por defecto todos los plugins instalados están en la lista de la página de plugins. Si no quieres que otros administradores vean que has instalados este plugin configura esta opción a Sí para que WP Activity Log no esté en la lista como plugin instalado en esta web."
+
+#: classes/Views/Settings.php:877
+msgid "Do you want to hide the plugin from the list of installed plugins?"
+msgstr "¿Quieres ocultar el plugin de la lista de plugins instalados?"
+
+#: classes/Views/Settings.php:857
+msgid "Use another email address"
+msgstr "Usar otra dirección de correo electrónico"
+
+#: classes/Views/Settings.php:852
+msgid "Use the email address from the WordPress general settings"
+msgstr "Usar la dirección de correo electrónico de los ajustes generales de WordPress"
+
+#: classes/Views/Settings.php:842
+msgid "By default when the plugin sends an email notification it uses the email address specified in this website’s general settings. Though you can change the email address and display name from this section."
+msgstr "Por defecto, cuando el plugin envía un aviso por correo electrónico utiliza la dirección especificada en los ajustes generales de esta web. De todos modos puedes cambiar la dirección de correo electrónico y el nombre a mostrar desde esta sección."
+
+#: classes/Views/Settings.php:841
+msgid "Which email address should the plugin use as a from address?"
+msgstr "¿Qué dirección de correo electrónico debería usar el plugin como dirección del remitente?"
+
+#: classes/Views/Settings.php:815
+msgid "Specify the username or the users which do not have an admin role but can also see the WordPress activity role. You can also specify roles."
+msgstr "Especifica el nombre de usuario de los usuarios que no tienen perfil de administrador pero que también puedan ver el registro de actividad de WordPress. También puedes especificar perfiles."
+
+#: classes/Views/Settings.php:749
+msgid "Allow other users to view the activity log"
+msgstr "Permite a otros usuarios ver el registro de actividad"
+
+#: classes/Views/Settings.php:736
+msgid "All administrators"
+msgstr "Todos los administradores"
+
+#: classes/Views/Settings.php:727 classes/Views/Settings.php:782
+msgid "Only me"
+msgstr "Solo yo"
+
+#: classes/Views/Settings.php:699
+msgid "Who can change the plugin settings?"
+msgstr "¿Quién puedes cambiar los ajustes del plugin?"
+
+#: classes/Views/Settings.php:683
+msgid "Filter internal IP addresses from the proxy headers. Enable this option only if you are\tare still seeing the internal IP addresses of the firewall or proxy."
+msgstr "Filtra direcciones IP internas de las cabeceras proxy. Activa esta opción solo si estás \testás aún viendo las direcciones IP internas del cortafuegos o del proxy."
+
+#: classes/Views/Settings.php:666 classes/Views/Settings.php:712
+#: classes/Views/Settings.php:767
+msgid "learn more"
+msgstr "aprende más"
+
+#. translators: Learn more link.
+#: classes/Views/Settings.php:665
+msgid "If your website is running behind a firewall set this option to yes so the plugin retrieves the end user’s IP address from the proxy header - %s."
+msgstr "Si tu web funciona tras un cortafuegos configura esta opción as Sí para que el plugin recupere la dirección IP final del usuario desde la cabecera proxy - %s."
+
+#: classes/Views/Settings.php:660
+msgid "Is your website running behind a firewall or reverse proxy?"
+msgstr "¿Está tu web funcionando tras un cortafuegos o proxy inverso?"
+
+#: classes/Views/Settings.php:596
+msgid "Add user notification on the WordPress login page"
+msgstr "Añade el aviso de usuario en la página de acceso de WordPress"
+
+#: classes/Views/Settings.php:521
+msgid "Dashboard Widget"
+msgstr "Widget de escritorio"
+
+#: classes/Views/Settings.php:245 classes/Views/SetupWizard.php:106
+msgid "Invalid input."
+msgstr "Entrada no válida."
+
+#: classes/Views/Settings.php:220 classes/Views/Settings.php:1785
+#: classes/Views/Settings.php:1808 classes/Views/SetupWizard.php:83
+msgid "Access Denied."
+msgstr "Acceso denegado."
+
+#: classes/Views/Settings.php:208
+msgid "Unknown settings tab."
+msgstr "Pestaña de ajustes desconocidos."
+
+#: classes/Views/Settings.php:112
+msgid "Advanced Settings"
+msgstr "Ajustes avanzados"
+
+#: classes/AlertManager.php:1144
+msgid "Activity log"
+msgstr "Registro de actividad"
+
+#: classes/Views/AuditLog.php:591 classes/Views/Settings.php:527
+#: classes/Views/Settings.php:554 classes/Views/Settings.php:620
+#: classes/Views/Settings.php:678 classes/Views/Settings.php:1122
+#: classes/Views/Settings.php:1390 classes/Views/Settings.php:1449
+#: classes/Views/Settings.php:1490 classes/Views/Settings.php:1511
+#: classes/Views/Settings.php:1521 classes/Views/SetupWizard.php:562
+msgid "Yes"
+msgstr "Sí"
+
+#: classes/AuditLogGridView.php:897 classes/AuditLogListView.php:893
+msgid "Select All"
+msgstr "Seleccionar todo"
+
+#: classes/Views/ToggleAlerts.php:431 classes/Views/ToggleAlerts.php:443
+#: classes/ConstantManager.php:156
+msgid "Notification"
+msgstr "Aviso"
+
+#: classes/Views/ToggleAlerts.php:429 classes/ConstantManager.php:154
+msgid "Warning"
+msgstr "Advertencia"
+
+#: classes/Views/ToggleAlerts.php:427 classes/Views/ToggleAlerts.php:433
+#: classes/ConstantManager.php:152 classes/ConstantManager.php:158
+msgid "Critical"
+msgstr "Crítico"
+
+#. translators: Event ID
+#: classes/AlertManager.php:374
+msgid "Event with code %d has not be registered."
+msgstr "El evento con el código %d no se ha registrado."
+
+#: classes/Views/ToggleAlerts.php:334
+msgid "Your website is a single site so the multisite events have been disabled."
+msgstr "Tu web es un sitio único así que los eventos multisitio se han desactivado."
+
+#: classes/Views/ToggleAlerts.php:314
+msgid "The plugin WooCommerce is not installed on your website so these events have been disabled."
+msgstr "El plugin WooCommerce no está instalado en tu web así que estos eventos se han desactivado."
+
+#. translators: 1: Archive page link tag. 2: Link closing tag.
+#: classes/Views/Settings.php:976
+msgid "Retention settings moved to %1$s archiving settings %2$s because archiving is enabled"
+msgstr "Los ajustes de retención se han movido a %1$s ajustes de archivo %2$s debido a que el archivado está activo"
+
+#: classes/Views/Help.php:68 classes/Views/Help.php:232
+msgid "System Info"
+msgstr "Información del sistema"
+
+#: wp-security-audit-log.php:1944
+msgid "Every 1 minute"
+msgstr "Cada 1 minuto"
+
+#: wp-security-audit-log.php:1940
+msgid "Every 10 minutes"
+msgstr "Cada 10 minutos"
+
+#: wp-security-audit-log.php:1932
+msgid "Every 30 minutes"
+msgstr "Cada 30 minutos"
+
+#: wp-security-audit-log.php:1928
+msgid "Every 45 minutes"
+msgstr "Cada 45 minutos"
+
+#: classes/WidgetManager.php:55
+msgid "Latest Events"
+msgstr "Últimos eventos"
+
+#: classes/Views/ToggleAlerts.php:580
+msgid "DISABLE EVENT"
+msgstr "DESATIVAR EVENTO"
+
+#: classes/Views/ToggleAlerts.php:579
+msgid "SWITCH ON"
+msgstr "ACTIVAR"
+
+#: classes/Views/ToggleAlerts.php:575
+msgid "The file integrity scanner is switched off. To enable this event it has to be switched on."
+msgstr "La exploración de integridad de archivos está desconectada. Para activar este evento tienes que conectarla."
+
+#: classes/Views/ToggleAlerts.php:573
+msgid "Enable File Integrity Scanner"
+msgstr "Activar la exploración de integridad de archivos"
+
+#: classes/Views/ToggleAlerts.php:419 classes/Views/Settings.php:99
+#: defaults.php:428
+msgid "File Changes"
+msgstr "Cambios en archivos"
+
+#: classes/Settings.php:2236
+msgid "Uploads directory of all sub sites on this network (/wp-content/sites/*)"
+msgstr "Directorio de subidas de todos los sub sitios de esta red (/wp-content/sites/*)"
+
+#: classes/Settings.php:2231
+msgid "Uploads directory (/wp-content/uploads/)"
+msgstr "Directorio de subidas (/wp-content/uploads/)"
+
+#: classes/Settings.php:2230
+msgid "Plugins directory (/wp-content/plugins/)"
+msgstr "Directorio de plugins (/wp-content/plugins/)"
+
+#: classes/Settings.php:2229
+msgid "Themes directory (/wp-content/themes/)"
+msgstr "Directorio de temas (/wp-content/themes/)"
+
+#: classes/Settings.php:2228
+msgid "/wp-content/ directory (excluding plugins, themes & uploads directories)"
+msgstr "directorio /wp-content/  (excluidos los directorios de plugins, temas y subidas)"
+
+#: classes/Settings.php:2227
+msgid "WP Includes directory (/wp-includes/)"
+msgstr "Directorio WP Includes (/wp-includes/)"
+
+#: classes/Settings.php:2226
+msgid "WP Admin directory (/wp-admin/)"
+msgstr "Directorio WP Admin (/wp-admin/)"
+
+#: classes/Settings.php:2225
+msgid "Root directory of WordPress (excluding sub directories)"
+msgstr "Directorio raíz de WordPress (excluidos los subdirectorios)"
+
+#: classes/AlertManager.php:1214
+msgid "Disabled"
+msgstr "Desactivado"
+
+#: classes/AlertManager.php:1213
+msgid "Enabled"
+msgstr "Activado"
+
+#: classes/Views/AuditLog.php:1073
+msgid "When a user makes a change on your website the plugin will keep a record of that event here. Right now there is nothing because this is a new install."
+msgstr "Cuando un usuario hace un cambio en tu web el plugin guarda aquí un registro de ese evento. Ahora mismo no hay nada debido a que es una instalación nueva."
+
+#: classes/Views/AuditLog.php:1072
+msgid "WordPress Activity Log"
+msgstr "Registro de actividad de WordPress"
+
+#: classes/Views/AuditLog.php:885
+msgid "Freemius opt choice not found."
+msgstr "Opción freemius no encontrada."
+
+#: classes/Views/AuditLog.php:878
+msgid "Freemius opt choice selected."
+msgstr "Opción fremius seleccionada."
+
+#: classes/Views/AuditLog.php:592 classes/Views/Settings.php:532
+#: classes/Views/Settings.php:559 classes/Views/Settings.php:650
+#: classes/Views/Settings.php:688 classes/Views/Settings.php:1127
+#: classes/Views/Settings.php:1395 classes/Views/Settings.php:1456
+#: classes/Views/Settings.php:1497 classes/Views/Settings.php:1512
+#: classes/Views/Settings.php:1522 classes/Views/SetupWizard.php:567
+msgid "No"
+msgstr "No"
+
+#: classes/Connector/wp-db-custom.php:221
+msgid "https://wordpress.org/support/"
+msgstr "https://es.wordpress.org/support/"
+
+#. translators: %s: support forums URL
+#: classes/Connector/wp-db-custom.php:220
+msgid "If you&#8217;re unsure what these terms mean you should probably contact your host. If you still need help you can always visit the <a href=\"%s\">WordPress Support Forums</a>."
+msgstr "Si no estás seguro sobre qué significan estos términos probablemente deberías contactar con tu alojamiento. Si aún necesitas ayuda siempre puedes visitar los <a href=\"%s\">foros de soporte de WordPress</a>."
+
+#: classes/Connector/wp-db-custom.php:215
+msgid "Are you sure that the database server is running?"
+msgstr "¿Estás seguro de que el servidor de la base de datos está funcionando?"
+
+#: classes/Connector/wp-db-custom.php:214
+msgid "Are you sure that you have typed the correct hostname?"
+msgstr "¿Estás seguro de que has tecleado el hostname correcto?"
+
+#: classes/Connector/wp-db-custom.php:213
+msgid "Are you sure you have the correct username and password?"
+msgstr "¿Estás seguro de que tienes el nombre de usuario y contraseña correctos?"
+
+#. translators: 1: wp-config.php. 2: database host
+#: classes/Connector/wp-db-custom.php:207
+msgid "This either means that the username and password information in your %1$s file is incorrect or we can&#8217;t contact the database server at %2$s. This could mean your host&#8217;s database server is down."
+msgstr "Esto significa o que la información de nombre de usuario y contraseña de tu archivo %1$s es incorrecta o que no podemos contactar con el servidor de la base de datos en %2$s. Esto podría significar que el servidor de tu base de datos está caído."
+
+#: classes/Connector/wp-db-custom.php:203
+msgid "Error establishing a database connection"
+msgstr "Error al establecer una conexión con la base de datos"
+
+#: classes/Views/Settings.php:1084
+msgid "Event ID"
+msgstr "ID del evento"
+
+#: classes/Views/ToggleAlerts.php:307
+msgid "<strong>Note:</strong> Post refers to any type of content, i.e. blog post, page or a post with a custom post type."
+msgstr "<strong>Nota:</strong> La entrada se refiere a cualquier tipo de contenido, p.ej. entrada, página o publicación con un tipo de contenido personalizado."
+
+#: classes/Views/Settings.php:644
+msgid "The only HTML code allowed in the login page notification is for links ( < a href >< /a > )."
+msgstr "El único código HTML permitido en los avisos de la página de acceso es el de los enlaces ( < a href >< /a > )."
+
+#: classes/Views/Settings.php:644
+msgid "<strong>Note: </strong>"
+msgstr "<strong>Nota: </strong>"
+
+#: classes/Views/Settings.php:597
+msgid "Many compliance regulations (such as the GDPR) require website administrators to tell the users of their website that all the changes they do when logged in are being logged."
+msgstr "Muchas regulaciones de cumplimento (como el RGPD) obligan a que los administradores web digan a los usuarios de su web que se registran todos los cambios que hacen cuando están conectados."
+
+#: classes/Views/AuditLog.php:214
+msgid "There are connectivity issues with the database where the WordPress activity log is stored. The logs will be temporary buffered in the WordPress database until the connection is fully restored."
+msgstr "Hay problemas de conectividad con la base de datos donde se almacena el registro de actividad de WordPress. Los registros se almacenarán temporalmente en la base de datos de WordPRess hasta que se restaure completamente la conexión."
+
+#: classes/AuditLogGridView.php:615 classes/AuditLogListView.php:607
+msgid "View all details of this change"
+msgstr "Ver todos los detalles de este cambio"
+
+#: classes/ThirdPartyExtensions/YoastSeoExtension.php:29
+msgid "Yoast SEO"
+msgstr "Yoast SEO"
+
+#: classes/Views/Settings.php:1791 classes/Views/Settings.php:1814
+msgid "Nonce Verification Failed."
+msgstr "Falló la verificación nonce."
+
+#: classes/Views/AuditLog.php:813
+msgid "No users found."
+msgstr "Ningún usuario encontrado."
+
+#: classes/AuditLogGridView.php:727 classes/AuditLogListView.php:723
+#: classes/Settings.php:1760
+msgid "Download the log file."
+msgstr "Descarga el archivo de registro."
+
+#: defaults.php:190
+msgid "Visitor posted a comment"
+msgstr "Un visitante publicó un comentario"
+
+#: defaults.php:131
+msgid "User removed post tag"
+msgstr "Un usuario ha eliminado la etiqueta de la entrada"
+
+#: defaults.php:130
+msgid "User added post tag"
+msgstr "Un usuario ha añadido una etiqueta de entrada"
+
+#: defaults.php:119
+msgid "User modified the content of a post"
+msgstr "Un usuario ha modificado el contenido de una entrada"
+
+#: defaults.php:143
+msgid "Changed the parent of a category"
+msgstr "Cambió la categoría superior"
+
+#: defaults.php:110
+msgid "User changed post URL"
+msgstr "Un usuario ha cambiado la URL de la entrada"
+
+#: defaults.php:106
+msgid "User modified a post"
+msgstr "Un usuario ha modificado una entrada"
+
+#: defaults.php:105
+msgid "User published a post"
+msgstr "Un usuario ha publicado una entrada"
+
+#: classes/Views/ToggleAlerts.php:304 defaults.php:103
+msgid "Content"
+msgstr "Contenido"
+
+#: classes/AuditLogGridView.php:735 classes/AuditLogListView.php:731
+#: classes/Settings.php:1773 classes/Settings.php:2013
+msgid "published"
+msgstr "publicado"
+
+#: classes/Views/ToggleAlerts.php:299 classes/Views/Settings.php:1086
+#: classes/AuditLogGridView.php:315 classes/AuditLogGridView.php:341
+#: classes/AuditLogListView.php:322 classes/AuditLogListView.php:352
+msgid "Severity"
+msgstr "Gravedad"
+
+#: wp-security-audit-log.php:1905
+msgid "For security and auditing purposes, a record of all of your logged-in actions and changes within the WordPress dashboard will be recorded in an activity log with the <a href=\"https://wpactivitylog.com/\" target=\"_blank\">WP Activity Log plugin</a>. The audit log also includes the IP address where you accessed this site from."
+msgstr "Por motivos de seguridad y auditoría, con el <a href=\"https://wpactivitylog.com/\" target=\"_blank\">plugin WP Activity Log</a>, se registrarán todas las acciones de acceso y cambios realizados dentro del escritorio de WordPress en un registro de actividad. El registro de auditoría también incluye la dirección IP desde la que has accedido a este sitio."
+
+#: wp-security-audit-log.php:1316
+msgid "Contact us on <a href=\"mailto:plugins@wpwhitesecurity.com\">plugins@wpwhitesecurity.com</a> to help you switch the version of PHP you are using."
+msgstr ""
+"Contáctanos en  <a href=\"mailto:plugins@wpwhitesecurity.com\">plugins@wpwhitesecurity.com</a> to \n"
+"para ayudarte a cambiar la versión de PHP que estés usando."
+
+#. Translators: %s: PHP Version
+#: wp-security-audit-log.php:1314
+msgid "You are using a version of PHP that is older than %s, which is no longer supported."
+msgstr "Estás usando una versión de PHP más antigua que %s, la cual ya no es compatible."
+
+#: wp-security-audit-log.php:1210
+msgid "Error: You do not have sufficient permissions to disable this alert."
+msgstr "Error: No tienes suficientes permisos para desactivar esta alerta."
+
+#: wp-security-audit-log.php:1158
+msgid "Error: You do not have sufficient permissions to disable this custom field."
+msgstr "Error: No tienes suficientes permisos para desactivar este campo personalizado."
+
+#. translators: 1: Plugin name. 2: Freemius link.
+#: wp-security-audit-log.php:935
+msgid "Please help us improve %2$s! If you opt-in, some non-sensitive data about your usage of %2$s will be sent to %5$s, a diagnostic tracking service we use. If you skip this, that's okay! %2$s will still work just fine."
+msgstr "Por favor ayúdanos a mejorar %2$s! Si te apuntas, algunos datos no confidenciales acerca de tu uso de %2$s serán enviados a %5$s, un servicio de diagnóstico de seguimiento que usamos. Si te saltas esto, no importa! %2$s seguirá funcionando bien."
+
+#: wp-security-audit-log.php:909 wp-security-audit-log.php:937
+msgid "NO ACTIVITY LOG ACTIVITY & DATA IS SENT BACK TO OUR SERVERS."
+msgstr "NINGÚN REGISTRO DE ACTIVIDAD NI DATOS SE ENVÍAN A NUESTROS SERVIDORES."
+
+#: wp-security-audit-log.php:908 wp-security-audit-log.php:936
+msgid "Note: "
+msgstr "Nota:"
+
+#: wp-security-audit-log.php:907
+msgid "Never miss an important update! Opt-in to our security and feature updates notifications, and non-sensitive diagnostic tracking with freemius.com."
+msgstr "Nunca te pierdas una actualización importante. Inscríbete a nuestras notificaciones de seguridad y de actualizaciones destacadas, y a un diganóstico de seguimiento de datos no confidenciales con freemius.com."
+
+#. translators: Username
+#: wp-security-audit-log.php:906 wp-security-audit-log.php:933
+msgid "Hey %1$s"
+msgstr "Eh %1$s"
+
+#: defaults.php:407
+msgid "Option Site Address (URL) in WordPress settings changed"
+msgstr "Se cambió la opción dirección del sitio (URL) en los ajustes de WordPress"
+
+#: defaults.php:406
+msgid "Option WordPress Address (URL) in WordPress settings changed"
+msgstr "Cambió la dirección de WordPress (URL) en los ajustes de WordPress"
+
+#: defaults.php:284
+msgid "Modified the content of the published page %PostTitle%. Page URL is %PostUrl%. %RevisionLink% %EditorLinkPage%."
+msgstr "Se modificó el contenido de la página publicada %PostTitle%. La URL de la página es %PostUrl%. %RevisionLink% %EditorLinkPage%."
+
+#: classes/Views/Settings.php:1879
+msgid "Months"
+msgstr "Meses"
+
+#: classes/Views/Settings.php:601
+msgid "Login Page Notification"
+msgstr "Aviso en la página de acceso"
+
+#: classes/Views/Search.php:42
+msgid "Search &#8682;"
+msgstr "Buscar &#8682;"
+
+#: classes/Views/Reports.php:42
+msgid "Reports &#8682;"
+msgstr "Informes &#8682;"
+
+#: classes/Views/LogInUsers.php:120
+msgid "When they logged in and from where"
+msgstr "Cuándo se han conectado y desde dónde"
+
+#: classes/Views/LogInUsers.php:42
+msgid "Logged In Users &#8682;"
+msgstr "Usuarios conectados &#8682;"
+
+#: classes/Views/Help.php:221
+msgid "Rate Plugin"
+msgstr "Valorar plugin"
+
+#: classes/Views/Help.php:211
+msgid "We appreciate every star!"
+msgstr "¡Apreciamos cada estrella!"
+
+#: classes/Views/Help.php:210
+msgid "Therefore if you like what you see, and find WP Activity Log useful we ask you nothing more than to please rate our plugin."
+msgstr "Por tanto, si te gusta lo que ves, y encuentras útil WP Activity Log solo te pedimos que, por favor, valores nuestro plugin."
+
+#: classes/Views/Help.php:209
+msgid "It takes thousands of man-hours every year and endless amount of dedication to research, develop and maintain the free edition of WP Activity Log."
+msgstr "Lleva miles de horas de trabajo real cada año y una infinita dedicación investigar, desarrollar y mantener la edición gratuita de WP Activity Log."
+
+#: classes/Views/Help.php:208
+msgid "We work really hard to deliver a plugin that enables you to keep a record of all the changes that are happening on your WordPress."
+msgstr "Trabajamos realmente duro para ofrecer un plugin que te permita guardar un informe de todos los cambios que suceden en tu WordPress."
+
+#: classes/Views/Help.php:200
+msgid "Knowledge Base"
+msgstr "Base de conocimiento"
+
+#: classes/Views/Help.php:196
+msgid "Refer to the list of WordPress security events for a complete list of Events and IDs that the plugin uses to keep a log of all the changes in the WordPress activity log."
+msgstr "Consulta la lista de eventos de seguridad de WordPress para obtener una lista completa de eventos e ID que el plugin usa para mantener un registro de todos los cambios en el registro de actividades de WordPress."
+
+#: classes/Views/Help.php:195
+msgid "For more technical information about the WP Activity Log plugin please visit the plugin’s knowledge base."
+msgstr "Para información más técnica sobre el plugin WP Activity Log, por favor, visita la base de conocimiento del plugin."
+
+#: classes/Views/Help.php:178
+msgid "Getting started with WP Activity Log is really easy; once the plugin is installed it will automatically keep a log of everything that is happening on your website and you do not need to do anything. Watch the video below for a quick overview of the plugin."
+msgstr "Empezar con WP Activity Log es realmente sencillo; una vez está instalado el plugin guardará automáticamente un registro de todo lo que esté pasando en tu web y no tienes que hacer nada. Mira el vídeo de abajo para un vistazo rápido del plugin."
+
+#: classes/Views/Help.php:177
+msgid "Getting Started"
+msgstr "Comenzando"
+
+#: classes/Views/ExternalDB.php:42
+msgid "DB & Integrations &#8682;"
+msgstr "BD e integraciones &#8682;"
+
+#: classes/Views/addons/html-view.php:104
+msgid "Screenshots"
+msgstr "Capturas de pantalla"
+
+#: classes/Views/AuditLog.php:795 classes/Views/AuditLog.php:838
+#: classes/Views/AuditLog.php:1108 classes/Views/AuditLog.php:1170
+#: classes/Views/AuditLog.php:1223 classes/Views/Settings.php:235
+#: classes/Views/Settings.php:1697 classes/Views/Settings.php:1725
+#: classes/Views/Settings.php:1755 classes/Views/SetupWizard.php:96
+msgid "Nonce verification failed."
+msgstr "La verificación nonce ha fallado."
+
+#: classes/Settings.php:583
+msgid "This function is deprecated"
+msgstr "Esta función está obsoleta"
+
+#: defaults.php:318
+msgid "User changed the display name for a user"
+msgstr "Un usuario ha cambiado el nombre visible de un usuario"
+
+#: defaults.php:317
+msgid "User changed nickname for a user"
+msgstr "Un usuario ha cambiado el alias de un usuario"
+
+#: defaults.php:316
+msgid "User changed last name for a user"
+msgstr "Un usuario ha cambiado los apellidos de un usuario"
+
+#: defaults.php:315
+msgid "User changed first name for a user"
+msgstr "Un usuario ha cambiado el nombre de un usuario"
+
+#: defaults.php:136
+msgid "User changed tag description"
+msgstr "Un usuario ha cambiado la descripción de la etiqueta"
+
+#: defaults.php:135
+msgid "User changed tag slug"
+msgstr "Un usuario ha cambiado el slug de la etiqueta."
+
+#: defaults.php:134
+msgid "User renamed tag"
+msgstr "Un usuario ha cambiado el nombre de la etiqueta. "
+
+#: defaults.php:133
+msgid "User deleted tag"
+msgstr "Un usuario ha borrado la etiqueta"
+
+#: defaults.php:132
+msgid "User created new tag"
+msgstr "Un usuario ha creado una nueva etiqueta"
+
+#: classes/Views/ToggleAlerts.php:484 classes/Views/ToggleAlerts.php:497
+msgid "Number of login attempts to log. Enter 0 to log all failed login attempts. (By default the plugin only logs up to 10 failed login because the process can be very resource intensive in case of a brute force attack)"
+msgstr "Número de intentos de acceso a registrar. Introduce 0 para registrar todos los intentos fallidos de acceso. (Por defecto el plugin solo registra hasta 10 intentos fallidos de acceso debido a que el proceso puede consumir muchos recursos en caso de ataques de fuerza bruta)"
+
+#: classes/AlertManager.php:1147
+msgid "IP Address"
+msgstr "Dirección IP"
+
+#: defaults.php:148
+msgid "Custom Fields"
+msgstr "Campos personalizados"
+
+#: defaults.php:314
+msgid "User created a custom field value for a user"
+msgstr "Un usuario ha creado un valor de campo personalizado para un usuario"
+
+#: defaults.php:313
+msgid "User updated a custom field value for a user"
+msgstr "Un usuario ha actualizado un valor de campo personalizado para un usuario"
+
+#: defaults.php:272
+msgid "Permanently deleted the page %PostTitle%."
+msgstr "Se borró permanentemente la página %PostTitle%."
+
+#: classes/Views/Settings.php:1055
+msgid "First name & last name"
+msgstr "Nombre y apellidos"
+
+#: classes/AuditLogGridView.php:545 classes/AuditLogGridView.php:558
+#: classes/AuditLogListView.php:565 classes/AuditLogListView.php:578
+msgid "Show me all activity originating from this IP Address"
+msgstr "Muéstrame toda la actividad originada desde esta dirección IP"
+
+#: classes/AuditLogGridView.php:484 classes/AuditLogListView.php:502
+msgid "Show me all activity by this User"
+msgstr "Muéstrame toda la actividad de este usuario"
+
+#: defaults.php:95
+msgid "User session destroyed and logged out"
+msgstr "Sesión de usuario destruida y desconectada"
+
+#: defaults.php:312
+msgid "User opened the profile page of another user"
+msgstr "Un usuario ha abierto la página de perfil de otro usuario"
+
+#: defaults.php:94
+msgid "Logged out all other sessions with the same user."
+msgstr "Desconectar todas las otras sesiones con el mismo usuario."
+
+#: defaults.php:94
+msgid "User logged out all other sessions with the same username"
+msgstr "Un usuario se ha desconectado de todas las sesiones con el mismo nombre de usuario"
+
+#: defaults.php:405
+msgid "Modified the list of keywords for comments blacklisting"
+msgstr "Se modificó la lista de palabras clave de la lista negra de comentarios"
+
+#: defaults.php:404
+msgid "Modified the list of keywords for comments medoration"
+msgstr "Se modificó la lista de palabras clave de moderación de comentarios"
+
+#: defaults.php:404
+msgid "Modified the list of keywords for comments moderation"
+msgstr "Se modificó la lista de palabras clave de moderación de comentarios"
+
+#: defaults.php:403
+msgid "Changed the number of links that a comment must have to be held in the queue"
+msgstr "Se cambió el número de enlaces por el que un comentario debe mantenerse en espera"
+
+#: defaults.php:402
+msgid "The option for an author to have previously approved comments for the comments to appear"
+msgstr "La opción para un autor de tener comentarios aprobados previamente para que aparezcan los comentarios"
+
+#: defaults.php:402
+msgid "Enabled/Disabled the option for an author to have previously approved comments for the comments to appear"
+msgstr "Se activó/desactivó la opción de que un autor tenga comentarios previamente aprobados para que aparezcan los comentarios"
+
+#: defaults.php:401
+msgid "Enabled/Disabled the option for comments to be manually approved"
+msgstr "Se activó/desactivó la opción para que los comentarios tengan que aprobarse manualmente"
+
+#: defaults.php:400
+msgid "Changed the value of the option Automatically close comments"
+msgstr "Se cambió el valor de cerrar automáticamente comentarios"
+
+#: defaults.php:399
+msgid "The option to Automatically close comments after %Value% days"
+msgstr "La opción para cerrar automáticamente los comentarios después de %Value% días"
+
+#: defaults.php:399
+msgid "Enabled/Disabled the option to automatically close comments"
+msgstr "Se activó/desactivó la opción de cerrar automáticamente los comentarios"
+
+#: defaults.php:398
+msgid "The option Users must be logged in and registered to comment"
+msgstr "La opción de que los usuarios deben estar conectados y registrados para comentar"
+
+#: defaults.php:398
+msgid "Enabled/Disabled the option Users must be logged in and registered to comment"
+msgstr "Se activó/desactivó la opción de que los usuarios deban acceder y registrarse para comentar"
+
+#: defaults.php:397
+msgid "The option Comment author must fill out name and email"
+msgstr "La opción de que el autor del comentario debe rellenar su nombre y correo electrónico"
+
+#: defaults.php:397
+msgid "Enabled/Disabled the option Comment author must fill out name and email"
+msgstr "Se activó/desactivó la opción de que el autor del comentario deba rellenar el nombre y el correo electrónico"
+
+#: defaults.php:396
+msgid "Enabled/Disabled comments on all the website"
+msgstr "Se activaron/desactivaron los comentarios en toda la web"
+
+#: defaults.php:395
+msgid "Enabled/Disabled the option Discourage search engines from indexing this site"
+msgstr "Se activó/desactivó la opción de disuadir a los motores de búsqueda de indexar este sitio"
+
+#: defaults.php:295
+msgid "Enabled %Type% on the draft page %PostTitle%. View the page: %PostUrl%."
+msgstr "Activado %Type% en la página en borrador %PostTitle%. Ver la página: %PostUrl%."
+
+#: defaults.php:295
+msgid "User enabled Comments/Trackbacks and Pingbacks on a draft page"
+msgstr "Un usuario ha activado los comentarios/trackbacks y pingbacks en una página en borrador"
+
+#: defaults.php:294
+msgid "Disabled %Type% on the draft page %PostTitle%. View the page: %PostUrl%."
+msgstr "Se desactivó %Type% en la página en borrador %PostTitle%. Ver la página: %PostUrl%."
+
+#: defaults.php:294
+msgid "User disabled Comments/Trackbacks and Pingbacks on a draft page"
+msgstr "Un usuario ha desactivado los comentarios/trackbacks y pingbacks en una página en borrador"
+
+#: defaults.php:293
+msgid "Enabled %Type% on the published page %PostTitle%. View the page: %PostUrl%."
+msgstr "Activado %Type% en la página publicada %PostTitle%. Ver la página: %PostUrl%."
+
+#: defaults.php:293
+msgid "User enabled Comments/Trackbacks and Pingbacks on a published page"
+msgstr "Un usuario ha activado los comentarios/trackbacks y pingbacks en una página publicada"
+
+#: defaults.php:292
+msgid "Disabled %Type% on the published page %PostTitle%. View the page: %PostUrl%."
+msgstr "Desactivado %Type% en la página publicada %PostTitle%. Ver la página: %PostUrl%."
+
+#: defaults.php:292
+msgid "User disabled Comments/Trackbacks and Pingbacks on a published page"
+msgstr "Un usuario ha desactivado los comentarios/trackbacks y pingbacks en una página publicada"
+
+#: classes/Views/ToggleAlerts.php:212 classes/Views/ToggleAlerts.php:244
+#: classes/AlertManager.php:1491 defaults.php:227
+msgid "Custom Post Types"
+msgstr "Tipos de contenido personalizados"
+
+#: defaults.php:291
+msgid "Enabled %Type% on the draft post %PostTitle%. View the post: %PostUrl%."
+msgstr "Activado %Type% en la entrada en borrador %PostTitle%. Ver la entrada: %PostUrl%."
+
+#: defaults.php:291
+msgid "User enabled Comments/Trackbacks and Pingbacks on a draft post"
+msgstr "Un usuario ha activado lo comentarios/trackbacks y pingbacks en una página en borrador"
+
+#: defaults.php:290
+msgid "Disabled %Type% on the draft post %PostTitle%. View the post: %PostUrl%."
+msgstr "Desactivado %Type% en la entrada en borrador %PostTitle%. Ver la entrada: %PostUrl%."
+
+#: defaults.php:290
+msgid "User disabled Comments/Trackbacks and Pingbacks on a draft post"
+msgstr "Un usuario ha desactivado los comentarios/trackbacks y pingbacks de una entrada en borrador"
+
+#: defaults.php:126
+msgid "User enabled/disabled trackbacks and pingbacks in a post"
+msgstr "Un usuario ha activado/desactivado los trackbacks y pingbacks en una entrada"
+
+#: defaults.php:102
+msgid "Content & Comments"
+msgstr "Contenido y comentarios"
+
+#: classes/ThirdPartyExtensions/WooCommerceExtension.php:34
+#: classes/Views/ToggleAlerts.php:310
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: defaults.php:256
+msgid "Plugin modified the custom post %PostTitle%. View the post: %EditorLinkPost%."
+msgstr "El plugin ha modificado la entrada personalizada %PostTitle%. Ver la entrada: %EditorLinkPost%."
+
+#: defaults.php:256
+msgid "A plugin modified a custom post"
+msgstr "Un plugin ha modificado una entrada personalizada"
+
+#: defaults.php:298
+msgid "Plugin modified the page %PostTitle%. View the page: %EditorLinkPage%."
+msgstr "El plugin ha modificado la página %PostTitle%. Ver la página: %EditorLinkPage%."
+
+#: defaults.php:298
+msgid "A plugin modified a page"
+msgstr "Un plugin ha modificado una página"
+
+#: classes/AuditLogGridView.php:415 classes/AuditLogListView.php:456
+msgid "Disable this type of events."
+msgstr "Desactivar este tipo de eventos."
+
+#: classes/AuditLogGridView.php:260 classes/AuditLogListView.php:267
+msgid "Archive Database"
+msgstr "Base de datos archivada"
+
+#: classes/AuditLogGridView.php:257 classes/AuditLogListView.php:264
+msgid "Live Database"
+msgstr "Base de datos actual"
+
+#: defaults.php:253
+msgid "Viewed the custom post %PostTitle% of type %PostType%. View the post: %PostUrl%."
+msgstr "Vista la entrada personalizada %PostTitle% del tipo %PostType%. Ver la entrada: %PostUrl%."
+
+#: defaults.php:253
+msgid "User viewed a custom post type"
+msgstr "Un usuario ha visto un tipo de contenido personalizado"
+
+#: defaults.php:252
+msgid "Opened the custom post %PostTitle% of type %PostType% in the editor. View the post: %EditorLinkPost%."
+msgstr "Abierta la entrada personalizada %PostTitle% del tipo %PostType% en el editor. Ver la entrada: %EditorLinkPost%."
+
+#: defaults.php:252
+msgid "User opened a custom post type in the editor"
+msgstr "Un usuario ha abierto un tipo de contenido personalizado en el editor"
+
+#: defaults.php:289
+msgid "Viewed the page %PostTitle%. View the page: %PostUrl%."
+msgstr "Vista la página %PostTitle%. Ver la página: %PostUrl%."
+
+#: defaults.php:289
+msgid "User viewed a page"
+msgstr "Un usuario ha visto una página"
+
+#: defaults.php:288
+msgid "Opened the page %PostTitle% in the editor. View the page: %EditorLinkPage%."
+msgstr "Abierta la página %PostTitle% en el editor. Ver la página: %EditorLinkPage%."
+
+#: defaults.php:288
+msgid "User opened a page in the editor"
+msgstr "Un usuario ha abierto una página en el editor"
+
+#: defaults.php:124
+msgid "User viewed a post"
+msgstr "Un usuario ha visto una entrada"
+
+#: defaults.php:123
+msgid "User opened a post in the editor"
+msgstr "Un usuario ha abierto una entrada en el editor"
+
+#: classes/Views/Settings.php:105
+msgid "Exclude Objects"
+msgstr "Excluir elementos"
+
+#: classes/Views/Settings.php:85
+msgid "General"
+msgstr "General"
+
+#: defaults.php:185
+msgid "User posted a comment"
+msgstr "Un usuario ha enviado un comentario"
+
+#: defaults.php:184
+msgid "User permanently deleted a comment"
+msgstr "Un usuario ha borrado permanentemente un comentario"
+
+#: defaults.php:183
+msgid "User restored a comment from the trash"
+msgstr "Un usuario ha restaurado un comentario de la papelera"
+
+#: defaults.php:182
+msgid "User moved a comment to trash"
+msgstr "Un usuario ha movido un comentario a la papelera"
+
+#: defaults.php:181
+msgid "User marked a comment as Not Spam"
+msgstr "Un usuario ha marcado un comentario como «No es spam»"
+
+#: defaults.php:180
+msgid "User marked a comment as Spam"
+msgstr "Un usuario ha marcado un comentario como «Spam»"
+
+#: defaults.php:179
+msgid "User edited a comment"
+msgstr "Un usuario ha editado un comentario"
+
+#: defaults.php:178
+msgid "User replied to a comment"
+msgstr "Un usuario ha respondido a un comentario"
+
+#: defaults.php:177
+msgid "User unapproved a comment"
+msgstr "Un usuario ha marcado un comentario como sin aprobar"
+
+#: defaults.php:176
+msgid "User approved a comment"
+msgstr "Un usuario ha aprobado un comentario"
+
+#: defaults.php:175
+msgid "Comments"
+msgstr "Comentarios"
+
+#: defaults.php:216
+msgid "User moved objects as a sub-item"
+msgstr "Un usuario ha movido objetos como un subelemento"
+
+#: defaults.php:380
+msgid "%PromoName% %PromoMessage%"
+msgstr "%PromoName% %PromoMessage%"
+
+#: defaults.php:384
+msgid "System automatically deleted %EventCount% event(s)"
+msgstr "El sistema ha borrado automáticamente %EventCount% evento(s)"
+
+#: defaults.php:352
+msgid "User updated a theme"
+msgstr "Un usuario ha actualizado un tema"
+
+#: defaults.php:255
+msgid "A plugin automatically deleted the following custom post: %PostTitle%."
+msgstr "Un plugin ha borrado automáticamente la siguiente entrada personalizada: %PostTitle%."
+
+#: defaults.php:255
+msgid "A plugin deleted a custom post"
+msgstr "Un plugin borró una entrada personalizada"
+
+#: defaults.php:297
+msgid "A plugin automatically deleted the following page: %PostTitle%."
+msgstr "Un plugin ha borrado automáticamente la siguiente página: %PostTitle%."
+
+#: defaults.php:297
+msgid "A plugin deleted a page"
+msgstr "Un plugin ha borrado una página"
+
+#: defaults.php:341
+msgid "A plugin deleted a post"
+msgstr "Un plugin ha borrado una entrada"
+
+#: defaults.php:254
+msgid "A plugin automatically created the following custom post: %PostTitle%."
+msgstr "Un plugin ha creado automáticamente la siguiente entrada personalizada: %PostTitle%."
+
+#: defaults.php:254
+msgid "A plugin created a custom post"
+msgstr "Un plugin ha creado un nuevo contenido"
+
+#: defaults.php:296
+msgid "A plugin automatically created the following page: %PostTitle%."
+msgstr "Un plugin automáticamente ha creado la página: %PostTitle%."
+
+#: defaults.php:296
+msgid "A plugin created a page"
+msgstr "Un plugin ha creado una página"
+
+#: defaults.php:340
+msgid "A plugin created a post"
+msgstr "Un plugin ha creado un contenido"
+
+#: defaults.php:251
+msgid "Changed the title of the custom post %OldTitle% to %NewTitle%. %EditorLinkPost%."
+msgstr "Cambiado el título de la entrada personalizada %OldTitle% a %NewTitle%. %EditorLinkPost%."
+
+#: defaults.php:250
+msgid "Scheduled the custom post type %PostTitle% to be published %PublishingDate%. %EditorLinkPost%."
+msgstr "Programado el tipo de contenido personalizado %PostTitle% para publicarse %PublishingDate%. %EditorLinkPost%."
+
+#: defaults.php:241
+msgid "Changed the date of the custom post %PostTitle% of type %PostType% from %OldDate% to %NewDate%. %EditorLinkPost%."
+msgstr "Cambiada la fecha de la entrada personalizada %PostTitle% del tipo %PostType% de %OldDate% a %NewDate%. %EditorLinkPost%."
+
+#: defaults.php:237
+msgid "Changed the URL of the custom post %PostTitle% of type %PostType% from %OldUrl% to %NewUrl%. %EditorLinkPost%."
+msgstr "Cambiada la URL de la entrada personalizada %PostTitle% del tipo %PostType% de %OldUrl% a %NewUrl%. %EditorLinkPost%."
+
+#: defaults.php:235
+msgid "The custom post %PostTitle% of type %PostType% has been restored from trash. %EditorLinkPost%."
+msgstr "La entrada personalizada %PostTitle% del tipo %PostType% ha sido restaurada desde la papelera. %EditorLinkPost%."
+
+#: defaults.php:234
+msgid "Moved the custom post %PostTitle% of type %PostType% to trash. Post URL was %PostUrl%."
+msgstr "Movida la entrada personalizada %PostTitle% del tipo %PostType% a la papelera. La URL de la entrada era %PostUrl%."
+
+#: defaults.php:232
+msgid "Modified the draft custom post %PostTitle% of type is %PostType%. %EditorLinkPost%."
+msgstr "Modificada la entrada personalizada en borrador %PostTitle% de tipo %PostType%. %EditorLinkPost%."
+
+#: defaults.php:231
+msgid "Modified the custom post %PostTitle% of type %PostType%. Post URL is %PostUrl%. %EditorLinkPost%."
+msgstr "Modificada la entrada personalizada %PostTitle% del tipo %PostType%. La URL de la entrada es %PostUrl%. %EditorLinkPost%."
+
+#: defaults.php:230
+msgid "Published a custom post %PostTitle% of type %PostType%. Post URL is %PostUrl%. %EditorLinkPost%."
+msgstr "Publicada una entrada personalizada %PostTitle% del tipo %PostType%. La URL de la entrada es %PostUrl%. %EditorLinkPost%."
+
+#: defaults.php:279
+msgid "Changed the date of the page %PostTitle% from %OldDate% to %NewDate%. %EditorLinkPage%."
+msgstr "Cambiada la fecha de la página %PostTitle% de %OldDate% a %NewDate%. %EditorLinkPage%."
+
+#: defaults.php:278
+msgid "Changed the visibility of the page %PostTitle% from %OldVisibility% to %NewVisibility%. %EditorLinkPage%."
+msgstr "Cambiada la visibilidad de la página %PostTitle% de %OldVisibility% a %NewVisibility%. %EditorLinkPage%."
+
+#: defaults.php:277
+msgid "Changed the status of the page %PostTitle% from %OldStatus% to %NewStatus%. %EditorLinkPage%."
+msgstr "Cambiado el estado de la página %PostTitle% de %OldStatus% a %NewStatus%. %EditorLinkPage%."
+
+#: defaults.php:276
+msgid "Changed the author of the page %PostTitle% from %OldAuthor% to %NewAuthor%. %EditorLinkPage%."
+msgstr "Cambiado el autor de la página %PostTitle% de %OldAuthor% a %NewAuthor%. %EditorLinkPage%."
+
+#: defaults.php:275
+msgid "Changed the URL of the page %PostTitle% from %OldUrl% to %NewUrl%. %EditorLinkPage%."
+msgstr "Cambiado la URL de la página %PostTitle% de %OldUrl% a %NewUrl%. %EditorLinkPage%."
+
+#: defaults.php:274
+msgid "Page %PostTitle% has been restored from trash. %EditorLinkPage%."
+msgstr "La página %PostTitle% ha sido restaurada de la papelera. %EditorLinkPage%."
+
+#: defaults.php:273
+msgid "Moved the page %PostTitle% to trash. Page URL was %PostUrl%."
+msgstr "Movida la página %PostTitle% a la papelera. La URL de la página era %PostUrl%."
+
+#: defaults.php:271
+msgid "Modified the draft page %PostTitle%. Page ID is %PostID%. %EditorLinkPage%."
+msgstr "Modificado el borrador %PostTitle%. El ID de la página es %PostID%. %EditorLinkPage%."
+
+#: defaults.php:270
+msgid "Modified the published page %PostTitle%. Page URL is %PostUrl%. %EditorLinkPage%."
+msgstr "Modificada la página publicada %PostTitle%. La URL de la página es %PostUrl%. %EditorLinkPage%."
+
+#: defaults.php:269
+msgid "Published a page called %PostTitle%. Page URL is %PostUrl%. %EditorLinkPage%."
+msgstr "Publicada una página con el título %PostTitle%. La URL de la página es %PostUrl%. %EditorLinkPage%."
+
+#: defaults.php:268
+msgid "Created a new page called %PostTitle% and saved it as draft. %EditorLinkPage%."
+msgstr "Creada una nueva página con el título %PostTitle% y guardada como borrador. %EditorLinkPage%."
+
+#: defaults.php:287
+msgid "Changed the title of the page %OldTitle% to %NewTitle%. %EditorLinkPage%."
+msgstr "Cambiado el título de la página %OldTitle% a %NewTitle%. %EditorLinkPage%."
+
+#: defaults.php:286
+msgid "Scheduled the page %PostTitle% to be published %PublishingDate%. %EditorLinkPage%."
+msgstr "Programada la página %PostTitle% para publicarse el %PublishingDate%. %EditorLinkPage%."
+
+#: defaults.php:228
+msgid "Modified the draft post with the %PostTitle%. %EditorLinkPost%."
+msgstr "Modificado el borrador con el %PostTitle%. %EditorLinkPost%."
+
+#: defaults.php:89
+msgid "User logged out"
+msgstr "Usuario desconectado"
+
+#: defaults.php:88
+msgid "User logged in"
+msgstr "Usuario conectado"
+
+#: classes/Views/Settings.php:866
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#: classes/Views/Settings.php:861
+msgid "Email Address"
+msgstr "Dirección de correo electrónico"
+
+#: classes/Views/Settings.php:846
+msgid "From Email & Name"
+msgstr "Nombre y correo electrónico del remitente"
+
+#: classes/Views/addons/html-view.php:95 classes/Views/addons/html-view.php:120
+msgid "Upgrade to Premium"
+msgstr "Actualiza a premium "
+
+#: classes/AuditLogGridView.php:505 classes/AuditLogListView.php:525
+#: defaults.php:331
+msgid "Plugins"
+msgstr "Plugins"
+
+#: defaults.php:93
+msgid "User logged in with existing session(s)"
+msgstr "Un usuario se ha conectado con sesión(es) existente(s)"
+
+#: defaults.php:92
+msgid "Login blocked"
+msgstr "Acceso bloqueado"
+
+#: defaults.php:251
+msgid "User changed title of a custom post type"
+msgstr "Un usuario ha cambiado el título de un tipo de contenido personalizado"
+
+#: defaults.php:287
+msgid "User changed title of a page"
+msgstr "Un usuario ha cambiado el título de una página"
+
+#: defaults.php:122
+msgid "User changed title of a post"
+msgstr "Un usuario ha cambiado el título de un contenido"
+
+#: classes/Views/Settings.php:1009
+msgid "UTC"
+msgstr "UTC"
+
+#: classes/Views/Settings.php:989
+msgid "Events Timestamp"
+msgstr "Marca temporal de los eventos"
+
+#: defaults.php:215
+msgid "Changed the order of the items in the menu %MenuName%"
+msgstr "Cambiado el orden de los elementos en el menú %MenuName%"
+
+#: defaults.php:215
+msgid "User changed order of the objects in a menu"
+msgstr "Un usuario ha cambiado el orden de los objetos en el menú"
+
+#: defaults.php:214
+msgid "User changed name of a menu"
+msgstr "Un usuario ha cambiado el nombre de un menú"
+
+#: defaults.php:213
+msgid "User modified content in a menu"
+msgstr "Un usuario ha modificado el contenido en un menú"
+
+#: defaults.php:212
+msgid "User changed menu setting"
+msgstr "Un usuario ha cambiado la configuración del menú"
+
+#: defaults.php:211
+msgid "Deleted the menu %MenuName%"
+msgstr "Borrado el menú %MenuName%"
+
+#: defaults.php:211
+msgid "User deleted menu"
+msgstr "El usuario borró el menú "
+
+#: defaults.php:210
+msgid "User removed content from a menu"
+msgstr "El usuario ha eliminado contenido de un menú"
+
+#: defaults.php:209
+msgid "User added content to a menu"
+msgstr "El usuario añadió contenido al menú"
+
+#: defaults.php:208
+msgid "User created new menu"
+msgstr "El usuario ha creado un nuevo menú"
+
+#: defaults.php:207
+msgid "Menus"
+msgstr "Menús"
+
+#: defaults.php:250
+msgid "User scheduled a custom post type"
+msgstr "El usuario ha registrado un tipo de contenido personalizado"
+
+#: defaults.php:286
+msgid "User scheduled a page"
+msgstr "El usuario ha registrado una página"
+
+#: defaults.php:121
+msgid "User scheduled a post"
+msgstr "El usuario ha registrado una entrada"
+
+#: classes/AuditLogGridView.php:502 classes/AuditLogListView.php:521
+#: classes/AlertManager.php:1128
+msgid "Plugin"
+msgstr "Plugin"
+
+#. Author of the plugin
+msgid "WP White Security"
+msgstr "WP White Security"
+
+#. Description of the plugin
+msgid "Identify WordPress security issues before they become a problem. Keep track of everything happening on your WordPress including WordPress users activity. Similar to Windows Event Log and Linux Syslog, WP Activity Log generates a security alert for everything that happens on your WordPress blogs and websites. Use the Activity log viewer included in the plugin to see all the security alerts."
+msgstr "Identifica los problemas de seguridad de WordPress antes de que se conviertan en un problema. Mantén un seguimiento de todo lo que sucede en tu WordPress, incluyendo la actividad de los usuarios de WordPress. De forma similar al registro de eventos de Windows y Syslog de Linux, WP Activity Log genera una alerta de seguridad para todo lo que sucede en tus blogs y webs WordPress. Usa el visor de Activity Log, incluido en el plugin, para ver todas las alertas de seguridad."
+
+#: defaults.php:364
+msgid "Unknown component deleted tables"
+msgstr "Tablas borradas por un componente desconocido"
+
+#: defaults.php:363
+msgid "Unknown component modified tables structure"
+msgstr "Estructura de tablas modificadas por un componente desconocido"
+
+#: defaults.php:362
+msgid "Unknown component created tables"
+msgstr "Un componente desconocido ha creado tablas"
+
+#: defaults.php:351
+msgid "Theme deleted tables"
+msgstr "El tema ha borrado tablas"
+
+#: defaults.php:350
+msgid "Theme modified tables structure"
+msgstr "El tema ha modificado la estructura de las tablas"
+
+#: defaults.php:349
+msgid "Theme created tables"
+msgstr "El tema ha creado tablas"
+
+#: defaults.php:339
+msgid "Plugin deleted table"
+msgstr "Tabla borrada por el plugin"
+
+#: defaults.php:338
+msgid "Plugin modified table structure"
+msgstr "Estructura de la tabla modificada por el plugin"
+
+#: defaults.php:337
+msgid "Plugin created table"
+msgstr "Tabla creada por el plugin"
+
+#: classes/AlertManager.php:1129
+msgid "Database"
+msgstr "Base de datos"
+
+#: defaults.php:358
+msgid "Deactivated theme from network"
+msgstr "Tema desactivado de la red"
+
+#: defaults.php:357
+msgid "Activated theme on network"
+msgstr "Tema activado de la red"
+
+#: defaults.php:418
+msgid "Existing site deleted from network"
+msgstr "Sitio existente borrado de la red"
+
+#: defaults.php:417
+msgid "Site has been deactivated"
+msgstr "El sitio ha sido desactivado"
+
+#: defaults.php:416
+msgid "Deactivated site has been activated"
+msgstr "El sitio desactivado ha sido activado"
+
+#: defaults.php:415
+msgid "Archived site has been unarchived"
+msgstr "El sitio archivado ha sido desarchivado"
+
+#: defaults.php:414
+msgid "Existing site archived"
+msgstr "Sitio existente archivado"
+
+#: defaults.php:413
+msgid "New site added on the network"
+msgstr "Nuevo sitio añadido a la red"
+
+#: defaults.php:326
+msgid "New network user created"
+msgstr "Nuevo usuario de red creado"
+
+#: defaults.php:325
+msgid "User removed from site"
+msgstr "Usuario borrado del sitio"
+
+#: defaults.php:324
+msgid "Existing user added to a site"
+msgstr "Usuario existente añadido a un sitio"
+
+#: defaults.php:323
+msgid "User revoked from Super Admin privileges"
+msgstr "Al usuario se le quitaron los privilegios de Super Admin"
+
+#: defaults.php:322
+msgid "User granted Super Admin privileges"
+msgstr "Al usuario se le dieron los privilegios de Super Admin"
+
+#: classes/Views/ToggleAlerts.php:330 defaults.php:412
+msgid "MultiSite"
+msgstr "MultiSitio"
+
+#: defaults.php:394
+msgid "User changes the WordPress Permalinks"
+msgstr "El usuario cambia los enlaces permanentes de WordPress"
+
+#: defaults.php:379
+msgid "WordPress was updated"
+msgstr "WordPress fue actualizado"
+
+#: defaults.php:393
+msgid "WordPress Administrator Notification email changed"
+msgstr "El email de Notificación de Administrador de WordPress cambió"
+
+#: defaults.php:392
+msgid "New User Default Role changed"
+msgstr "El Rol Por Defecto de Nuevo Usuario cambió"
+
+#: defaults.php:391
+msgid "Option Anyone Can Register in WordPress settings changed"
+msgstr "Los ajustes de Opción Cualquiera Puede Registrarse en WordPress cambiaron"
+
+#: defaults.php:384
+msgid "Events automatically pruned by system"
+msgstr "Eventos podados automáticamente por el sistema"
+
+#: defaults.php:378
+msgid "PHP shutdown error"
+msgstr "Error de apagado de PHP"
+
+#: defaults.php:377
+msgid "PHP exception"
+msgstr "Excepción de PHP"
+
+#: defaults.php:376
+msgid "PHP notice"
+msgstr "Aviso de PHP"
+
+#: defaults.php:375
+msgid "PHP warning"
+msgstr "Advertencia de PHP"
+
+#: defaults.php:374 defaults.php:375 defaults.php:376 defaults.php:377
+#: defaults.php:378
+msgid "%Message%."
+msgstr "%Message%"
+
+#: defaults.php:374
+msgid "PHP error"
+msgstr "Error de PHP"
+
+#: defaults.php:373
+msgid "An unexpected error has occurred ."
+msgstr "Ocurrió un error inesperado"
+
+#: defaults.php:373
+msgid "Unknown Error"
+msgstr "Error desconocido"
+
+#: classes/AlertManager.php:1808
+msgid "System Activity"
+msgstr "Actividad del Sistema"
+
+#: defaults.php:348
+msgid "User uninstalled a theme"
+msgstr "El usuario desinstaló un tema"
+
+#: defaults.php:347
+msgid "User activated a theme"
+msgstr "El usuario activó un tema"
+
+#: defaults.php:346
+msgid "User installed a theme"
+msgstr "El usuario instaló un tema"
+
+#: defaults.php:336
+msgid "User upgraded a plugin"
+msgstr "El usuario actualizó un plugin"
+
+#: defaults.php:335
+msgid "User uninstalled a plugin"
+msgstr "El usuario desinstaló un plugin"
+
+#: defaults.php:334
+msgid "User deactivated a WordPress plugin"
+msgstr "El usuario desactivó un plugin de WordPress"
+
+#: defaults.php:333
+msgid "User activated a WordPress plugin"
+msgstr "El usuario activó un plugin de WordPress"
+
+#: defaults.php:332
+msgid "User installed a plugin"
+msgstr "El usuario instaló un plugin"
+
+#: defaults.php:330
+msgid "Plugins & Themes"
+msgstr "Plugins y Temas"
+
+#: defaults.php:311
+msgid "User was deleted by another user"
+msgstr "Un usuario fue borrado por otro usuario"
+
+#: defaults.php:310
+msgid "User changed another user's email address"
+msgstr "Un usuario cambió la dirección de correo de otros usuarios"
+
+#: defaults.php:309
+msgid "User changed his or her email address"
+msgstr "El usuario cambió su dirección de email"
+
+#: defaults.php:308
+msgid "User changed another user's password"
+msgstr "Un usuario cambió la contraseña de otro usuario"
+
+#: defaults.php:307
+msgid "User has changed his or her password"
+msgstr "El usuario cambió su contraseña"
+
+#: defaults.php:306
+msgid "The role of a user was changed by another WordPress user"
+msgstr "El rol de un usuario fue cambiado por otro usuario de WordPress"
+
+#: defaults.php:305
+msgid "User created another WordPress user"
+msgstr "Un usuario creó otro usuario de WordPress"
+
+#: defaults.php:304
+msgid "New user was created on WordPress"
+msgstr "Un nuevo usuario fue creado en WordPress"
+
+#: defaults.php:303
+msgid "User Profiles"
+msgstr "Perfiles de Usuario"
+
+#: defaults.php:201
+msgid "User changed widget position"
+msgstr "El usuario cambió la posición de un widget"
+
+#: defaults.php:200
+msgid "User moved widget"
+msgstr "El usuario movió un widget"
+
+#: defaults.php:199
+msgid "Deleted the %WidgetName% widget from %Sidebar%."
+msgstr "El widget %WidgetName% fue borrado de %Sidebar%"
+
+#: defaults.php:199
+msgid "User deleted widget"
+msgstr "El usuario borró un widget"
+
+#: defaults.php:198
+msgid "Modified the %WidgetName% widget in %Sidebar%."
+msgstr "El widget %WidgetName% fue modificado en %Sidebar%"
+
+#: defaults.php:198
+msgid "User modified a widget"
+msgstr "El usuario modificó un widget"
+
+#: defaults.php:197
+msgid "Added a new %WidgetName% widget in  %Sidebar%."
+msgstr "Un nuevo widget %WidgetName% fue añadido en %Sidebar%"
+
+#: defaults.php:197
+msgid "User added a new widget"
+msgstr "El usuario adicionó un nuevo widget"
+
+#: defaults.php:196
+msgid "Widgets"
+msgstr "Widgets"
+
+#: defaults.php:248
+msgid "User modified content for a draft custom post type"
+msgstr "El  usuario modificó el contenido de un tipo de contenido personalizado en borrador"
+
+#: defaults.php:246
+msgid "User modified content for a published custom post type"
+msgstr "El usuario modificó el contenido de  un tipo de contenido personalizado publicado"
+
+#: defaults.php:245
+msgid "User updated a custom field name for a custom post type"
+msgstr "El usuario actualizó un nombre de campo personalizado para un contenido personalizado"
+
+#: defaults.php:244
+msgid "User deleted a custom field from a custom post type"
+msgstr "El usuario borró un campo personalizado de un tipo de contenido personalizado"
+
+#: defaults.php:243
+msgid "User updated a custom field for a custom post type"
+msgstr "El usuario actualizó un campo personalizado para un contenido personalizado"
+
+#: defaults.php:242
+msgid "User created a custom field for a custom post type"
+msgstr "El usuario creó un campo personalizado para un contenido personalizado"
+
+#: defaults.php:241
+msgid "User changed the date of post with custom post type"
+msgstr "El usuario cambió la fecha del post con tipo de post personalizado"
+
+#: defaults.php:240
+msgid "Changed the visibility of the custom post %PostTitle% of type %PostType% from %OldVisibility% to %NewVisibility%. %EditorLinkPost%."
+msgstr "La visibilidad del contenido personalizado %PostTitle% de tipo %PostType% cambió de %OldVisibility% to %NewVisibility%. %EditorLinkPost%."
+
+#: defaults.php:240
+msgid "User changed the visibility of a post with custom post type"
+msgstr "El usuario cambió la visibilidad de un post con tipo de post personalizado"
+
+#: defaults.php:239
+msgid "Changed the status of custom post %PostTitle% of type %PostType% from %OldStatus% to %NewStatus%. %EditorLinkPost%."
+msgstr "El estado del contenido personalizado %PostTitle% del tipo %PostType% cambió de %OldStatus% a %NewStatus%. %EditorLinkPost%."
+
+#: defaults.php:239
+msgid "User changed the status of post with custom post type"
+msgstr "El usuario cambió el estado del post con tipo de post personalizado"
+
+#: defaults.php:238
+msgid "Changed the author of custom post %PostTitle% of type %PostType% from %OldAuthor% to %NewAuthor%. %EditorLinkPost%."
+msgstr "El autor del contenido personalizado %PostTitle% del tipo %PostType% fue cambiado de %OldAuthor% a %NewAuthor%. %EditorLinkPost%."
+
+#: defaults.php:238
+msgid "User changed the author or post with custom post type"
+msgstr "El usuario cambió el autor o el post con el tipo de post personalizado"
+
+#: defaults.php:237
+msgid "User changed the URL of a post with custom post type"
+msgstr "El usuario cambió la URL de un post con tipo de post personalizado"
+
+#: defaults.php:236
+msgid "Changed the category(ies) of the custom post %PostTitle% of type %PostType% from %OldCategories% to %NewCategories%. %EditorLinkPost%."
+msgstr "La(s) categoría(s) del contenido personalizado %PostTitle% de tipo %PostType% fue(ron) cambiada(s) de %OldCategories% to %NewCategories%. %EditorLinkPost%."
+
+#: defaults.php:236
+msgid "User changed the category of a post with custom post type"
+msgstr "El usuario cambió la categoría de un post con tipo de post personalizado"
+
+#: defaults.php:235
+msgid "User restored post with custom post type from trash"
+msgstr "El usuario restauró un post con tipo de post personalizado de la papelera"
+
+#: defaults.php:234
+msgid "User moved post with custom post type to trash"
+msgstr "El usuario movió un post con tipo de post personalizado a la papelera"
+
+#: defaults.php:233
+msgid "Permanently Deleted the custom post %PostTitle% of type %PostType%."
+msgstr "Se borró permanentemente el contenido personalizado %PostTitle% del tipo %PostType%."
+
+#: defaults.php:233
+msgid "User permanently deleted post with custom post type"
+msgstr "El usuario borró permanentemente un post con tipo de post personalizado"
+
+#: defaults.php:232
+msgid "User modified a draft post with custom post type"
+msgstr "El usuario modificó un post borrador con tipo de post personalizado"
+
+#: defaults.php:231
+msgid "User modified a post with custom post type"
+msgstr "El usuario modificó un post con tipo de post personalizado"
+
+#: defaults.php:230
+msgid "User published a post with custom post type"
+msgstr "El usuario publicó un post con tipo de post personalizado"
+
+#: defaults.php:229
+msgid "Created a new custom post called %PostTitle% of type %PostType%. %EditorLinkPost%."
+msgstr "Un nuevo contenido personalizado llamado %PostTitle% del tipo %PostType% fue creado. El ID del Post es %PostID%. %EditorLinkPost%."
+
+#: defaults.php:229
+msgid "User created a new post with custom post type and saved it as draft"
+msgstr "El usuario creó un nuevo post con tipo de post personalizado y lo salvó como borrador"
+
+#: defaults.php:285
+msgid "User modified content for a draft page"
+msgstr "El usuario modificó el contenido de una página en borrador"
+
+#: defaults.php:284
+msgid "User modified content for a published page"
+msgstr "El usuario modificó el contenido de una página publicada"
+
+#: defaults.php:283
+msgid "User updated a custom field name for a page"
+msgstr "El usuario actualizó un nombre de campo personalizado para una página"
+
+#: defaults.php:282
+msgid "User deleted a custom field from a page"
+msgstr "El usuario borró un campo personalizado de una página "
+
+#: defaults.php:281
+msgid "User updated a custom field value for a page"
+msgstr "El usuario actualizó un valor de campo personalizado para una página"
+
+#: defaults.php:280
+msgid "User created a custom field for a page"
+msgstr "El usuario creó un campo personalizado para una página"
+
+#: defaults.php:116
+msgid "User changed the template of a page"
+msgstr "El usuario cambió la plantilla de una página"
+
+#: defaults.php:115
+msgid "User changed the parent of a page"
+msgstr "El usuario cambió el padre de una página"
+
+#: defaults.php:279
+msgid "User changed the date of a page post"
+msgstr "El usuario cambió la fecha de un post de página"
+
+#: defaults.php:278
+msgid "User changed the visibility of a page post"
+msgstr "El usuario cambió la visibilidad de un post de página"
+
+#: defaults.php:277
+msgid "User changed page status"
+msgstr "El usuario cambió el estado de la página"
+
+#: defaults.php:276
+msgid "User changed page author"
+msgstr "El usuario cambió el autor de la página"
+
+#: defaults.php:275
+msgid "User changed page URL"
+msgstr "El usuario cambió la URL de la página"
+
+#: defaults.php:274
+msgid "User restored a WordPress page from trash"
+msgstr "El usuario restauró una página de WordPress de la papelera"
+
+#: defaults.php:273
+msgid "User moved WordPress page to the trash"
+msgstr "El usuario movió la página de WordPress a la papelera"
+
+#: defaults.php:272
+msgid "User permanently deleted a page from the trash"
+msgstr "El usuario borró permanentemente una página de la papelera"
+
+#: defaults.php:271
+msgid "User modified a draft WordPress page"
+msgstr "El usuario modificó una página de borrador de WordPress "
+
+#: defaults.php:270
+msgid "User modified a published WordPress page"
+msgstr "El usuario modificó una página de WordPress publicada"
+
+#: defaults.php:269
+msgid "User published a WordPress page"
+msgstr "El usuario publicó una página de WordPress"
+
+#: defaults.php:268
+msgid "User created a new WordPress page and saved it as draft"
+msgstr "El usuario creó una página nueva de WordPress y la salvó como un borrador"
+
+#: classes/Views/ToggleAlerts.php:212 classes/Views/ToggleAlerts.php:244
+#: classes/AlertManager.php:1491 defaults.php:267
+msgid "Pages"
+msgstr "Páginas"
+
+#: defaults.php:120
+msgid "User submitted a post for review"
+msgstr "El usuario envío una entrada a revisión"
+
+#: defaults.php:249
+msgid "User modified content of a post"
+msgstr "El usuario modificó el contenido de una entrada"
+
+#: defaults.php:247
+msgid "User modified content for a draft post"
+msgstr "El usuario modificó el contenido de una entrada en borrador"
+
+#: defaults.php:152
+msgid "User updated a custom field name for a post"
+msgstr "El usuario actualizó un nombre de campo personalizado para un contenido"
+
+#: defaults.php:151
+msgid "User deleted a custom field from a post"
+msgstr "El usuario borró un campo personalizado de un contenido"
+
+#: defaults.php:150
+msgid "User updated a custom field value for a post"
+msgstr "El usuario actualizó un valor de campo personalizado para un contenido"
+
+#: defaults.php:149
+msgid "User created a custom field for a post"
+msgstr "El usuario creó un campo personalizado para un contenido"
+
+#: defaults.php:118
+msgid "User removed post from sticky"
+msgstr "El usuario quitó un contenido como entrada fija"
+
+#: defaults.php:117
+msgid "User set a post as sticky"
+msgstr "El usuario estableció un entrada como fija"
+
+#: defaults.php:114
+msgid "User changed the date of a post"
+msgstr "El usuario cambió la fecha de una entrada"
+
+#: defaults.php:113
+msgid "User changed the visibility of a post"
+msgstr "El usuario cambió la visibilidad de una entrada"
+
+#: defaults.php:142
+msgid "User deleted category"
+msgstr "El usuario borró la categoría"
+
+#: defaults.php:141
+msgid "User created new category"
+msgstr "El usuario creó una nueva categoría"
+
+#: defaults.php:112
+msgid "User changed post status"
+msgstr "El usuario cambió el estado de la entrada"
+
+#: defaults.php:111
+msgid "User changed post author"
+msgstr "El usuario cambió el autor de la entrada"
+
+#: defaults.php:140
+msgid "User changed post category"
+msgstr "El usuario cambió la categoría de la entrada"
+
+#: defaults.php:109
+msgid "User restored a post from trash"
+msgstr "El usuario restauró una entrada de la papelera"
+
+#: defaults.php:108
+msgid "User moved a post to the trash"
+msgstr "El usuario movió una entrada a la papelera"
+
+#: defaults.php:107
+msgid "User permanently deleted a post from the trash"
+msgstr "El usuario borró permanentemente una entrada de la papelera"
+
+#: defaults.php:228
+msgid "User modified a draft blog post"
+msgstr "El usuario modificó un post del blog borrador"
+
+#: defaults.php:104
+msgid "User created a new post and saved it as draft"
+msgstr "El usuario creó una nueva entrada y la guardó como borrador"
+
+#: defaults.php:342
+msgid "User changed a file using the plugin editor"
+msgstr "El usuario cambió un archivo usando el editor de plugin"
+
+#: defaults.php:353
+msgid "User changed a file using the theme editor"
+msgstr "El usuario cambió un archivo usando el editor de tema"
+
+#: defaults.php:98
+msgid "User deleted file from Uploads directory"
+msgstr "El usuario borró un archivo del directorio Uploads"
+
+#: defaults.php:97
+msgid "User uploaded file from Uploads directory"
+msgstr "El usuario subió un archivo del directorio Uploads"
+
+#: defaults.php:91
+msgid "Login failed  / non existing user"
+msgstr "El acceso falló / el usuario no existe"
+
+#: defaults.php:90
+msgid "Login failed"
+msgstr "Acceso fallido"
+
+#: classes/Views/ToggleAlerts.php:338
+msgid "Other User Activity"
+msgstr "Otra Actividad de Usuario"
+
+#: classes/Views/Settings.php:1090 classes/AuditLogListView.php:324
+#: classes/AuditLogListView.php:358 classes/AlertManager.php:1126
+#: classes/WidgetManager.php:76
+msgid "User"
+msgstr "Usuario"
+
+#: classes/WidgetManager.php:71
+msgid "No events found."
+msgstr "No se encontraron eventos."
+
+#: classes/Views/ToggleAlerts.php:543
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: classes/Views/ToggleAlerts.php:367
+msgid "Not Available"
+msgstr "No disponible"
+
+#: classes/Views/ToggleAlerts.php:364
+msgid "Not Implemented"
+msgstr "No Implementado"
+
+#: classes/Views/ToggleAlerts.php:300 classes/WidgetManager.php:77
+msgid "Description"
+msgstr "Descripción"
+
+#: classes/Views/ToggleAlerts.php:27 classes/Views/ToggleAlerts.php:41
+msgid "Enable/Disable Events"
+msgstr "Activa/Desactiva eventos"
+
+#: classes/Views/Settings.php:1253
+msgid "Exclude IP Address(es):"
+msgstr "Excluir direcciones IP:"
+
+#: classes/Views/Settings.php:1297
+msgid "Exclude Custom Fields:"
+msgstr "Excluir campos personalizados:"
+
+#: classes/Views/Settings.php:1232
+msgid "Exclude Roles:"
+msgstr "Excluir perfiles:"
+
+#: classes/Views/Settings.php:1211
+msgid "Exclude Users:"
+msgstr "Excluir usuarios:"
+
+#: classes/Views/Settings.php:1483
+msgid "Remove Data on Uninstall"
+msgstr "Borrar datos al desinstalar"
+
+#: classes/Views/Settings.php:1117
+msgid "Enable Events for WordPress Background Activity"
+msgstr "Activar eventos de la actividad de fondo de WordPress"
+
+#: classes/Views/Settings.php:882
+msgid "Hide Plugin in Plugins Page"
+msgstr "Ocultar el plugin en la página de plugins"
+
+#: classes/Views/Settings.php:1382
+msgid "Request Log"
+msgstr "Pedir log"
+
+#: classes/Views/Settings.php:722
+msgid "Restrict plugin access"
+msgstr "Restringir el acceso al plugin"
+
+#: classes/Views/Settings.php:776 classes/Views/Settings.php:806
+msgid "Can view events"
+msgstr "Puede ver eventos"
+
+#: classes/Views/Settings.php:673
+msgid "Reverse Proxy / Firewall Options"
+msgstr "Opciones de proxy inverso / cortafuegos"
+
+#: classes/Views/Settings.php:1871
+msgid "Delete events older than"
+msgstr "Borrar eventos más antiguos de"
+
+#: classes/Views/Settings.php:161 classes/Views/Settings.php:175
+msgid "Settings"
+msgstr "Ajustes"
+
+#: classes/Views/ToggleAlerts.php:128 classes/Views/Settings.php:348
+msgid "Error: "
+msgstr "Error:"
+
+#: classes/Views/ToggleAlerts.php:122 classes/Views/Settings.php:342
+msgid "Settings have been saved."
+msgstr "Se han guardado los ajustes"
+
+#: classes/Views/Help.php:198
+msgid "Plugin Website"
+msgstr "Web del plugin"
+
+#: classes/Views/Help.php:193
+msgid "Plugin Documentation"
+msgstr "Documentación del plugin"
+
+#: classes/Views/Help.php:189
+msgid "Free Support Email"
+msgstr "Correo electrónico de soporte gratuito"
+
+#: classes/Views/Help.php:187
+msgid "Free Support Forum"
+msgstr "Foro de soporte gratuito"
+
+#: classes/Views/Help.php:185
+msgid "Or you want to report something to us? Click any of the options below to post on the plugin's forum or contact our support directly."
+msgstr "¿O quieres informarnos de algo? Haz clic en cualquiera de las opciones siguientes para publicar en el foro del plugin o ponte en contacto directamente con nuestro servicio de soporte."
+
+#: classes/Views/Help.php:184
+msgid "Have you encountered or noticed any issues while using WP Activity Log plugin?"
+msgstr "¿Has encontrado o notado algún problema utilizando el plugin WP Activity Log?"
+
+#: classes/Views/Help.php:182
+msgid "Plugin Support"
+msgstr "Soporte del plugin"
+
+#: classes/Views/Help.php:62 classes/Views/Help.php:104
+#: classes/Views/Help.php:118
+msgid "Help"
+msgstr "Ayuda"
+
+#: classes/Views/addons/html-view.php:96
+msgid "More Information"
+msgstr "Más información"
+
+#: classes/Views/AuditLog.php:625
+msgid "No Results"
+msgstr "Sin resultados"
+
+#: classes/Views/AuditLog.php:623
+msgid "Please enter the number of alerts you would like to see on one page:"
+msgstr "Por favor, introduce el número de alertas que que gustaría ver por página:"
+
+#: classes/Views/AuditLog.php:540 classes/Views/ToggleAlerts.php:105
+#: classes/Views/Settings.php:326
+msgid "You do not have sufficient permissions to access this page."
+msgstr "No tienes los permisos suficientes para acceder a esta página."
+
+#: classes/Views/ToggleAlerts.php:519 classes/Views/Settings.php:1178
+msgid "Learn More"
+msgstr "Aprender más"
+
+#: classes/Sensors/Content.php:1037 classes/Sensors/Content.php:1045
+msgid "Private"
+msgstr "Privado"
+
+#: classes/Sensors/Content.php:1039 classes/Sensors/Content.php:1047
+msgid "Public"
+msgstr "Público"
+
+#: classes/Sensors/Content.php:1035 classes/Sensors/Content.php:1043
+msgid "Password Protected"
+msgstr "Protegido con contraseña"
+
+#: classes/AuditLogGridView.php:616 classes/AuditLogGridView.php:755
+#: classes/AuditLogListView.php:608 classes/AuditLogListView.php:751
+msgid "Alert Data Inspector"
+msgstr "Inspector de datos de alerta"
+
+#: classes/AuditLogGridView.php:511 classes/AuditLogListView.php:533
+#: classes/AlertManager.php:1127 classes/AlertManager.php:1909 defaults.php:372
+msgid "System"
+msgstr "Sistema"
+
+#: classes/AuditLogGridView.php:453 classes/AuditLogGridView.php:460
+#: classes/AuditLogGridView.php:499 classes/AuditLogListView.php:476
+#: classes/AuditLogListView.php:517
+msgid "Unknown"
+msgstr "Desconocido"
+
+#: classes/ConstantManager.php:146 classes/AlertManager.php:1868
+msgid "Unknown error code."
+msgstr "Código de error desconocido."
+
+#: classes/AuditLogListView.php:435
+msgid "Click to toggle."
+msgstr "Haz clic para alternar."
+
+#: classes/AuditLogGridView.php:324 classes/AuditLogGridView.php:347
+#: classes/AuditLogListView.php:335 classes/AuditLogListView.php:373
+msgid "Message"
+msgstr "Mensaje"
+
+#: classes/AuditLogGridView.php:321 classes/AuditLogListView.php:332
+#: classes/AuditLogListView.php:364
+msgid "Site"
+msgstr "Sitio"
+
+#: classes/AuditLogListView.php:323 classes/AuditLogListView.php:355
+msgid "Date"
+msgstr "Fecha"
+
+#: classes/Views/ToggleAlerts.php:298
+msgid "Code"
+msgstr "Código"
+
+#: classes/Views/AuditLog.php:624 classes/AuditLogGridView.php:229
+#: classes/AuditLogListView.php:235
+msgid "All Sites"
+msgstr "Todos los sitios"
+
+#: classes/AuditLogGridView.php:201 classes/AuditLogListView.php:207
+msgid " Items"
+msgstr "Elementos"
+
+#: classes/AuditLogGridView.php:193 classes/AuditLogListView.php:199
+msgid "Show "
+msgstr "Mostrar"
+
+#: classes/AuditLogGridView.php:129 classes/AuditLogListView.php:129
+msgid "No events so far."
+msgstr "No hay eventos hasta el momento."
