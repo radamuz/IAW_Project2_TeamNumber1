@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 5.6.x - Development - Administration package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-12-05 07:17:09+0000\n"
+"PO-Revision-Date: 2020-12-10 11:54:07+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1313,7 +1313,7 @@ msgstr "Estás actualizando un tema. Primero, asegúrate de <a href=\"%s\">hacer
 #: wp-admin/includes/class-plugin-installer-skin.php:302
 #: wp-admin/update-core.php:248
 msgid "https://wordpress.org/support/article/wordpress-backups/"
-msgstr "https://es.wordpress.org/support/article/wordpress-backups/"
+msgstr "https://wordpress.org/support/article/wordpress-backups/"
 
 #. translators: %s: Documentation URL.
 #: wp-admin/includes/class-theme-installer-skin.php:330

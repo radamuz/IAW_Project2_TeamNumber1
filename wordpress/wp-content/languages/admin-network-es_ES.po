@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 5.6.x - Development - Administration - Network Admin package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-07-24 08:27:26+0000\n"
+"PO-Revision-Date: 2020-12-10 12:41:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -46,7 +46,7 @@ msgstr "d/m/Y H:i:s"
 
 #: wp-admin/includes/network.php:629
 msgid "https://wordpress.org/support/article/nginx/"
-msgstr "https://es.wordpress.org/support/article/nginx/"
+msgstr "https://wordpress.org/support/article/nginx/"
 
 #. translators: %s: Documentation URL.
 #: wp-admin/includes/network.php:628
