@@ -216,6 +216,16 @@ Please update your WP Google Maps version to 6.2.1 to ensure you are using the l
 
 == Changelog ==
 
+= 8.0.30 - 2020-12-17 - Medium priority =
+* Adds DOMElement support for PHP 8
+* Fixed GDPR message showing multiple times on some installations
+* Fixed issue with undefined variables in polygon creator panel
+* Fixed an issue with hiding POI locations in Google Maps Engine
+
+= 8.0.29 - 2020-12-10 - High priority =
+* Tested up to WordPress 5.6
+* Added support for jQuery 3
+
 = 8.0.28 - 2020-11-26 - Low priority =
 * Tested the plugin with WP5.6 RC1 - All seems in order
 * Modified the Google Places Autocomplete functionality to reduce the amount of API calls originating from basic users
@@ -1494,125 +1504,3 @@ Please update your WP Google Maps version to 6.2.1 to ensure you are using the l
 
 
 For more, please view the WP Google Maps site
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

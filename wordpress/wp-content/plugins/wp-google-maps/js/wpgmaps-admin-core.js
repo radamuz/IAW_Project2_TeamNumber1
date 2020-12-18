@@ -400,7 +400,8 @@ jQuery(function($) {
         });
 		
 		var geocoder = WPGMZA.Geocoder.createInstance();
-        wpgmza_InitMap();
+
+		wpgmza_InitMap();
 
         jQuery("body").on("click", ".wpgmza_del_btn", function() {
 			
@@ -961,6 +962,8 @@ MYMAP.init = function(selector, latLng, zoom) {
 	this.map.setOptions({
 		mapTypeId: maptype
 	});
+
+	jQuery(document.body).trigger('wpgmza_map_editor_init');
     //this.bounds = new google.maps.LatLngBounds();
 
     if ("undefined" !== typeof wpgmaps_localize[wpgmaps_mapid]['other_settings']['wpgmza_theme_data'] && wpgmaps_localize[wpgmaps_mapid]['other_settings']['wpgmza_theme_data'] !== false && wpgmaps_localize[wpgmaps_mapid]['other_settings']['wpgmza_theme_data'] !== "") {
@@ -1227,12 +1230,15 @@ function add_marker(marker_data) {
             d_string = "<p style='min-width:100px; display:block;'>"+Math.round(marker_data.d,2)+" "+wpgmaps_lang_km_away+"</p>";
         }
     } else { d_string = ''; }
-    infoWindow[marker_data.marker_id] = WPGMZA.InfoWindow.createInstance(marker);
+
+    infoWindow[marker.id] = WPGMZA.InfoWindow.createInstance(marker);
+
     var html='<span style=\'min-width:100px; display:block;\'>'+marker_data.address+'</span>'+d_string;
     if (marker_data.infoopen === "1") {
-        infoWindow[marker_data.marker_id].setContent(html);
-        infoWindow[marker_data.marker_id].open(marker_data.map, wpgmaps_markers_array[marker_data.marker_id]);
+        infoWindow[marker.id].setContent(html);
+        infoWindow[marker.id].open(marker_data.map, wpgmaps_markers_array[marker_data.marker_id]);
     }
+
     temp_actiontype = 'click';
     if (typeof wpgmaps_localize_global_settings.wpgmza_settings_map_open_marker_by !== "undefined" && wpgmaps_localize_global_settings.wpgmza_settings_map_open_marker_by == '2') {
         temp_actiontype = 'mouseover';
@@ -1240,8 +1246,8 @@ function add_marker(marker_data) {
 	
     marker.on(temp_actiontype, function() {
         close_infowindows();
-        infoWindow[marker_data.marker_id].setContent(html);
-        infoWindow[marker_data.marker_id].open(marker_data.map, wpgmaps_markers_array[marker_data.marker_id]);
+        infoWindow[marker.id].setContent(html);
+        infoWindow[marker.id].open(marker_data.map, marker);
     });
 
 }

@@ -2891,8 +2891,7 @@ jQuery(function($) {
 		});
 	}
 	
-	$(window).on("load", function(event) {
-		
+	$(document.body).on("wpgmza_map_editor_init", function(event) {
 		WPGMZA.mapEditPage = WPGMZA.MapEditPage.createInstance();
 		
 	});
@@ -4439,7 +4438,7 @@ jQuery(function($) {
 		this.element = element;
 	}
 	
-	$(window).on("load", function(event) {
+	$(document.body).on("wpgmza_map_editor_init", function(event) {
 		
 		if(WPGMZA.getCurrentPage() == WPGMZA.PAGE_MAP_EDIT)
 			WPGMZA.mapEditPage.markerPanel = new WPGMZA.MarkerPanel($("#wpgmza-marker-edit-panel")[0]);
@@ -7139,704 +7138,6 @@ jQuery(function($) {
 
 });
 
-// js/v8/compatibility/astra-theme-compatibility.js
-/**
- * @namespace WPGMZA
- * @module AstraThemeCompatiblity
- * @requires WPGMZA
- * @description Prevents the document.body.onclick handler firing for markers, which causes the Astra theme to throw an error, preventing the infowindow from opening
- */
-jQuery(function($) {
-	
-	$(window).on("load", function(event) {
-		
-		var parent = document.body.onclick;
-		
-		if(!parent)
-			return;
-		
-		document.body.onclick = function(event)
-		{
-			if(event.target instanceof WPGMZA.Marker)
-				return;
-			
-			parent(event);
-		}
-		
-	});
-	
-});
-
-// js/v8/compatibility/google-ui-compatibility.js
-/**
- * @namespace WPGMZA
- * @module GoogleUICompatibility
- * @requires WPGMZA
- */ 
-jQuery(function($) {
-	
-	WPGMZA.GoogleUICompatibility = function()
-	{
-		var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
-				   navigator.userAgent &&
-				   navigator.userAgent.indexOf('CriOS') == -1 &&
-				   navigator.userAgent.indexOf('FxiOS') == -1;
-		
-		if(!isSafari)
-		{
-			var style = $("<style id='wpgmza-google-ui-compatiblity-fix'/>");
-			style.html(".wpgmza_map img:not(button img) { padding:0 !important; }");
-			$(document.head).append(style);
-		}
-	}
-	
-	WPGMZA.googleUICompatibility = new WPGMZA.GoogleUICompatibility();
-	
-});
-
-// js/v8/tables/datatable.js
-/**
- * @namespace WPGMZA
- * @module DataTable
- * @requires WPGMZA
- */
-jQuery(function($) {
-	
-	WPGMZA.DataTable = function(element)
-	{
-		var self = this;
-		if(!$.fn.dataTable)
-		{
-			console.warn("The dataTables library is not loaded. Cannot create a dataTable. Did you enable 'Do not enqueue dataTables'?");
-			
-			if(WPGMZA.settings.wpgmza_do_not_enqueue_datatables && WPGMZA.getCurrentPage() == WPGMZA.PAGE_MAP_EDIT)
-				alert("You have selected 'Do not enqueue DataTables' in WP Google Maps' settings. No 3rd party software is loading the DataTables library. Because of this, the marker table cannot load. Please uncheck this option to use the marker table.");
-			
-			return;
-		}
-		
-		if($.fn.dataTable.ext)
-			$.fn.dataTable.ext.errMode = "throw";
-		else
-		{
-			var version = $.fn.dataTable.version ? $.fn.dataTable.version : "unknown";
-			
-			console.warn("You appear to be running an outdated or modified version of the dataTables library. This may cause issues with table functionality. This is usually caused by 3rd party software loading an older version of DataTables. The loaded version is " + version + ", we recommend version 1.10.12 or above.");
-		}
-		
-		this.element = element;
-		this.element.wpgmzaDataTable = this;
-		this.dataTableElement = this.getDataTableElement();
-
-		var settings = this.getDataTableSettings();
-		
-		this.phpClass			= $(element).attr("data-wpgmza-php-class");
-		this.wpgmzaDataTable	= this;
-		
-		this.useCompressedPathVariable = (WPGMZA.restAPI.isCompressedPathVariableSupported && WPGMZA.settings.enable_compressed_path_variables);
-		this.method = (this.useCompressedPathVariable ? "GET" : "POST");
-		
-		if(this.getLanguageURL() == undefined || this.getLanguageURL() == "//cdn.datatables.net/plug-ins/1.10.12/i18n/English.json") 
-		{
-			this.dataTable			= $(this.dataTableElement).DataTable(settings);
-			this.dataTable.ajax.reload();
-		}
-		else{
-		
-			$.ajax(this.getLanguageURL(), {
-
-				success: function(response, status, xhr)
-				{
-					self.languageJSON = response; // TODO: This doesn't appear to go anywhere
-					
-					self.dataTable = $(self.dataTableElement).DataTable(settings);
-					self.dataTable.ajax.reload();
-				},
-				
-				error: function()
-				{
-					// TODO: Use complete instead
-					self.dataTable = $(self.dataTableElement).DataTable(settings);
-					self.dataTable.ajax.reload();
-				}
-				
-			  });
-		}
-	}
-	
-	WPGMZA.DataTable.prototype.getDataTableElement = function()
-	{
-		return $(this.element).find("table");
-	}
-	
-	/**
-	 * This function wraps the request so it doesn't collide with WP query vars,
-	 * it also adds the PHP class so that the controller knows which class to 
-	 * instantiate
-	 * @return object
-	 */
-	WPGMZA.DataTable.prototype.onAJAXRequest = function(data, settings)
-	{
-		// TODO: Move this to the REST API module and add useCompressedPathVariable
-		var params = {
-			"phpClass":	this.phpClass
-		};
-		
-		var attr = $(this.element).attr("data-wpgmza-ajax-parameters");
-		if(attr)
-			$.extend(params, JSON.parse(attr));
-		
-		return $.extend(data, params);
-	}
-	
-	WPGMZA.DataTable.prototype.onDataTableAjaxRequest = function(data, callback, settings) {
-		var self = this;
-		var element = this.element;
-		var route = $(element).attr("data-wpgmza-rest-api-route");
-		var params = this.onAJAXRequest(data, settings);
-		var draw = params.draw;
-		
-		delete params.draw;
-		
-		if(!route)
-			throw new Error("No data-wpgmza-rest-api-route attribute specified");
-		
-		var options = {
-			method: "POST",
-			useCompressedPathVariable: true,
-			data: params,
-			dataType: "json",
-			cache: !this.preventCaching,
-			beforeSend: function(xhr) {
-				// Put draw in header, for compressed requests
-				xhr.setRequestHeader("X-DataTables-Draw", draw);
-			},
-			success: function(response, status, xhr) {
-				
-				response.draw = draw;
-				self.lastResponse = response;
-				
-				callback(response);
-				self.onAJAXResponse(response);
-				
-			}
-		};
-		
-
-
-		return WPGMZA.restAPI.call(route, options);
-	}
-	
-	WPGMZA.DataTable.prototype.getDataTableSettings = function()
-	{
-		var self = this;
-		var element = this.element;
-		var options = {};
-		
-		if($(element).attr("data-wpgmza-datatable-options"))
-			options = JSON.parse($(element).attr("data-wpgmza-datatable-options"));
-	
-		options.deferLoading = true;
-		options.processing = true;
-		options.serverSide = true;
-		options.ajax = function(data, callback, settings) { 
-			return WPGMZA.DataTable.prototype.onDataTableAjaxRequest.apply(self, arguments); 
-		}
-		
-		if(WPGMZA.AdvancedTableDataTable && this instanceof WPGMZA.AdvancedTableDataTable && WPGMZA.settings.wpgmza_default_items)
-			options.iDisplayLength = parseInt(WPGMZA.settings.wpgmza_default_items);
-		
-		options.aLengthMenu = [[5, 10, 25, 50, 100, -1], ["5", "10", "25", "50", "100", WPGMZA.localized_strings.all]];
-		
-		var languageURL = this.getLanguageURL();
-		if(languageURL)
-			options.language = {
-				"url": languageURL
-			};
-		
-		return options;
-	}
-	
-	WPGMZA.DataTable.prototype.getLanguageURL = function()
-	{
-		if(!WPGMZA.locale)
-			return null;
-		
-		var languageURL;
-		
-		switch(WPGMZA.locale.substr(0, 2))
-		{
-			case "af":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Afrikaans.json";
-				break;
-
-			case "sq":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Albanian.json";
-				break;
-
-			case "am":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Amharic.json";
-				break;
-
-			case "ar":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Arabic.json";
-				break;
-
-			case "hy":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Armenian.json";
-				break;
-
-			case "az":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Azerbaijan.json";
-				break;
-
-			case "bn":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Bangla.json";
-				break;
-
-			case "eu":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Basque.json";
-				break;
-
-			case "be":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Belarusian.json";
-				break;
-
-			case "bg":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Bulgarian.json";
-				break;
-
-			case "ca":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Catalan.json";
-				break;
-
-			case "zh":
-				if(WPGMZA.locale == "zh_TW")
-					languageURL = WPGMZA.pluginDirURL + "languages/datatables/Chinese-traditional.json";
-				else
-					languageURL = "//cdn.datatables.net/plug-ins/1.10.12/i18n/Chinese.json";
-				break;
-
-			case "hr":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Croatian.json";
-				break;
-
-			case "cs":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Czech.json";
-				break;
-
-			case "da":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Danish.json";
-				break;
-
-			case "nl":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Dutch.json";
-				break;
-
-			/*case "en":
-				languageURL = "//cdn.datatables.net/plug-ins/1.10.12/i18n/English.json";
-				break;*/
-
-			case "et":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Estonian.json";
-				break;
-
-			case "fi":
-				if(WPGMZA.locale.match(/^fil/))
-					languageURL = WPGMZA.pluginDirURL + "languages/datatables/Filipino.json";
-				else
-					languageURL = WPGMZA.pluginDirURL + "languages/datatables/Finnish.json";
-				break;
-
-			case "fr":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/French.json";
-				break;
-
-			case "gl":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Galician.json";
-				break;
-
-			case "ka":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Georgian.json";
-				break;
-
-			case "de":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/German.json";
-				break;
-
-			case "el":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Greek.json";
-				break;
-
-			case "gu":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Gujarati.json";
-				break;
-
-			case "he":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Hebrew.json";
-				break;
-
-			case "hi":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Hindi.json";
-				break;
-
-			case "hu":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Hungarian.json";
-				break;
-
-			case "is":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Icelandic.json";
-				break;
-
-			/*case "id":
-				languageURL = "//cdn.datatables.net/plug-ins/1.10.12/i18n/Indonesian-Alternative.json";
-				break;*/
-			
-			case "id":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Indonesian.json";
-				break;
-
-			case "ga":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Irish.json";
-				break;
-
-			case "it":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Italian.json";
-				break;
-
-			case "ja":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Japanese.json";
-				break;
-
-			case "kk":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Kazakh.json";
-				break;
-
-			case "ko":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Korean.json";
-				break;
-
-			case "ky":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Kyrgyz.json";
-				break;
-
-			case "lv":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Latvian.json";
-				break;
-
-			case "lt":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Lithuanian.json";
-				break;
-
-			case "mk":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Macedonian.json";
-				break;
-
-			case "ml":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Malay.json";
-				break;
-
-			case "mn":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Mongolian.json";
-				break;
-
-			case "ne":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Nepali.json";
-				break;
-
-			case "nb":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Norwegian-Bokmal.json";
-				break;
-			
-			case "nn":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Norwegian-Nynorsk.json";
-				break;
-			
-			case "ps":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Pashto.json";
-				break;
-
-			case "fa":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Persian.json";
-				break;
-
-			case "pl":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Polish.json";
-				break;
-
-			case "pt":
-				if(WPGMZA.locale == "pt_BR")
-					languageURL = WPGMZA.pluginDirURL + "languages/datatables/Portuguese-Brasil.json";
-				else
-					languageURL = "//cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese.json";
-				break;
-			
-			case "ro":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Romanian.json";
-				break;
-
-			case "ru":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Russian.json";
-				break;
-
-			case "sr":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Serbian.json";
-				break;
-
-			case "si":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Sinhala.json";
-				break;
-
-			case "sk":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Slovak.json";
-				break;
-
-			case "sl":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Slovenian.json";
-				break;
-
-			case "es":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Spanish.json";
-				break;
-
-			case "sw":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Swahili.json";
-				break;
-
-			case "sv":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Swedish.json";
-				break;
-
-			case "ta":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Tamil.json";
-				break;
-
-			case "te":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/telugu.json";
-				break;
-
-			case "th":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Thai.json";
-				break;
-
-			case "tr":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Turkish.json";
-				break;
-
-			case "uk":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Ukrainian.json";
-				break;
-
-			case "ur":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Urdu.json";
-				break;
-
-			case "uz":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Uzbek.json";
-				break;
-
-			case "vi":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Vietnamese.json";
-				break;
-
-			case "cy":
-				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Welsh.json";
-				break;
-		}
-		
-		return languageURL;
-	}
-	
-	WPGMZA.DataTable.prototype.onAJAXResponse = function(response)
-	{
-		
-	}
-	
-	WPGMZA.DataTable.prototype.reload = function()
-	{
-		this.dataTable.ajax.reload(null, false); // null callback, false for resetPaging
-	}
-	
-});
-
-// js/v8/tables/admin-marker-datatable.js
-/**
- * @namespace WPGMZA
- * @module AdminMarkerDataTable
- * @requires WPGMZA.DataTable
- */
-jQuery(function($) {
-	
-	WPGMZA.AdminMarkerDataTable = function(element)
-	{
-		var self = this;
-		
-		this.preventCaching = true;
-		
-		WPGMZA.DataTable.call(this, element);
-		
-		// NB: Pro marker panel currently manages edit marker buttons
-		
-		$(element).on("click", "[data-delete-marker-id]", function(event) {
-			self.onDeleteMarker(event);
-		});
-		
-		$(element).find(".wpgmza.select_all_markers").on("click", function(event) {
-			self.onSelectAll(event);
-		});
-		
-		$(element).find(".wpgmza.bulk_delete").on("click", function(event) {
-			self.onBulkDelete(event);
-		});
-
-		$(element).on("click", "[data-center-marker-id]", function(event) {
-			self.onCenterMarker(event);
-		});
-	}
-	
-	WPGMZA.AdminMarkerDataTable.prototype = Object.create(WPGMZA.DataTable.prototype);
-	WPGMZA.AdminMarkerDataTable.prototype.constructor = WPGMZA.AdminMarkerDataTable;
-	
-	WPGMZA.AdminMarkerDataTable.createInstance = function(element)
-	{
-		return new WPGMZA.AdminMarkerDataTable(element);
-	}
-	
-	WPGMZA.AdminMarkerDataTable.prototype.getDataTableSettings = function()
-	{
-		var self = this;
-		var options = WPGMZA.DataTable.prototype.getDataTableSettings.call(this);
-		
-		options.createdRow = function(row, data, index)
-		{
-			var meta = self.lastResponse.meta[index];
-			row.wpgmzaMarkerData = meta;
-		}
-		
-		return options;
-	}
-	
-	WPGMZA.AdminMarkerDataTable.prototype.onEditMarker = function(event)
-	{
-		WPGMZA.animatedScroll("#wpgmaps_tabs_markers");
-	}
-	
-	WPGMZA.AdminMarkerDataTable.prototype.onDeleteMarker = function(event)
-	{
-		var self	= this;
-		var id		= $(event.currentTarget).attr("data-delete-marker-id");
-		
-		var data	= {
-			action: 'delete_marker',
-			security: WPGMZA.legacyajaxnonce,
-			map_id: WPGMZA.mapEditPage.map.id,
-			marker_id: id
-		};
-		
-		$.post(ajaxurl, data, function(response) {
-			
-			WPGMZA.mapEditPage.map.removeMarkerByID(id);
-			self.reload();
-			
-		});
-	}
-	
-	// NB: Move this to UGM
-	WPGMZA.AdminMarkerDataTable.prototype.onApproveMarker = function(event)
-	{
-		var self	= this;
-		var cur_id	= $(this).attr("id");
-		
-		var data = {
-			action:		'approve_marker',
-			security:	WPGMZA.legacyajaxnonce,
-			map_id:		WPGMZA.mapEditPage.map.id,
-			marker_id:	cur_id
-		};
-		$.post(ajaxurl, data, function (response) {
-			
-			
-			wpgmza_InitMap();
-			wpgmza_reinitialisetbl();
-
-		});
-	}
-	
-	WPGMZA.AdminMarkerDataTable.prototype.onSelectAll = function(event)
-	{
-		$(this.element).find("input[name='mark']").prop("checked", true);
-	}
-	
-	WPGMZA.AdminMarkerDataTable.prototype.onBulkDelete = function(event)
-	{
-		var self = this;
-		var ids = [];
-		var map = WPGMZA.maps[0];
-		
-		$(this.element).find("input[name='mark']:checked").each(function(index, el) {
-			var row = $(el).closest("tr")[0];
-			ids.push(row.wpgmzaMarkerData.id);
-		});
-		
-		ids.forEach(function(marker_id) {
-			var marker = map.getMarkerByID(marker_id);
-			
-			if(marker)
-				map.removeMarker(marker);
-		});
-		
-		WPGMZA.restAPI.call("/markers/", {
-			method: "DELETE",
-			data: {
-				ids: ids
-			},
-			complete: function() {
-				self.reload();
-			}
-		});
-	}
-
-	WPGMZA.AdminMarkerDataTable.prototype.onCenterMarker = function(event)
-	{
-		var id;
-
-		//Check if we have selected the center on marker button or called this function elsewhere 
-		if(event.currentTarget == undefined)
-		{
-			id = event;
-		}
-		else{
-			id = $(event.currentTarget).attr("data-center-marker-id");
-		}
-
-		var marker = WPGMZA.mapEditPage.map.getMarkerByID(id);
-		
-		if(marker){
-			var latLng = new WPGMZA.LatLng({
-				lat: marker.lat,
-				lng: marker.lng
-			});
-			
-			//Set a static zoom level
-			var zoom_value = 6;
-			WPGMZA.mapEditPage.map.setCenter(latLng);
-			WPGMZA.mapEditPage.map.setZoom(zoom_value);
-			WPGMZA.animateScroll("#wpgmaps_tabs_markers");
-		}
-
-
-	}
-	
-	$(document).ready(function(event) {
-		
-		$("[data-wpgmza-admin-marker-datatable]").each(function(index, el) {
-			WPGMZA.adminMarkerDataTable = WPGMZA.AdminMarkerDataTable.createInstance(el);
-		});
-		
-	});
-	
-});
-
 // js/v8/3rd-party-integration/integration.js
 /**
  * @namespace WPGMZA
@@ -8029,6 +7330,1981 @@ jQuery(function ($) {
 
 	// Allow the Pro module to extend and create the module, only create here when Pro isn't loaded
 	if(!WPGMZA.isProVersion() && !(/^6/.test(WPGMZA.pro_version))) WPGMZA.integrationModules.gutenberg = WPGMZA.Integration.Gutenberg.createInstance();
+});
+
+// js/v8/compatibility/astra-theme-compatibility.js
+/**
+ * @namespace WPGMZA
+ * @module AstraThemeCompatiblity
+ * @requires WPGMZA
+ * @description Prevents the document.body.onclick handler firing for markers, which causes the Astra theme to throw an error, preventing the infowindow from opening
+ */
+jQuery(function($) {
+	
+	$(document).on("load", function(event) {
+		
+		var parent = document.body.onclick;
+		
+		if(!parent)
+			return;
+		
+		document.body.onclick = function(event)
+		{
+			if(event.target instanceof WPGMZA.Marker)
+				return;
+			
+			parent(event);
+		}
+		
+	});
+	
+});
+
+// js/v8/compatibility/google-ui-compatibility.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleUICompatibility
+ * @requires WPGMZA
+ */ 
+jQuery(function($) {
+	
+	WPGMZA.GoogleUICompatibility = function()
+	{
+		var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+				   navigator.userAgent &&
+				   navigator.userAgent.indexOf('CriOS') == -1 &&
+				   navigator.userAgent.indexOf('FxiOS') == -1;
+		
+		if(!isSafari)
+		{
+			var style = $("<style id='wpgmza-google-ui-compatiblity-fix'/>");
+			style.html(".wpgmza_map img:not(button img) { padding:0 !important; }");
+			$(document.head).append(style);
+		}
+	}
+	
+	WPGMZA.googleUICompatibility = new WPGMZA.GoogleUICompatibility();
+	
+});
+
+// js/v8/google-maps/google-circle.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleCircle
+ * @requires WPGMZA.Circle
+ */
+jQuery(function($) {
+	
+	/**
+	 * Subclass, used when Google is the maps engine. <strong>Please <em>do not</em> call this constructor directly. Always use createInstance rather than instantiating this class directly.</strong> Using createInstance allows this class to be externally extensible.
+	 * @class WPGMZA.GoogleCircle
+	 * @constructor WPGMZA.GoogleCircle
+	 * @memberof WPGMZA
+	 * @augments WPGMZA.Circle
+	 * @see WPGMZA.Circle.createInstance
+	 */
+	WPGMZA.GoogleCircle = function(options, googleCircle)
+	{
+		var self = this;
+		
+		WPGMZA.Circle.call(this, options, googleCircle);
+		
+		if(googleCircle)
+		{
+			this.googleCircle = googleCircle;
+		}
+		else
+		{
+			this.googleCircle = new google.maps.Circle();
+			this.googleCircle.wpgmzaCircle = this;
+		}
+		
+		google.maps.event.addListener(this.googleCircle, "click", function() {
+			self.dispatchEvent({type: "click"});
+		});
+		
+		if(options)
+			this.setOptions(options);
+	}
+	
+	WPGMZA.GoogleCircle.prototype = Object.create(WPGMZA.Circle.prototype);
+	WPGMZA.GoogleCircle.prototype.constructor = WPGMZA.GoogleCircle;
+	
+	WPGMZA.GoogleCircle.prototype.setCenter = function(center)
+	{
+		WPGMZA.Circle.prototype.setCenter.apply(this, arguments);
+		
+		this.googleCircle.setCenter(center);
+	}
+	
+	WPGMZA.GoogleCircle.prototype.setRadius = function(radius)
+	{
+		WPGMZA.Circle.prototype.setRadius.apply(this, arguments);
+		
+		this.googleCircle.setRadius(parseFloat(radius) * 1000);
+	}
+	
+	WPGMZA.GoogleCircle.prototype.setVisible = function(visible)
+	{
+		this.googleCircle.setVisible(visible ? true : false);
+	}
+	
+	WPGMZA.GoogleCircle.prototype.setOptions = function(options)
+	{
+		var googleOptions = {};
+		
+		googleOptions = $.extend({}, options);
+		delete googleOptions.map;
+		delete googleOptions.center;
+		
+		if(options.center)
+			googleOptions.center = new google.maps.LatLng({
+				lat: parseFloat(options.center.lat),
+				lng: parseFloat(options.center.lng)
+			});
+			
+		if(options.radius)
+			googleOptions.radius = parseFloat(options.radius);
+		
+		if(options.color)
+			googleOptions.fillColor = options.color;
+		
+		if(options.opacity)
+		{
+			googleOptions.fillOpacity = parseFloat(options.opacity);
+			googleOptions.strokeOpacity = parseFloat(options.opacity);
+
+		}
+		
+		this.googleCircle.setOptions(googleOptions);
+		
+		if(options.map)
+			options.map.addCircle(this);
+	}
+	
+});
+
+// js/v8/google-maps/google-geocoder.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleGeocoder
+ * @requires WPGMZA.Geocoder
+ */
+jQuery(function($) {
+	
+	/**
+	 * Subclass, used when Google is the maps engine. <strong>Please <em>do not</em> call this constructor directly. Always use createInstance rather than instantiating this class directly.</strong> Using createInstance allows this class to be externally extensible.
+	 * @class WPGMZA.GoogleGeocoder
+	 * @constructor WPGMZA.GoogleGeocoder
+	 * @memberof WPGMZA
+	 * @augments WPGMZA.Geocoder
+	 * @see WPGMZA.Geocoder.createInstance
+	 */
+	WPGMZA.GoogleGeocoder = function()
+	{
+		WPGMZA.Geocoder.call(this);
+	}
+	
+	WPGMZA.GoogleGeocoder.prototype = Object.create(WPGMZA.Geocoder.prototype);
+	WPGMZA.GoogleGeocoder.prototype.constructor = WPGMZA.GoogleGeocoder;
+	
+	WPGMZA.GoogleGeocoder.prototype.getGoogleGeocoder = function()
+	{
+		if(WPGMZA.CloudAPI && WPGMZA.CloudAPI.isBeingUsed)
+			return new WPGMZA.CloudGeocoder();
+		
+		return new google.maps.Geocoder();
+	}
+	
+	WPGMZA.GoogleGeocoder.prototype.getLatLngFromAddress = function(options, callback)
+	{
+		if(!options || !options.address)
+			throw new Error("No address specified");
+		
+		if(WPGMZA.isLatLngString(options.address))
+			return WPGMZA.Geocoder.prototype.getLatLngFromAddress.call(this, options, callback);
+		
+		if(options.country)
+			options.componentRestrictions = {
+				country: options.country
+			};
+		
+		var geocoder = this.getGoogleGeocoder();
+		
+		geocoder.geocode(options, function(results, status) {
+			
+			if(status == google.maps.GeocoderStatus.OK || status == WPGMZA.CloudGeocoder.SUCCESS)
+			{
+				var location = results[0].geometry.location;
+				var latLng, bounds = null;
+				
+				latLng = {
+					lat: location.lat(),
+					lng: location.lng()
+				};
+				
+				if(bounds = results[0].geometry.bounds)
+				{
+					if(bounds instanceof google.maps.LatLngBounds)
+						bounds = WPGMZA.LatLngBounds.fromGoogleLatLngBounds(results[0].geometry.bounds);
+					else
+						bounds = WPGMZA.LatLngBounds.fromGoogleLatLngBoundsLiteral(results[0].geometry.bounds);
+				}
+				
+				var results = [
+					{
+						geometry: {
+							location: latLng
+						},
+						latLng: latLng,
+						lat: latLng.lat,
+						lng: latLng.lng,
+						bounds: bounds
+					}
+				];
+				
+				callback(results, WPGMZA.Geocoder.SUCCESS);
+			}
+			else
+			{
+				var nativeStatus = WPGMZA.Geocoder.FAIL;
+				
+				if(status == google.maps.GeocoderStatus.ZERO_RESULTS)
+					nativeStatus = WPGMZA.Geocoder.ZERO_RESULTS;
+				
+				callback(null, nativeStatus);
+			}
+		});
+	}
+	
+	WPGMZA.GoogleGeocoder.prototype.getAddressFromLatLng = function(options, callback)
+	{
+		if(!options || !options.latLng)
+			throw new Error("No latLng specified");
+		
+		var latLng = new WPGMZA.LatLng(options.latLng);
+		var geocoder = this.getGoogleGeocoder();
+		
+		var options = $.extend(options, {
+			location: {
+				lat: latLng.lat,
+				lng: latLng.lng
+			}
+		});
+		delete options.latLng;
+		
+		geocoder.geocode(options, function(results, status) {
+			
+			if(status !== "OK")
+				callback(null, WPGMZA.Geocoder.FAIL);
+			
+			if(!results || !results.length)
+				callback([], WPGMZA.Geocoder.NO_RESULTS);
+			
+			callback([results[0].formatted_address], WPGMZA.Geocoder.SUCCESS);
+			
+		});
+	}
+	
+});
+
+// js/v8/google-maps/google-html-overlay.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleHTMLOverlay
+ * @requires WPGMZA
+ */
+jQuery(function($) {
+	
+	// https://developers.google.com/maps/documentation/javascript/customoverlays
+	
+	if(WPGMZA.settings.engine && WPGMZA.settings.engine != "google-maps")
+		return;
+	
+	if(!window.google || !window.google.maps)
+		return;
+	
+	WPGMZA.GoogleHTMLOverlay = function(map)
+	{
+		this.element	= $("<div class='wpgmza-google-html-overlay'></div>");
+		
+		this.visible	= true;
+		this.position	= new WPGMZA.LatLng();
+		
+		this.setMap(map.googleMap);
+		this.wpgmzaMap = map;
+	}
+	
+	WPGMZA.GoogleHTMLOverlay.prototype = new google.maps.OverlayView();
+	
+	WPGMZA.GoogleHTMLOverlay.prototype.onAdd = function()
+	{
+		var panes = this.getPanes();
+		panes.overlayMouseTarget.appendChild(this.element[0]);
+		
+		/*google.maps.event.addDomListener(this.element, "click", function() {
+			
+		});*/
+	}
+	
+	WPGMZA.GoogleHTMLOverlay.prototype.onRemove = function()
+	{
+		if(this.element && $(this.element).parent().length)
+		{
+			$(this.element).remove();
+			this.element = null;
+		}
+	}
+	
+	WPGMZA.GoogleHTMLOverlay.prototype.draw = function()
+	{
+		this.updateElementPosition();
+	}
+	
+	/*WPGMZA.GoogleHTMLOverlay.prototype.setMap = function(map)
+	{
+		if(!(map instanceof WPGMZA.Map))
+			throw new Error("Map must be an instance of WPGMZA.Map");
+		
+		google.maps.OverlayView.prototype.setMap.call(this, map.googleMap);
+		
+		this.wpgmzaMap = map;
+	}*/
+	
+	/*WPGMZA.GoogleHTMLOverlay.prototype.getVisible = function()
+	{
+		return $(this.element).css("display") != "none";
+	}
+	
+	WPGMZA.GoogleHTMLOverlay.prototype.setVisible = function(visible)
+	{
+		$(this.element).css({
+			"display": (visible ? "block" : "none")
+		});
+	}*/
+	
+	/*WPGMZA.GoogleHTMLOverlay.prototype.getPosition = function()
+	{
+		return new WPGMZA.LatLng(this.position);
+	}
+	
+	WPGMZA.GoogleHTMLOverlay.prototype.setPosition = function(position)
+	{
+		if(!(position instanceof WPGMZA.LatLng))
+			throw new Error("Argument must be an instance of WPGMZA.LatLng");
+		
+		this.position = position;
+		this.updateElementPosition();
+	}*/
+	
+	WPGMZA.GoogleHTMLOverlay.prototype.updateElementPosition = function()
+	{
+		//var pixels = this.wpgmzaMap.latLngToPixels(this.position);
+		
+		var projection = this.getProjection();
+		
+		if(!projection)
+			return;
+		
+		var pixels = projection.fromLatLngToDivPixel(this.position.toGoogleLatLng());
+		
+		$(this.element).css({
+			"left": pixels.x,
+			"top": pixels.y
+		});
+	}
+});
+
+// js/v8/google-maps/google-info-window.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleInfoWindow
+ * @requires WPGMZA.InfoWindow
+ * @pro-requires WPGMZA.ProInfoWindow
+ */
+jQuery(function($) {
+	
+	var Parent;
+	
+	WPGMZA.GoogleInfoWindow = function(mapObject)
+	{
+		Parent.call(this, mapObject);
+		
+		this.setMapObject(mapObject);
+	}
+	
+	WPGMZA.GoogleInfoWindow.Z_INDEX		= 99;
+	
+	if(WPGMZA.isProVersion())
+		Parent = WPGMZA.ProInfoWindow;
+	else
+		Parent = WPGMZA.InfoWindow;
+	
+	WPGMZA.GoogleInfoWindow.prototype = Object.create(Parent.prototype);
+	WPGMZA.GoogleInfoWindow.prototype.constructor = WPGMZA.GoogleInfoWindow;
+	
+	WPGMZA.GoogleInfoWindow.prototype.setMapObject = function(mapObject)
+	{
+		if(mapObject instanceof WPGMZA.Marker)
+			this.googleObject = mapObject.googleMarker;
+		else if(mapObject instanceof WPGMZA.Polygon)
+			this.googleObject = mapObject.googlePolygon;
+		else if(mapObject instanceof WPGMZA.Polyline)
+			this.googleObject = mapObject.googlePolyline;
+	}
+	
+	WPGMZA.GoogleInfoWindow.prototype.createGoogleInfoWindow = function()
+	{
+		var self = this;
+		
+		if(this.googleInfoWindow)
+			return;
+		
+		this.googleInfoWindow = new google.maps.InfoWindow();
+		
+		this.googleInfoWindow.setZIndex(WPGMZA.GoogleInfoWindow.Z_INDEX);
+		
+		google.maps.event.addListener(this.googleInfoWindow, "domready", function(event) {
+			self.trigger("domready");
+		});
+		
+		google.maps.event.addListener(this.googleInfoWindow, "closeclick", function(event) {
+			
+			if(self.state == WPGMZA.InfoWindow.STATE_CLOSED)
+				return;
+			
+			self.state = WPGMZA.InfoWindow.STATE_CLOSED;
+			self.trigger("infowindowclose");
+			
+		});
+	}
+	
+	/**
+	 * Opens the info window
+	 * @return boolean FALSE if the info window should not & will not open, TRUE if it will
+	 */
+	WPGMZA.GoogleInfoWindow.prototype.open = function(map, mapObject)
+	{
+		var self = this;
+		
+		if(!Parent.prototype.open.call(this, map, mapObject))
+			return false;
+		
+		// Set parent for events to bubble up to
+		this.parent = map;
+		
+		this.createGoogleInfoWindow();
+		this.setMapObject(mapObject);
+
+		if(this.googleObject instanceof google.maps.Polygon)
+		{
+
+		}
+		else{
+			this.googleInfoWindow.open(
+				this.mapObject.map.googleMap,
+				this.googleObject
+			);
+		}
+		
+
+		
+		var guid = WPGMZA.guid();
+		var html = "<div id='" + guid + "'>" + this.content + "</div>";
+
+		this.googleInfoWindow.setContent(html);
+		
+		var intervalID;
+		intervalID = setInterval(function(event) {
+			
+			div = $("#" + guid);
+			
+			if(div.length)
+			{
+				clearInterval(intervalID);
+				
+				div[0].wpgmzaMapObject = self.mapObject;
+				div.addClass("wpgmza-infowindow");
+				
+				self.element = div[0];
+				self.trigger("infowindowopen");
+			}
+			
+		}, 50);
+		
+		return true;
+	}
+	
+	WPGMZA.GoogleInfoWindow.prototype.close = function()
+	{
+		if(!this.googleInfoWindow)
+			return;
+		
+		WPGMZA.InfoWindow.prototype.close.call(this);
+		
+		this.googleInfoWindow.close();
+	}
+	
+	WPGMZA.GoogleInfoWindow.prototype.setContent = function(html)
+	{
+		Parent.prototype.setContent.call(this, html);
+		
+		this.content = html;
+		
+		this.createGoogleInfoWindow();
+		
+		this.googleInfoWindow.setContent(html);
+	}
+	
+	WPGMZA.GoogleInfoWindow.prototype.setOptions = function(options)
+	{
+		Parent.prototype.setOptions.call(this, options);
+		
+		this.createGoogleInfoWindow();
+		
+		this.googleInfoWindow.setOptions(options);
+	}
+	
+});
+
+// js/v8/google-maps/google-map.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleMap
+ * @requires WPGMZA.Map
+ * @pro-requires WPGMZA.ProMap
+ */
+jQuery(function($) {
+	var Parent;
+	
+	/**
+	 * Constructor
+	 * @param element to contain the map
+	 */
+	WPGMZA.GoogleMap = function(element, options)
+	{
+		var self = this;
+		
+		Parent.call(this, element, options);
+		
+		if(!window.google)
+		{
+			var status = WPGMZA.googleAPIStatus;
+			var message = "Google API not loaded";
+			
+			if(status && status.message)
+				message += " - " + status.message;
+			
+			if(status.code == "USER_CONSENT_NOT_GIVEN")
+			{
+				return;
+			}
+			
+			$(element).html("<div class='notice notice-error'><p>" + WPGMZA.localized_strings.google_api_not_loaded + "<pre>" + message + "</pre></p></div>");
+			
+			throw new Error(message);
+		}
+		
+		this.loadGoogleMap();
+		
+		if(options)
+			this.setOptions(options, true);
+
+		google.maps.event.addListener(this.googleMap, "click", function(event) {
+			var wpgmzaEvent = new WPGMZA.Event("click");
+			wpgmzaEvent.latLng = {
+				lat: event.latLng.lat(),
+				lng: event.latLng.lng()
+			};
+			self.dispatchEvent(wpgmzaEvent);
+		});
+		
+		google.maps.event.addListener(this.googleMap, "rightclick", function(event) {
+			var wpgmzaEvent = new WPGMZA.Event("rightclick");
+			wpgmzaEvent.latLng = {
+				lat: event.latLng.lat(),
+				lng: event.latLng.lng()
+			};
+			self.dispatchEvent(wpgmzaEvent);
+		});
+		
+		google.maps.event.addListener(this.googleMap, "dragend", function(event) {
+			self.dispatchEvent("dragend");
+		});
+		
+		google.maps.event.addListener(this.googleMap, "zoom_changed", function(event) {
+			self.dispatchEvent("zoom_changed");
+			self.dispatchEvent("zoomchanged");
+		});
+		
+		// Idle event
+		google.maps.event.addListener(this.googleMap, "idle", function(event) {
+			self.onIdle(event);
+		});
+		
+		// Dispatch event
+		if(!WPGMZA.isProVersion())
+		{
+			this.trigger("init");
+			
+			this.dispatchEvent("created");
+			WPGMZA.events.dispatchEvent({type: "mapcreated", map: this});
+			
+			// Legacy event
+			$(this.element).trigger("wpgooglemaps_loaded");
+		}
+	}
+	
+	// If we're running the Pro version, inherit from ProMap, otherwise, inherit from Map
+	if(WPGMZA.isProVersion())
+	{
+		Parent = WPGMZA.ProMap;
+		WPGMZA.GoogleMap.prototype = Object.create(WPGMZA.ProMap.prototype);
+	}
+	else
+	{
+		Parent = WPGMZA.Map;
+		WPGMZA.GoogleMap.prototype = Object.create(WPGMZA.Map.prototype);
+	}
+	WPGMZA.GoogleMap.prototype.constructor = WPGMZA.GoogleMap;
+	
+	WPGMZA.GoogleMap.parseThemeData = function(raw)
+	{
+		var json;
+		
+		try{
+			json = JSON.parse(raw);	// Try to parse strict JSON
+		}catch(e) {
+			
+			try{
+				
+				json = eval(raw);	// Try to parse JS object
+				
+			}catch(e) {
+				
+				var str = raw;
+				
+				str = str.replace(/\\'/g, '\'');
+				str = str.replace(/\\"/g, '"');
+				str = str.replace(/\\0/g, '\0');
+				str = str.replace(/\\\\/g, '\\');
+				
+				try{
+					
+					json = eval(str);
+					
+				}catch(e) {
+					
+					console.warn("Couldn't parse theme data");
+				
+				return [];
+					
+				}
+				
+			}
+			
+		}
+		
+		return json;
+	}
+	
+	/**
+	 * Creates the Google Maps map
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.loadGoogleMap = function()
+	{
+		var self = this;
+		var options = this.settings.toGoogleMapsOptions();
+		
+		this.googleMap = new google.maps.Map(this.engineElement, options);
+		
+		google.maps.event.addListener(this.googleMap, "bounds_changed", function() { 
+			self.onBoundsChanged();
+		});
+		
+		if(this.settings.bicycle == 1)
+			this.enableBicycleLayer(true);
+		if(this.settings.traffic == 1)
+			this.enableTrafficLayer(true);
+		if(this.settings.transport == 1)
+			this.enablePublicTransportLayer(true);
+		this.showPointsOfInterest(this.settings.show_point_of_interest);
+		
+		// Move the loading wheel into the map element (it has to live outside in the HTML file because it'll be overwritten by Google otherwise)
+		$(this.engineElement).append($(this.element).find(".wpgmza-loader"));
+	}
+	
+	WPGMZA.GoogleMap.prototype.setOptions = function(options, initializing)
+	{
+		Parent.prototype.setOptions.call(this, options);
+		
+		if(options.scrollwheel)
+			delete options.scrollwheel;	// NB: Delete this when true, scrollwheel: true breaks gesture handling
+		
+		if(!initializing)
+		{
+			this.googleMap.setOptions(options);
+			return;
+		}
+		
+		var converted = $.extend(options, this.settings.toGoogleMapsOptions());
+		
+		var clone = $.extend({}, converted);
+		if(!clone.center instanceof google.maps.LatLng && (clone.center instanceof WPGMZA.LatLng || typeof clone.center == "object"))
+			clone.center = {
+				lat: parseFloat(clone.center.lat),
+				lng: parseFloat(clone.center.lng)
+			};
+		
+		if(parseInt(this.settings.hide_point_of_interest) == 1)
+		{
+			var noPoi = {
+				featureType: "poi",
+				elementType: "labels",
+				stylers: [
+					{
+						visibility: "off"
+					}
+				]
+			};
+			
+			if(!clone.styles)
+				clone.styles = [];
+			
+			clone.styles.push(noPoi);
+		}
+		
+		this.googleMap.setOptions(clone);
+	}
+	
+	/**
+	 * Adds the specified marker to this map
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.addMarker = function(marker)
+	{
+		marker.googleMarker.setMap(this.googleMap);
+		
+		Parent.prototype.addMarker.call(this, marker);
+	}
+	
+	/**
+	 * Removes the specified marker from this map
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.removeMarker = function(marker) {
+		
+		marker.googleMarker.setMap(null);
+		
+		Parent.prototype.removeMarker.call(this, marker);
+	}
+	
+	/**
+	 * Adds the specified polygon to this map
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.addPolygon = function(polygon)
+	{
+		polygon.googlePolygon.setMap(this.googleMap);
+		
+		Parent.prototype.addPolygon.call(this, polygon);
+	}
+	
+	/**
+	 * Removes the specified polygon from this map
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.removePolygon = function(polygon)
+	{
+		polygon.googlePolygon.setMap(null);
+		
+		Parent.prototype.removePolygon.call(this, polygon);
+	}
+	
+	/**
+	 * Adds the specified polyline to this map
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.addPolyline = function(polyline)
+	{
+		polyline.googlePolyline.setMap(this.googleMap);
+		
+		Parent.prototype.addPolyline.call(this, polyline);
+	}
+	
+	/**
+	 * Removes the specified polygon from this map
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.removePolyline = function(polyline)
+	{
+		polyline.googlePolyline.setMap(null);
+		
+		Parent.prototype.removePolyline.call(this, polyline);
+	}
+	
+	WPGMZA.GoogleMap.prototype.addCircle = function(circle)
+	{
+		circle.googleCircle.setMap(this.googleMap);
+		
+		Parent.prototype.addCircle.call(this, circle);
+	}
+	
+	WPGMZA.GoogleMap.prototype.removeCircle = function(circle)
+	{
+		circle.googleCircle.setMap(null);
+		
+		Parent.prototype.removeCircle.call(this, circle);
+	}
+	
+	WPGMZA.GoogleMap.prototype.addRectangle = function(rectangle)
+	{
+		rectangle.googleRectangle.setMap(this.googleMap);
+		
+		Parent.prototype.addRectangle.call(this, rectangle);
+	}
+	
+	WPGMZA.GoogleMap.prototype.removeRectangle = function(rectangle)
+	{
+		rectangle.googleRectangle.setMap(null);
+		
+		Parent.prototype.removeRectangle.call(this, rectangle);
+	}
+	
+	/**
+	 * Delegate for google maps getCenter
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.getCenter = function()
+	{
+		var latLng = this.googleMap.getCenter();
+		
+		return {
+			lat: latLng.lat(),
+			lng: latLng.lng()
+		};
+	}
+	
+	/**
+	 * Delegate for google maps setCenter
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.setCenter = function(latLng)
+	{
+		WPGMZA.Map.prototype.setCenter.call(this, latLng);
+		
+		if(latLng instanceof WPGMZA.LatLng)
+			this.googleMap.setCenter({
+				lat: latLng.lat,
+				lng: latLng.lng
+			});
+		else
+			this.googleMap.setCenter(latLng);
+	}
+	
+	/**
+	 * Delegate for google maps setPan
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.panTo = function(latLng)
+	{
+		if(latLng instanceof WPGMZA.LatLng)
+			this.googleMap.panTo({
+				lat: latLng.lat,
+				lng: latLng.lng
+			});
+		else
+			this.googleMap.panTo(latLng);
+	}
+	
+	/**
+	 * Delegate for google maps getCenter
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.getZoom = function()
+	{
+		return this.googleMap.getZoom();
+	}
+	
+	/**
+	 * Delegate for google maps getZoom
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.setZoom = function(value)
+	{
+		if(isNaN(value))
+			throw new Error("Value must not be NaN");
+		
+		return this.googleMap.setZoom(parseInt(value));
+	}
+	
+	/**
+	 * Gets the bounds
+	 * @return object
+	 */
+	WPGMZA.GoogleMap.prototype.getBounds = function()
+	{
+		var bounds = this.googleMap.getBounds();
+		var northEast = bounds.getNorthEast();
+		var southWest = bounds.getSouthWest();
+		
+		var nativeBounds = new WPGMZA.LatLngBounds({});
+		
+		nativeBounds.north = northEast.lat();
+		nativeBounds.south = southWest.lat();
+		nativeBounds.west = southWest.lng();
+		nativeBounds.east = northEast.lng();
+		
+		// Backward compatibility
+		nativeBounds.topLeft = {
+			lat: northEast.lat(),
+			lng: southWest.lng()
+		};
+		
+		nativeBounds.bottomRight = {
+			lat: southWest.lat(),
+			lng: northEast.lng()
+		};
+		
+		return nativeBounds;
+	}
+	
+	/**
+	 * Fit to given boundaries
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.fitBounds = function(southWest, northEast)
+	{
+		if(southWest instanceof WPGMZA.LatLng)
+			southWest = {lat: southWest.lat, lng: southWest.lng};
+		if(northEast instanceof WPGMZA.LatLng)
+			northEast = {lat: northEast.lat, lng: northEast.lng};
+		else if(southWest instanceof WPGMZA.LatLngBounds)
+		{
+			var bounds = southWest;
+			
+			southWest = {
+				lat: bounds.south,
+				lng: bounds.west
+			};
+			
+			northEast = {
+				lat: bounds.north,
+				lng: bounds.east
+			};
+		}
+		
+		var nativeBounds = new google.maps.LatLngBounds(southWest, northEast);
+		this.googleMap.fitBounds(nativeBounds);
+	}
+	
+	/**
+	 * Fit the map boundaries to visible markers
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.fitBoundsToVisibleMarkers = function()
+	{
+		var bounds = new google.maps.LatLngBounds();
+		for(var i = 0; i < this.markers.length; i++)
+		{
+			if(markers[i].getVisible())
+				bounds.extend(markers[i].getPosition());
+		}
+		this.googleMap.fitBounds(bounds);
+	}
+	
+	/**
+	 * Enables / disables the bicycle layer
+	 * @param enable boolean, enable or not
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.enableBicycleLayer = function(enable)
+	{
+		if(!this.bicycleLayer)
+			this.bicycleLayer = new google.maps.BicyclingLayer();
+		
+		this.bicycleLayer.setMap(
+			enable ? this.googleMap : null
+		);
+	}
+	
+	/**
+	 * Enables / disables the bicycle layer
+	 * @param enable boolean, enable or not
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.enableTrafficLayer = function(enable)
+	{
+		if(!this.trafficLayer)
+			this.trafficLayer = new google.maps.TrafficLayer();
+		
+		this.trafficLayer.setMap(
+			enable ? this.googleMap : null
+		);
+	}
+	
+	/**
+	 * Enables / disables the bicycle layer
+	 * @param enable boolean, enable or not
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.enablePublicTransportLayer = function(enable)
+	{
+		if(!this.publicTransportLayer)
+			this.publicTransportLayer = new google.maps.TransitLayer();
+		
+		this.publicTransportLayer.setMap(
+			enable ? this.googleMap : null
+		);
+	}
+	
+	/**
+	 * Shows / hides points of interest
+	 * @param show boolean, enable or not
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.showPointsOfInterest = function(show)
+	{
+		// TODO: This will bug the front end because there is no textarea with theme data
+		var text = $("textarea[name='theme_data']").val();
+		
+		if(!text)
+			return;
+		
+		var styles = JSON.parse(text);
+		
+		styles.push({
+			featureType: "poi",
+			stylers: [
+				{
+					visibility: (show ? "on" : "off")
+				}
+			]
+		});
+		
+		this.googleMap.setOptions({styles: styles});
+	}
+	
+	/**
+	 * Gets the min zoom of the map
+	 * @return int
+	 */
+	WPGMZA.GoogleMap.prototype.getMinZoom = function()
+	{
+		return parseInt(this.settings.min_zoom);
+	}
+	
+	/**
+	 * Sets the min zoom of the map
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.setMinZoom = function(value)
+	{
+		this.googleMap.setOptions({
+			minZoom: value,
+			maxZoom: this.getMaxZoom()
+		});
+	}
+	
+	/**
+	 * Gets the min zoom of the map
+	 * @return int
+	 */
+	WPGMZA.GoogleMap.prototype.getMaxZoom = function()
+	{
+		return parseInt(this.settings.max_zoom);
+	}
+	
+	/**
+	 * Sets the min zoom of the map
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.setMaxZoom = function(value)
+	{
+		this.googleMap.setOptions({
+			minZoom: this.getMinZoom(),
+			maxZoom: value
+		});
+	}
+	
+	WPGMZA.GoogleMap.prototype.latLngToPixels = function(latLng)
+	{
+		var map = this.googleMap;
+		var nativeLatLng = new google.maps.LatLng({
+			lat: parseFloat(latLng.lat),
+			lng: parseFloat(latLng.lng)
+		});
+		var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
+		var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
+		var scale = Math.pow(2, map.getZoom());
+		var worldPoint = map.getProjection().fromLatLngToPoint(nativeLatLng);
+		return {
+			x: (worldPoint.x - bottomLeft.x) * scale, 
+			y: (worldPoint.y - topRight.y) * scale
+		};
+	}
+	
+	WPGMZA.GoogleMap.prototype.pixelsToLatLng = function(x, y)
+	{
+		if(y == undefined)
+		{
+			if("x" in x && "y" in x)
+			{
+				y = x.y;
+				x = x.x;
+			}
+			else
+				console.warn("Y coordinate undefined in pixelsToLatLng (did you mean to pass 2 arguments?)");
+		}
+		
+		var map = this.googleMap;
+		var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
+		var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
+		var scale = Math.pow(2, map.getZoom());
+		var worldPoint = new google.maps.Point(x / scale + bottomLeft.x, y / scale + topRight.y);
+		var latLng = map.getProjection().fromPointToLatLng(worldPoint);
+		return {
+			lat: latLng.lat(),
+			lng: latLng.lng()
+		};
+	}
+	
+	/**
+	 * Handle the map element resizing
+	 * @return void
+	 */
+	WPGMZA.GoogleMap.prototype.onElementResized = function(event)
+	{
+		if(!this.googleMap)
+			return;
+		google.maps.event.trigger(this.googleMap, "resize");
+	}
+
+	WPGMZA.GoogleMap.prototype.enableAllInteractions = function()
+	{	
+		var options = {};
+
+		options.scrollwheel				= true;
+		options.draggable				= true;
+		options.disableDoubleClickZoom	= false;
+		
+		this.googleMap.setOptions(options);
+	}
+	
+});
+
+// js/v8/google-maps/google-marker.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleMarker
+ * @requires WPGMZA.Marker
+ * @pro-requires WPGMZA.ProMarker
+ */
+jQuery(function($) {
+	
+	var Parent;
+	
+	WPGMZA.GoogleMarker = function(row)
+	{
+		var self = this;
+		
+		Parent.call(this, row);
+		
+		this._opacity = 1.0;
+		
+		var settings = {};
+		if(row)
+		{
+			for(var name in row)
+			{
+				if(row[name] instanceof WPGMZA.LatLng)
+				{
+					settings[name] = row[name].toGoogleLatLng();
+				}
+				else if(row[name] instanceof WPGMZA.Map || name == "icon")
+				{
+					// NB: Ignore map here, it's not a google.maps.Map, Google would throw an exception
+					// NB: Ignore icon here, it conflicts with updateIcon in Pro
+				}
+				else
+					settings[name] = row[name];
+			}
+		}
+		
+		this.googleMarker = new google.maps.Marker(settings);
+		this.googleMarker.wpgmzaMarker = this;
+		
+		this.googleMarker.setPosition(new google.maps.LatLng({
+			lat: parseFloat(this.lat),
+			lng: parseFloat(this.lng)
+		}));
+			
+		// this.googleMarker.setLabel(this.settings.label);
+		
+		if(this.anim)
+			this.googleMarker.setAnimation(this.anim);
+		if(this.animation)
+			this.googleMarker.setAnimation(this.animation);
+			
+		google.maps.event.addListener(this.googleMarker, "click", function() {
+			self.dispatchEvent("click");
+			self.dispatchEvent("select");
+		});
+		
+		google.maps.event.addListener(this.googleMarker, "mouseover", function() {
+			self.dispatchEvent("mouseover");
+		});
+		
+		google.maps.event.addListener(this.googleMarker, "dragend", function() {
+			var googleMarkerPosition = self.googleMarker.getPosition();
+			
+			self.setPosition({
+				lat: googleMarkerPosition.lat(),
+				lng: googleMarkerPosition.lng()
+			});
+			
+			self.dispatchEvent({
+				type: "dragend",
+				latLng: self.getPosition()
+			});
+		});
+		
+		this.trigger("init");
+	}
+	
+	if(WPGMZA.isProVersion())
+		Parent = WPGMZA.ProMarker;
+	else
+		Parent = WPGMZA.Marker;
+	WPGMZA.GoogleMarker.prototype = Object.create(Parent.prototype);
+	WPGMZA.GoogleMarker.prototype.constructor = WPGMZA.GoogleMarker;
+	
+	Object.defineProperty(WPGMZA.GoogleMarker.prototype, "opacity", {
+		
+		"get": function() {
+			return this._opacity;
+		},
+		
+		"set": function(value) {
+			this._opacity = value;
+			this.googleMarker.setOpacity(value);
+		}
+		
+	});
+	
+	WPGMZA.GoogleMarker.prototype.setLabel = function(label)
+	{
+		if(!label)
+		{
+			this.googleMarker.setLabel(null);
+			return;
+		}
+		
+		this.googleMarker.setLabel({
+			text: label
+		});
+		
+		if(!this.googleMarker.getIcon())
+			this.googleMarker.setIcon(WPGMZA.settings.default_marker_icon);
+	}
+	
+	/**
+	 * Sets the position of the marker
+	 * @return void
+	 */
+	WPGMZA.GoogleMarker.prototype.setPosition = function(latLng)
+	{
+		Parent.prototype.setPosition.call(this, latLng);
+		this.googleMarker.setPosition({
+			lat: this.lat,
+			lng: this.lng
+		});
+	}
+	
+	/**
+	 * Sets the position offset of a marker
+	 * @return void
+	 */
+	WPGMZA.GoogleMarker.prototype.updateOffset = function()
+	{
+		var self = this;
+		var icon = this.googleMarker.getIcon();
+		var img = new Image();
+		var params;
+		var x = this._offset.x;
+		var y = this._offset.y;
+		
+		if(!icon)
+			icon = WPGMZA.settings.default_marker_icon;
+		
+		if(typeof icon == "string")
+			params = {
+				url: icon
+			};
+		else
+			params = icon;
+		
+		img.onload = function()
+		{
+			var defaultAnchor = {
+				x: img.width / 2,
+				y: img.height
+			};
+			
+			params.anchor = new google.maps.Point(defaultAnchor.x - x, defaultAnchor.y - y);
+			
+			self.googleMarker.setIcon(params);
+		}
+		
+		img.src = params.url;
+	}
+	
+	WPGMZA.GoogleMarker.prototype.setOptions = function(options)
+	{
+		this.googleMarker.setOptions(options);
+	}
+	
+	/**
+	 * Set the marker animation
+	 * @return void
+	 */
+	WPGMZA.GoogleMarker.prototype.setAnimation = function(animation)
+	{
+		Parent.prototype.setAnimation.call(this, animation);
+		this.googleMarker.setAnimation(animation);
+	}
+	
+	/**
+	 * Sets the visibility of the marker
+	 * @return void
+	 */
+	WPGMZA.GoogleMarker.prototype.setVisible = function(visible)
+	{
+		Parent.prototype.setVisible.call(this, visible);
+		
+		this.googleMarker.setVisible(visible ? true : false);
+	}
+	
+	WPGMZA.GoogleMarker.prototype.getVisible = function(visible)
+	{
+		return this.googleMarker.getVisible();
+	}
+	
+	WPGMZA.GoogleMarker.prototype.setDraggable = function(draggable)
+	{
+		this.googleMarker.setDraggable(draggable);
+	}
+	
+	WPGMZA.GoogleMarker.prototype.setOpacity = function(opacity)
+	{
+		this.googleMarker.setOpacity(opacity);
+	}
+	
+});
+
+// js/v8/google-maps/google-modern-store-locator-circle.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleModernStoreLocatorCircle
+ * @requires WPGMZA.ModernStoreLocatorCircle
+ */
+jQuery(function($) {
+	
+	WPGMZA.GoogleModernStoreLocatorCircle = function(map, settings)
+	{
+		var self = this;
+		
+		WPGMZA.ModernStoreLocatorCircle.call(this, map, settings);
+		
+		this.intervalID = setInterval(function() {
+			
+			var mapSize = {
+				width: $(self.mapElement).width(),
+				height: $(self.mapElement).height()
+			};
+			
+			if(mapSize.width == self.mapSize.width && mapSize.height == self.mapSize.height)
+				return;
+			
+			self.canvasLayer.resize_();
+			self.canvasLayer.draw();
+			
+			self.mapSize = mapSize;
+			
+		}, 1000);
+		
+		$(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function() {
+			
+			self.canvasLayer.resize_();
+			self.canvasLayer.draw();
+			
+		});
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype = Object.create(WPGMZA.ModernStoreLocatorCircle.prototype);
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.constructor = WPGMZA.GoogleModernStoreLocatorCircle;
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.initCanvasLayer = function()
+	{
+		var self = this;
+		
+		if(this.canvasLayer)
+		{
+			this.canvasLayer.setMap(null);
+			this.canvasLayer.setAnimate(false);
+		}
+		
+		this.canvasLayer = new CanvasLayer({
+			map: this.map.googleMap,
+			resizeHandler: function(event) {
+				self.onResize(event);
+			},
+			updateHandler: function(event) {
+				self.onUpdate(event);
+			},
+			animate: true,
+			resolutionScale: this.getResolutionScale()
+        });
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setOptions = function(options)
+	{
+		WPGMZA.ModernStoreLocatorCircle.prototype.setOptions.call(this, options);
+		
+		this.canvasLayer.scheduleUpdate();
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setPosition = function(position)
+	{
+		WPGMZA.ModernStoreLocatorCircle.prototype.setPosition.call(this, position);
+		
+		this.canvasLayer.scheduleUpdate();
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setRadius = function(radius)
+	{
+		WPGMZA.ModernStoreLocatorCircle.prototype.setRadius.call(this, radius);
+		
+		this.canvasLayer.scheduleUpdate();
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getTransformedRadius = function(km)
+	{
+		var multiplierAtEquator = 0.006395;
+		var spherical = google.maps.geometry.spherical;
+		
+		var center = this.settings.center;
+		var equator = new WPGMZA.LatLng({
+			lat: 0.0,
+			lng: 0.0
+		});
+		var latitude = new WPGMZA.LatLng({
+			lat: center.lat,
+			lng: 0.0
+		});
+		
+		var offsetAtEquator = spherical.computeOffset(equator.toGoogleLatLng(), km * 1000, 90);
+		var offsetAtLatitude = spherical.computeOffset(latitude.toGoogleLatLng(), km * 1000, 90);
+		
+		var factor = offsetAtLatitude.lng() / offsetAtEquator.lng();
+		var result = km * multiplierAtEquator * factor;
+		
+		if(isNaN(result))
+			throw new Error("here");
+		
+		return result;
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getCanvasDimensions = function()
+	{
+		return {
+			width: this.canvasLayer.canvas.width,
+			height: this.canvasLayer.canvas.height
+		};
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getWorldOriginOffset = function()
+	{
+		var projection = this.map.googleMap.getProjection();
+		var position = projection.fromLatLngToPoint(this.canvasLayer.getTopLeft());
+		
+		return {
+			x: -position.x,
+			y: -position.y
+		};
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getCenterPixels = function()
+	{
+		var center = new WPGMZA.LatLng(this.settings.center);
+		var projection = this.map.googleMap.getProjection();
+		return projection.fromLatLngToPoint(center.toGoogleLatLng());
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getContext = function(type)
+	{
+		return this.canvasLayer.canvas.getContext("2d");
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getScale = function()
+	{
+		return Math.pow(2, this.map.getZoom()) * this.getResolutionScale();
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setVisible = function(visible)
+	{
+		WPGMZA.ModernStoreLocatorCircle.prototype.setVisible.call(this, visible);
+		
+		this.canvasLayer.scheduleUpdate();
+	}
+	
+	WPGMZA.GoogleModernStoreLocatorCircle.prototype.destroy = function()
+	{
+		this.canvasLayer.setMap(null);
+		this.canvasLayer = null;
+		
+		clearInterval(this.intervalID);
+	}
+	
+});
+
+// js/v8/google-maps/google-modern-store-locator.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleModernStoreLocator
+ * @requires WPGMZA.ModernStoreLocator
+ */
+jQuery(function($) {
+	
+	WPGMZA.GoogleModernStoreLocator = function(map_id)
+	{
+		var googleMap, self = this;
+		
+		this.map = WPGMZA.getMapByID(map_id);
+		
+		WPGMZA.ModernStoreLocator.call(this, map_id);
+
+		var options = {
+			fields: ["name", "formatted_address"],
+			types: ["geocode"]
+		};
+		var restrict = wpgmaps_localize[map_id]["other_settings"]["wpgmza_store_locator_restrict"];
+		
+		this.addressInput = $(this.element).find(".addressInput, #addressInput")[0];
+		
+		if(this.addressInput)
+		{
+			if(restrict && restrict.length)
+				options.componentRestrictions = {
+					country: restrict
+				};
+			
+			this.autoComplete = new google.maps.places.Autocomplete(
+				this.addressInput,
+				options
+			);
+		}
+		
+		// Positioning for Google
+		this.map.googleMap.controls[google.maps.ControlPosition.TOP_CENTER].push(this.element);
+	}
+	
+	WPGMZA.GoogleModernStoreLocator.prototype = Object.create(WPGMZA.ModernStoreLocator.prototype);
+	WPGMZA.GoogleModernStoreLocator.prototype.constructor = WPGMZA.GoogleModernStoreLocator;
+	
+});
+
+// js/v8/google-maps/google-polygon.js
+/**
+ * @namespace WPGMZA
+ * @module GooglePolygon
+ * @requires WPGMZA.Polygon
+ * @pro-requires WPGMZA.ProPolygon
+ */
+jQuery(function($) {
+	
+	var Parent;
+	
+	WPGMZA.GooglePolygon = function(options, googlePolygon)
+	{
+		var self = this;
+		
+		Parent.call(this, options, googlePolygon);
+		
+		if(googlePolygon)
+		{
+			this.googlePolygon = googlePolygon;
+		}
+		else
+		{
+			this.googlePolygon = new google.maps.Polygon();
+			
+			if(options)
+			{
+				var googleOptions = $.extend({}, options);
+				
+				if(options.polydata)
+					googleOptions.paths = this.parseGeometry(options.polydata);
+				
+				if(options.linecolor)
+					googleOptions.strokeColor = "#" + options.linecolor;
+				
+				if(options.lineopacity)
+					googleOptions.strokeOpacity = parseFloat(options.lineopacity);
+				
+				if(options.fillcolor)
+					googleOptions.fillColor = "#" + options.fillcolor;
+				
+				if(options.opacity)
+					googleOptions.fillOpacity = parseFloat(options.opacity);
+				
+				this.googlePolygon.setOptions(googleOptions);
+			}
+		}
+		
+		this.googlePolygon.wpgmzaPolygon = this;
+			
+		google.maps.event.addListener(this.googlePolygon, "click", function() {
+			self.dispatchEvent({type: "click"});
+		});
+	}
+	
+	if(WPGMZA.isProVersion())
+		Parent = WPGMZA.ProPolygon;
+	else
+		Parent = WPGMZA.Polygon;
+		
+	WPGMZA.GooglePolygon.prototype = Object.create(Parent.prototype);
+	WPGMZA.GooglePolygon.prototype.constructor = WPGMZA.GooglePolygon;
+	
+	/**
+	 * Returns true if the polygon is editable
+	 * @return void
+	 */
+	WPGMZA.GooglePolygon.prototype.getEditable = function()
+	{
+		return this.googlePolygon.getOptions().editable;
+	}
+	
+	/**
+	 * Sets the editable state of the polygon
+	 * @return void
+	 */
+	WPGMZA.GooglePolygon.prototype.setEditable = function(value)
+	{
+		this.googlePolygon.setOptions({editable: value});
+	}
+	
+	/**
+	 * Returns the polygon represented by a JSON object
+	 * @return object
+	 */
+	WPGMZA.GooglePolygon.prototype.toJSON = function()
+	{
+		var result = WPGMZA.Polygon.prototype.toJSON.call(this);
+		
+		result.points = [];
+		
+		// TODO: Support holes using multiple paths
+		var path = this.googlePolygon.getPath();
+		for(var i = 0; i < path.getLength(); i++)
+		{
+			var latLng = path.getAt(i);
+			result.points.push({
+				lat: latLng.lat(),
+				lng: latLng.lng()
+			});
+		}
+		
+		return result;
+	}
+	
+});
+
+// js/v8/google-maps/google-polyline.js
+/**
+ * @namespace WPGMZA
+ * @module GooglePolyline
+ * @requires WPGMZA.Polyline
+ */
+jQuery(function($) {
+	
+	WPGMZA.GooglePolyline = function(options, googlePolyline)
+	{
+		var self = this;
+		
+		WPGMZA.Polyline.call(this, options, googlePolyline);
+		
+		if(googlePolyline)
+		{
+			this.googlePolyline = googlePolyline;
+		}
+		else
+		{
+			this.googlePolyline = new google.maps.Polyline(this.settings);			
+			
+			if(options)
+			{
+				var googleOptions = $.extend({}, options);
+				
+				if(options.polydata)
+					googleOptions.path = this.parseGeometry(options.polydata);
+				
+				if(options.linecolor)
+					googleOptions.strokeColor = "#" + options.linecolor;
+				
+				if(options.linethickness)
+					googleOptions.strokeWeight = parseInt(options.linethickness);
+				
+				if(options.opacity)
+					googleOptions.strokeOpacity = parseFloat(options.opacity);
+			}
+			
+			if(options && options.polydata)
+			{
+				var path = this.parseGeometry(options.polydata);
+				this.setPoints(path);
+			}
+		}
+		
+		this.googlePolyline.wpgmzaPolyline = this;
+		
+		google.maps.event.addListener(this.googlePolyline, "click", function() {
+			self.dispatchEvent({type: "click"});
+		});
+	}
+	
+	WPGMZA.GooglePolyline.prototype = Object.create(WPGMZA.Polyline.prototype);
+	WPGMZA.GooglePolyline.prototype.constructor = WPGMZA.GooglePolyline;
+	
+	WPGMZA.GooglePolyline.prototype.setEditable = function(value)
+	{
+		this.googlePolyline.setOptions({editable: value});
+	}
+	
+	WPGMZA.GooglePolyline.prototype.setPoints = function(points)
+	{
+		this.googlePolyline.setOptions({path: points});
+	}
+	
+	WPGMZA.GooglePolyline.prototype.toJSON = function()
+	{
+		var result = WPGMZA.Polyline.prototype.toJSON.call(this);
+		
+		result.points = [];
+		
+		var path = this.googlePolyline.getPath();
+		for(var i = 0; i < path.getLength(); i++)
+		{
+			var latLng = path.getAt(i);
+			result.points.push({
+				lat: latLng.lat(),
+				lng: latLng.lng()
+			});
+		}
+		
+		return result;
+	}
+	
+});
+
+// js/v8/google-maps/google-text.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleText
+ * @requires WPGMZA.Text
+ */
+jQuery(function($) {
+	
+	WPGMZA.GoogleText = function(options)
+	{
+		WPGMZA.Text.apply(this, arguments);
+		
+		this.overlay = new WPGMZA.GoogleTextOverlay(options);
+	}
+	
+	WPGMZA.extend(WPGMZA.GoogleText, WPGMZA.Text);
+	
+});
+
+// js/v8/google-maps/google-text-overlay.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleTextOverlay
+ * @requires WPGMZA.GoogleText
+ */
+jQuery(function($) {
+	
+	WPGMZA.GoogleTextOverlay = function(options)
+	{
+		this.element = $("<div class='wpgmza-google-text-overlay'><div class='wpgmza-inner'></div></div>");
+		
+		if(!options)
+			options = {};
+		
+		if(options.position)
+			this.position = options.position;
+		
+		if(options.text)
+			this.element.find(".wpgmza-inner").text(options.text);
+		
+		if(options.map)
+			this.setMap(options.map.googleMap);
+	}
+	
+	if(window.google && google.maps && google.maps.OverlayView)
+		WPGMZA.GoogleTextOverlay.prototype = new google.maps.OverlayView();
+	
+	WPGMZA.GoogleTextOverlay.prototype.onAdd = function()
+	{
+		var overlayProjection = this.getProjection();
+		var position = overlayProjection.fromLatLngToDivPixel(this.position.toGoogleLatLng());
+		
+		this.element.css({
+			position: "absolute",
+			left: position.x + "px",
+			top: position.y + "px"
+		});
+
+		var panes = this.getPanes();
+		panes.floatPane.appendChild(this.element[0]);
+	}
+	
+	WPGMZA.GoogleTextOverlay.prototype.draw = function()
+	{
+		var overlayProjection = this.getProjection();
+		var position = overlayProjection.fromLatLngToDivPixel(this.position.toGoogleLatLng());
+		
+		this.element.css({
+			position: "absolute",
+			left: position.x + "px",
+			top: position.y + "px"
+		});
+	}
+	
+	WPGMZA.GoogleTextOverlay.prototype.onRemove = function()
+	{
+		this.element.remove();
+	}
+	
+	WPGMZA.GoogleTextOverlay.prototype.hide = function()
+	{
+		this.element.hide();
+	}
+	
+	WPGMZA.GoogleTextOverlay.prototype.show = function()
+	{
+		this.element.show();
+	}
+	
+	WPGMZA.GoogleTextOverlay.prototype.toggle = function()
+	{
+		if(this.element.is(":visible"))
+			this.element.hide();
+		else
+			this.element.show();
+	}
+	
+});
+
+// js/v8/google-maps/google-vertex-context-menu.js
+/**
+ * @namespace WPGMZA
+ * @module GoogleVertexContextMenu
+ * @requires wpgmza_api_call
+ */
+jQuery(function($) {
+	
+	if(WPGMZA.settings.engine != "google-maps")
+		return;
+	
+	if(WPGMZA.googleAPIStatus && WPGMZA.googleAPIStatus.code == "USER_CONSENT_NOT_GIVEN")
+		return;
+	
+	WPGMZA.GoogleVertexContextMenu = function(mapEditPage)
+	{
+		var self = this;
+		
+		this.mapEditPage = mapEditPage;
+		
+		this.element = document.createElement("div");
+		this.element.className = "wpgmza-vertex-context-menu";
+		this.element.innerHTML = "Delete";
+		
+		google.maps.event.addDomListener(this.element, "click", function(event) {
+			self.removeVertex();
+			event.preventDefault();
+			event.stopPropagation();
+			return false;
+		});
+	}
+	
+	WPGMZA.GoogleVertexContextMenu.prototype = new google.maps.OverlayView();
+	
+	WPGMZA.GoogleVertexContextMenu.prototype.onAdd = function()
+	{
+		var self = this;
+		var map = this.getMap();
+		
+		this.getPanes().floatPane.appendChild(this.element);
+		this.divListener = google.maps.event.addDomListener(map.getDiv(), "mousedown", function(e) {
+			if(e.target != self.element)
+				self.close();
+		}, true);
+	}
+	
+	WPGMZA.GoogleVertexContextMenu.prototype.onRemove = function()
+	{
+		google.maps.event.removeListener(this.divListener);
+		this.element.parentNode.removeChild(this.element);
+		
+		this.set("position");
+		this.set("path");
+		this.set("vertex");
+	}
+	
+	WPGMZA.GoogleVertexContextMenu.prototype.open = function(map, path, vertex)
+	{
+		this.set('position', path.getAt(vertex));
+		this.set('path', path);
+		this.set('vertex', vertex);
+		this.setMap(map);
+		this.draw();
+	}
+	
+	WPGMZA.GoogleVertexContextMenu.prototype.close = function()
+	{
+		this.setMap(null);
+	}
+	
+	WPGMZA.GoogleVertexContextMenu.prototype.draw = function()
+	{
+		var position = this.get('position');
+		var projection = this.getProjection();
+
+		if (!position || !projection)
+		  return;
+
+		var point = projection.fromLatLngToDivPixel(position);
+		this.element.style.top = point.y + 'px';
+		this.element.style.left = point.x + 'px';
+	}
+	
+	WPGMZA.GoogleVertexContextMenu.prototype.removeVertex = function()
+	{
+		var path = this.get('path');
+		var vertex = this.get('vertex');
+
+		if (!path || vertex == undefined) {
+		  this.close();
+		  return;
+		}
+
+		path.removeAt(vertex);
+		this.close();
+	}
+	
 });
 
 // js/v8/open-layers/ol-circle.js
@@ -9944,1922 +11220,645 @@ jQuery(function($) {
 	
 });
 
-// js/v8/google-maps/google-circle.js
+// js/v8/tables/datatable.js
 /**
  * @namespace WPGMZA
- * @module GoogleCircle
- * @requires WPGMZA.Circle
- */
-jQuery(function($) {
-	
-	/**
-	 * Subclass, used when Google is the maps engine. <strong>Please <em>do not</em> call this constructor directly. Always use createInstance rather than instantiating this class directly.</strong> Using createInstance allows this class to be externally extensible.
-	 * @class WPGMZA.GoogleCircle
-	 * @constructor WPGMZA.GoogleCircle
-	 * @memberof WPGMZA
-	 * @augments WPGMZA.Circle
-	 * @see WPGMZA.Circle.createInstance
-	 */
-	WPGMZA.GoogleCircle = function(options, googleCircle)
-	{
-		var self = this;
-		
-		WPGMZA.Circle.call(this, options, googleCircle);
-		
-		if(googleCircle)
-		{
-			this.googleCircle = googleCircle;
-		}
-		else
-		{
-			this.googleCircle = new google.maps.Circle();
-			this.googleCircle.wpgmzaCircle = this;
-		}
-		
-		google.maps.event.addListener(this.googleCircle, "click", function() {
-			self.dispatchEvent({type: "click"});
-		});
-		
-		if(options)
-			this.setOptions(options);
-	}
-	
-	WPGMZA.GoogleCircle.prototype = Object.create(WPGMZA.Circle.prototype);
-	WPGMZA.GoogleCircle.prototype.constructor = WPGMZA.GoogleCircle;
-	
-	WPGMZA.GoogleCircle.prototype.setCenter = function(center)
-	{
-		WPGMZA.Circle.prototype.setCenter.apply(this, arguments);
-		
-		this.googleCircle.setCenter(center);
-	}
-	
-	WPGMZA.GoogleCircle.prototype.setRadius = function(radius)
-	{
-		WPGMZA.Circle.prototype.setRadius.apply(this, arguments);
-		
-		this.googleCircle.setRadius(parseFloat(radius) * 1000);
-	}
-	
-	WPGMZA.GoogleCircle.prototype.setVisible = function(visible)
-	{
-		this.googleCircle.setVisible(visible ? true : false);
-	}
-	
-	WPGMZA.GoogleCircle.prototype.setOptions = function(options)
-	{
-		var googleOptions = {};
-		
-		googleOptions = $.extend({}, options);
-		delete googleOptions.map;
-		delete googleOptions.center;
-		
-		if(options.center)
-			googleOptions.center = new google.maps.LatLng({
-				lat: parseFloat(options.center.lat),
-				lng: parseFloat(options.center.lng)
-			});
-			
-		if(options.radius)
-			googleOptions.radius = parseFloat(options.radius);
-		
-		if(options.color)
-			googleOptions.fillColor = options.color;
-		
-		if(options.opacity)
-		{
-			googleOptions.fillOpacity = parseFloat(options.opacity);
-			googleOptions.strokeOpacity = parseFloat(options.opacity);
-
-		}
-		
-		this.googleCircle.setOptions(googleOptions);
-		
-		if(options.map)
-			options.map.addCircle(this);
-	}
-	
-});
-
-// js/v8/google-maps/google-geocoder.js
-/**
- * @namespace WPGMZA
- * @module GoogleGeocoder
- * @requires WPGMZA.Geocoder
- */
-jQuery(function($) {
-	
-	/**
-	 * Subclass, used when Google is the maps engine. <strong>Please <em>do not</em> call this constructor directly. Always use createInstance rather than instantiating this class directly.</strong> Using createInstance allows this class to be externally extensible.
-	 * @class WPGMZA.GoogleGeocoder
-	 * @constructor WPGMZA.GoogleGeocoder
-	 * @memberof WPGMZA
-	 * @augments WPGMZA.Geocoder
-	 * @see WPGMZA.Geocoder.createInstance
-	 */
-	WPGMZA.GoogleGeocoder = function()
-	{
-		WPGMZA.Geocoder.call(this);
-	}
-	
-	WPGMZA.GoogleGeocoder.prototype = Object.create(WPGMZA.Geocoder.prototype);
-	WPGMZA.GoogleGeocoder.prototype.constructor = WPGMZA.GoogleGeocoder;
-	
-	WPGMZA.GoogleGeocoder.prototype.getGoogleGeocoder = function()
-	{
-		if(WPGMZA.CloudAPI && WPGMZA.CloudAPI.isBeingUsed)
-			return new WPGMZA.CloudGeocoder();
-		
-		return new google.maps.Geocoder();
-	}
-	
-	WPGMZA.GoogleGeocoder.prototype.getLatLngFromAddress = function(options, callback)
-	{
-		if(!options || !options.address)
-			throw new Error("No address specified");
-		
-		if(WPGMZA.isLatLngString(options.address))
-			return WPGMZA.Geocoder.prototype.getLatLngFromAddress.call(this, options, callback);
-		
-		if(options.country)
-			options.componentRestrictions = {
-				country: options.country
-			};
-		
-		var geocoder = this.getGoogleGeocoder();
-		
-		geocoder.geocode(options, function(results, status) {
-			
-			if(status == google.maps.GeocoderStatus.OK || status == WPGMZA.CloudGeocoder.SUCCESS)
-			{
-				var location = results[0].geometry.location;
-				var latLng, bounds = null;
-				
-				latLng = {
-					lat: location.lat(),
-					lng: location.lng()
-				};
-				
-				if(bounds = results[0].geometry.bounds)
-				{
-					if(bounds instanceof google.maps.LatLngBounds)
-						bounds = WPGMZA.LatLngBounds.fromGoogleLatLngBounds(results[0].geometry.bounds);
-					else
-						bounds = WPGMZA.LatLngBounds.fromGoogleLatLngBoundsLiteral(results[0].geometry.bounds);
-				}
-				
-				var results = [
-					{
-						geometry: {
-							location: latLng
-						},
-						latLng: latLng,
-						lat: latLng.lat,
-						lng: latLng.lng,
-						bounds: bounds
-					}
-				];
-				
-				callback(results, WPGMZA.Geocoder.SUCCESS);
-			}
-			else
-			{
-				var nativeStatus = WPGMZA.Geocoder.FAIL;
-				
-				if(status == google.maps.GeocoderStatus.ZERO_RESULTS)
-					nativeStatus = WPGMZA.Geocoder.ZERO_RESULTS;
-				
-				callback(null, nativeStatus);
-			}
-		});
-	}
-	
-	WPGMZA.GoogleGeocoder.prototype.getAddressFromLatLng = function(options, callback)
-	{
-		if(!options || !options.latLng)
-			throw new Error("No latLng specified");
-		
-		var latLng = new WPGMZA.LatLng(options.latLng);
-		var geocoder = this.getGoogleGeocoder();
-		
-		var options = $.extend(options, {
-			location: {
-				lat: latLng.lat,
-				lng: latLng.lng
-			}
-		});
-		delete options.latLng;
-		
-		geocoder.geocode(options, function(results, status) {
-			
-			if(status !== "OK")
-				callback(null, WPGMZA.Geocoder.FAIL);
-			
-			if(!results || !results.length)
-				callback([], WPGMZA.Geocoder.NO_RESULTS);
-			
-			callback([results[0].formatted_address], WPGMZA.Geocoder.SUCCESS);
-			
-		});
-	}
-	
-});
-
-// js/v8/google-maps/google-html-overlay.js
-/**
- * @namespace WPGMZA
- * @module GoogleHTMLOverlay
+ * @module DataTable
  * @requires WPGMZA
  */
 jQuery(function($) {
 	
-	// https://developers.google.com/maps/documentation/javascript/customoverlays
-	
-	if(WPGMZA.settings.engine && WPGMZA.settings.engine != "google-maps")
-		return;
-	
-	if(!window.google || !window.google.maps)
-		return;
-	
-	WPGMZA.GoogleHTMLOverlay = function(map)
+	WPGMZA.DataTable = function(element)
 	{
-		this.element	= $("<div class='wpgmza-google-html-overlay'></div>");
-		
-		this.visible	= true;
-		this.position	= new WPGMZA.LatLng();
-		
-		this.setMap(map.googleMap);
-		this.wpgmzaMap = map;
-	}
-	
-	WPGMZA.GoogleHTMLOverlay.prototype = new google.maps.OverlayView();
-	
-	WPGMZA.GoogleHTMLOverlay.prototype.onAdd = function()
-	{
-		var panes = this.getPanes();
-		panes.overlayMouseTarget.appendChild(this.element[0]);
-		
-		/*google.maps.event.addDomListener(this.element, "click", function() {
-			
-		});*/
-	}
-	
-	WPGMZA.GoogleHTMLOverlay.prototype.onRemove = function()
-	{
-		if(this.element && $(this.element).parent().length)
+		var self = this;
+		if(!$.fn.dataTable)
 		{
-			$(this.element).remove();
-			this.element = null;
+			console.warn("The dataTables library is not loaded. Cannot create a dataTable. Did you enable 'Do not enqueue dataTables'?");
+			
+			if(WPGMZA.settings.wpgmza_do_not_enqueue_datatables && WPGMZA.getCurrentPage() == WPGMZA.PAGE_MAP_EDIT)
+				alert("You have selected 'Do not enqueue DataTables' in WP Google Maps' settings. No 3rd party software is loading the DataTables library. Because of this, the marker table cannot load. Please uncheck this option to use the marker table.");
+			
+			return;
 		}
-	}
-	
-	WPGMZA.GoogleHTMLOverlay.prototype.draw = function()
-	{
-		this.updateElementPosition();
-	}
-	
-	/*WPGMZA.GoogleHTMLOverlay.prototype.setMap = function(map)
-	{
-		if(!(map instanceof WPGMZA.Map))
-			throw new Error("Map must be an instance of WPGMZA.Map");
 		
-		google.maps.OverlayView.prototype.setMap.call(this, map.googleMap);
-		
-		this.wpgmzaMap = map;
-	}*/
-	
-	/*WPGMZA.GoogleHTMLOverlay.prototype.getVisible = function()
-	{
-		return $(this.element).css("display") != "none";
-	}
-	
-	WPGMZA.GoogleHTMLOverlay.prototype.setVisible = function(visible)
-	{
-		$(this.element).css({
-			"display": (visible ? "block" : "none")
-		});
-	}*/
-	
-	/*WPGMZA.GoogleHTMLOverlay.prototype.getPosition = function()
-	{
-		return new WPGMZA.LatLng(this.position);
-	}
-	
-	WPGMZA.GoogleHTMLOverlay.prototype.setPosition = function(position)
-	{
-		if(!(position instanceof WPGMZA.LatLng))
-			throw new Error("Argument must be an instance of WPGMZA.LatLng");
-		
-		this.position = position;
-		this.updateElementPosition();
-	}*/
-	
-	WPGMZA.GoogleHTMLOverlay.prototype.updateElementPosition = function()
-	{
-		//var pixels = this.wpgmzaMap.latLngToPixels(this.position);
-		
-		var projection = this.getProjection();
-		
-		if(!projection)
-			return;
-		
-		var pixels = projection.fromLatLngToDivPixel(this.position.toGoogleLatLng());
-		
-		$(this.element).css({
-			"left": pixels.x,
-			"top": pixels.y
-		});
-	}
-});
-
-// js/v8/google-maps/google-info-window.js
-/**
- * @namespace WPGMZA
- * @module GoogleInfoWindow
- * @requires WPGMZA.InfoWindow
- * @pro-requires WPGMZA.ProInfoWindow
- */
-jQuery(function($) {
-	
-	var Parent;
-	
-	WPGMZA.GoogleInfoWindow = function(mapObject)
-	{
-		Parent.call(this, mapObject);
-		
-		this.setMapObject(mapObject);
-	}
-	
-	WPGMZA.GoogleInfoWindow.Z_INDEX		= 99;
-	
-	if(WPGMZA.isProVersion())
-		Parent = WPGMZA.ProInfoWindow;
-	else
-		Parent = WPGMZA.InfoWindow;
-	
-	WPGMZA.GoogleInfoWindow.prototype = Object.create(Parent.prototype);
-	WPGMZA.GoogleInfoWindow.prototype.constructor = WPGMZA.GoogleInfoWindow;
-	
-	WPGMZA.GoogleInfoWindow.prototype.setMapObject = function(mapObject)
-	{
-		if(mapObject instanceof WPGMZA.Marker)
-			this.googleObject = mapObject.googleMarker;
-		else if(mapObject instanceof WPGMZA.Polygon)
-			this.googleObject = mapObject.googlePolygon;
-		else if(mapObject instanceof WPGMZA.Polyline)
-			this.googleObject = mapObject.googlePolyline;
-	}
-	
-	WPGMZA.GoogleInfoWindow.prototype.createGoogleInfoWindow = function()
-	{
-		var self = this;
-		
-		if(this.googleInfoWindow)
-			return;
-		
-		this.googleInfoWindow = new google.maps.InfoWindow();
-		
-		this.googleInfoWindow.setZIndex(WPGMZA.GoogleInfoWindow.Z_INDEX);
-		
-		google.maps.event.addListener(this.googleInfoWindow, "domready", function(event) {
-			self.trigger("domready");
-		});
-		
-		google.maps.event.addListener(this.googleInfoWindow, "closeclick", function(event) {
-			
-			if(self.state == WPGMZA.InfoWindow.STATE_CLOSED)
-				return;
-			
-			self.state = WPGMZA.InfoWindow.STATE_CLOSED;
-			self.trigger("infowindowclose");
-			
-		});
-	}
-	
-	/**
-	 * Opens the info window
-	 * @return boolean FALSE if the info window should not & will not open, TRUE if it will
-	 */
-	WPGMZA.GoogleInfoWindow.prototype.open = function(map, mapObject)
-	{
-		var self = this;
-		
-		if(!Parent.prototype.open.call(this, map, mapObject))
-			return false;
-		
-		// Set parent for events to bubble up to
-		this.parent = map;
-		
-		this.createGoogleInfoWindow();
-		this.setMapObject(mapObject);
-
-		if(this.googleObject instanceof google.maps.Polygon)
+		if($.fn.dataTable.ext)
+			$.fn.dataTable.ext.errMode = "throw";
+		else
 		{
+			var version = $.fn.dataTable.version ? $.fn.dataTable.version : "unknown";
+			
+			console.warn("You appear to be running an outdated or modified version of the dataTables library. This may cause issues with table functionality. This is usually caused by 3rd party software loading an older version of DataTables. The loaded version is " + version + ", we recommend version 1.10.12 or above.");
+		}
+		
+		this.element = element;
+		this.element.wpgmzaDataTable = this;
+		this.dataTableElement = this.getDataTableElement();
 
+		var settings = this.getDataTableSettings();
+		
+		this.phpClass			= $(element).attr("data-wpgmza-php-class");
+		this.wpgmzaDataTable	= this;
+		
+		this.useCompressedPathVariable = (WPGMZA.restAPI.isCompressedPathVariableSupported && WPGMZA.settings.enable_compressed_path_variables);
+		this.method = (this.useCompressedPathVariable ? "GET" : "POST");
+		
+		if(this.getLanguageURL() == undefined || this.getLanguageURL() == "//cdn.datatables.net/plug-ins/1.10.12/i18n/English.json") 
+		{
+			this.dataTable			= $(this.dataTableElement).DataTable(settings);
+			this.dataTable.ajax.reload();
 		}
 		else{
-			this.googleInfoWindow.open(
-				this.mapObject.map.googleMap,
-				this.googleObject
-			);
-		}
 		
+			$.ajax(this.getLanguageURL(), {
 
-		
-		var guid = WPGMZA.guid();
-		var html = "<div id='" + guid + "'>" + this.content + "</div>";
-
-		this.googleInfoWindow.setContent(html);
-		
-		var intervalID;
-		intervalID = setInterval(function(event) {
-			
-			div = $("#" + guid);
-			
-			if(div.length)
-			{
-				clearInterval(intervalID);
-				
-				div[0].wpgmzaMapObject = self.mapObject;
-				div.addClass("wpgmza-infowindow");
-				
-				self.element = div[0];
-				self.trigger("infowindowopen");
-			}
-			
-		}, 50);
-		
-		return true;
-	}
-	
-	WPGMZA.GoogleInfoWindow.prototype.close = function()
-	{
-		if(!this.googleInfoWindow)
-			return;
-		
-		WPGMZA.InfoWindow.prototype.close.call(this);
-		
-		this.googleInfoWindow.close();
-	}
-	
-	WPGMZA.GoogleInfoWindow.prototype.setContent = function(html)
-	{
-		Parent.prototype.setContent.call(this, html);
-		
-		this.content = html;
-		
-		this.createGoogleInfoWindow();
-		
-		this.googleInfoWindow.setContent(html);
-	}
-	
-	WPGMZA.GoogleInfoWindow.prototype.setOptions = function(options)
-	{
-		Parent.prototype.setOptions.call(this, options);
-		
-		this.createGoogleInfoWindow();
-		
-		this.googleInfoWindow.setOptions(options);
-	}
-	
-});
-
-// js/v8/google-maps/google-map.js
-/**
- * @namespace WPGMZA
- * @module GoogleMap
- * @requires WPGMZA.Map
- * @pro-requires WPGMZA.ProMap
- */
-jQuery(function($) {
-	var Parent;
-	
-	/**
-	 * Constructor
-	 * @param element to contain the map
-	 */
-	WPGMZA.GoogleMap = function(element, options)
-	{
-		var self = this;
-		
-		Parent.call(this, element, options);
-		
-		if(!window.google)
-		{
-			var status = WPGMZA.googleAPIStatus;
-			var message = "Google API not loaded";
-			
-			if(status && status.message)
-				message += " - " + status.message;
-			
-			if(status.code == "USER_CONSENT_NOT_GIVEN")
-			{
-				return;
-			}
-			
-			$(element).html("<div class='notice notice-error'><p>" + WPGMZA.localized_strings.google_api_not_loaded + "<pre>" + message + "</pre></p></div>");
-			
-			throw new Error(message);
-		}
-		
-		this.loadGoogleMap();
-		
-		if(options)
-			this.setOptions(options, true);
-
-		google.maps.event.addListener(this.googleMap, "click", function(event) {
-			var wpgmzaEvent = new WPGMZA.Event("click");
-			wpgmzaEvent.latLng = {
-				lat: event.latLng.lat(),
-				lng: event.latLng.lng()
-			};
-			self.dispatchEvent(wpgmzaEvent);
-		});
-		
-		google.maps.event.addListener(this.googleMap, "rightclick", function(event) {
-			var wpgmzaEvent = new WPGMZA.Event("rightclick");
-			wpgmzaEvent.latLng = {
-				lat: event.latLng.lat(),
-				lng: event.latLng.lng()
-			};
-			self.dispatchEvent(wpgmzaEvent);
-		});
-		
-		google.maps.event.addListener(this.googleMap, "dragend", function(event) {
-			self.dispatchEvent("dragend");
-		});
-		
-		google.maps.event.addListener(this.googleMap, "zoom_changed", function(event) {
-			self.dispatchEvent("zoom_changed");
-			self.dispatchEvent("zoomchanged");
-		});
-		
-		// Idle event
-		google.maps.event.addListener(this.googleMap, "idle", function(event) {
-			self.onIdle(event);
-		});
-		
-		// Dispatch event
-		if(!WPGMZA.isProVersion())
-		{
-			this.trigger("init");
-			
-			this.dispatchEvent("created");
-			WPGMZA.events.dispatchEvent({type: "mapcreated", map: this});
-			
-			// Legacy event
-			$(this.element).trigger("wpgooglemaps_loaded");
-		}
-	}
-	
-	// If we're running the Pro version, inherit from ProMap, otherwise, inherit from Map
-	if(WPGMZA.isProVersion())
-	{
-		Parent = WPGMZA.ProMap;
-		WPGMZA.GoogleMap.prototype = Object.create(WPGMZA.ProMap.prototype);
-	}
-	else
-	{
-		Parent = WPGMZA.Map;
-		WPGMZA.GoogleMap.prototype = Object.create(WPGMZA.Map.prototype);
-	}
-	WPGMZA.GoogleMap.prototype.constructor = WPGMZA.GoogleMap;
-	
-	WPGMZA.GoogleMap.parseThemeData = function(raw)
-	{
-		var json;
-		
-		try{
-			json = JSON.parse(raw);	// Try to parse strict JSON
-		}catch(e) {
-			
-			try{
-				
-				json = eval(raw);	// Try to parse JS object
-				
-			}catch(e) {
-				
-				var str = raw;
-				
-				str = str.replace(/\\'/g, '\'');
-				str = str.replace(/\\"/g, '"');
-				str = str.replace(/\\0/g, '\0');
-				str = str.replace(/\\\\/g, '\\');
-				
-				try{
+				success: function(response, status, xhr)
+				{
+					self.languageJSON = response; // TODO: This doesn't appear to go anywhere
 					
-					json = eval(str);
-					
-				}catch(e) {
-					
-					console.warn("Couldn't parse theme data");
+					self.dataTable = $(self.dataTableElement).DataTable(settings);
+					self.dataTable.ajax.reload();
+				},
 				
-				return [];
-					
+				error: function()
+				{
+					// TODO: Use complete instead
+					self.dataTable = $(self.dataTableElement).DataTable(settings);
+					self.dataTable.ajax.reload();
 				}
 				
-			}
-			
+			  });
 		}
-		
-		return json;
+	}
+	
+	WPGMZA.DataTable.prototype.getDataTableElement = function()
+	{
+		return $(this.element).find("table");
 	}
 	
 	/**
-	 * Creates the Google Maps map
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.loadGoogleMap = function()
-	{
-		var self = this;
-		var options = this.settings.toGoogleMapsOptions();
-		
-		this.googleMap = new google.maps.Map(this.engineElement, options);
-		
-		google.maps.event.addListener(this.googleMap, "bounds_changed", function() { 
-			self.onBoundsChanged();
-		});
-		
-		if(this.settings.bicycle == 1)
-			this.enableBicycleLayer(true);
-		if(this.settings.traffic == 1)
-			this.enableTrafficLayer(true);
-		if(this.settings.transport == 1)
-			this.enablePublicTransportLayer(true);
-		this.showPointsOfInterest(this.settings.show_point_of_interest);
-		
-		// Move the loading wheel into the map element (it has to live outside in the HTML file because it'll be overwritten by Google otherwise)
-		$(this.engineElement).append($(this.element).find(".wpgmza-loader"));
-	}
-	
-	WPGMZA.GoogleMap.prototype.setOptions = function(options, initializing)
-	{
-		Parent.prototype.setOptions.call(this, options);
-		
-		if(options.scrollwheel)
-			delete options.scrollwheel;	// NB: Delete this when true, scrollwheel: true breaks gesture handling
-		
-		if(!initializing)
-		{
-			this.googleMap.setOptions(options);
-			return;
-		}
-		
-		var converted = $.extend(options, this.settings.toGoogleMapsOptions());
-		
-		var clone = $.extend({}, converted);
-		if(!clone.center instanceof google.maps.LatLng && (clone.center instanceof WPGMZA.LatLng || typeof clone.center == "object"))
-			clone.center = {
-				lat: parseFloat(clone.center.lat),
-				lng: parseFloat(clone.center.lng)
-			};
-		
-		if(this.settings.hide_point_of_interest == "1")
-		{
-			var noPoi = {
-				featureType: "poi",
-				elementType: "labels",
-				stylers: [
-					{
-						visibility: "off"
-					}
-				]
-			};
-			
-			if(!clone.styles)
-				clone.styles = [];
-			
-			clone.styles.push(noPoi);
-		}
-		
-		this.googleMap.setOptions(clone);
-	}
-	
-	/**
-	 * Adds the specified marker to this map
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.addMarker = function(marker)
-	{
-		marker.googleMarker.setMap(this.googleMap);
-		
-		Parent.prototype.addMarker.call(this, marker);
-	}
-	
-	/**
-	 * Removes the specified marker from this map
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.removeMarker = function(marker) {
-		
-		marker.googleMarker.setMap(null);
-		
-		Parent.prototype.removeMarker.call(this, marker);
-	}
-	
-	/**
-	 * Adds the specified polygon to this map
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.addPolygon = function(polygon)
-	{
-		polygon.googlePolygon.setMap(this.googleMap);
-		
-		Parent.prototype.addPolygon.call(this, polygon);
-	}
-	
-	/**
-	 * Removes the specified polygon from this map
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.removePolygon = function(polygon)
-	{
-		polygon.googlePolygon.setMap(null);
-		
-		Parent.prototype.removePolygon.call(this, polygon);
-	}
-	
-	/**
-	 * Adds the specified polyline to this map
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.addPolyline = function(polyline)
-	{
-		polyline.googlePolyline.setMap(this.googleMap);
-		
-		Parent.prototype.addPolyline.call(this, polyline);
-	}
-	
-	/**
-	 * Removes the specified polygon from this map
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.removePolyline = function(polyline)
-	{
-		polyline.googlePolyline.setMap(null);
-		
-		Parent.prototype.removePolyline.call(this, polyline);
-	}
-	
-	WPGMZA.GoogleMap.prototype.addCircle = function(circle)
-	{
-		circle.googleCircle.setMap(this.googleMap);
-		
-		Parent.prototype.addCircle.call(this, circle);
-	}
-	
-	WPGMZA.GoogleMap.prototype.removeCircle = function(circle)
-	{
-		circle.googleCircle.setMap(null);
-		
-		Parent.prototype.removeCircle.call(this, circle);
-	}
-	
-	WPGMZA.GoogleMap.prototype.addRectangle = function(rectangle)
-	{
-		rectangle.googleRectangle.setMap(this.googleMap);
-		
-		Parent.prototype.addRectangle.call(this, rectangle);
-	}
-	
-	WPGMZA.GoogleMap.prototype.removeRectangle = function(rectangle)
-	{
-		rectangle.googleRectangle.setMap(null);
-		
-		Parent.prototype.removeRectangle.call(this, rectangle);
-	}
-	
-	/**
-	 * Delegate for google maps getCenter
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.getCenter = function()
-	{
-		var latLng = this.googleMap.getCenter();
-		
-		return {
-			lat: latLng.lat(),
-			lng: latLng.lng()
-		};
-	}
-	
-	/**
-	 * Delegate for google maps setCenter
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.setCenter = function(latLng)
-	{
-		WPGMZA.Map.prototype.setCenter.call(this, latLng);
-		
-		if(latLng instanceof WPGMZA.LatLng)
-			this.googleMap.setCenter({
-				lat: latLng.lat,
-				lng: latLng.lng
-			});
-		else
-			this.googleMap.setCenter(latLng);
-	}
-	
-	/**
-	 * Delegate for google maps setPan
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.panTo = function(latLng)
-	{
-		if(latLng instanceof WPGMZA.LatLng)
-			this.googleMap.panTo({
-				lat: latLng.lat,
-				lng: latLng.lng
-			});
-		else
-			this.googleMap.panTo(latLng);
-	}
-	
-	/**
-	 * Delegate for google maps getCenter
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.getZoom = function()
-	{
-		return this.googleMap.getZoom();
-	}
-	
-	/**
-	 * Delegate for google maps getZoom
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.setZoom = function(value)
-	{
-		if(isNaN(value))
-			throw new Error("Value must not be NaN");
-		
-		return this.googleMap.setZoom(parseInt(value));
-	}
-	
-	/**
-	 * Gets the bounds
+	 * This function wraps the request so it doesn't collide with WP query vars,
+	 * it also adds the PHP class so that the controller knows which class to 
+	 * instantiate
 	 * @return object
 	 */
-	WPGMZA.GoogleMap.prototype.getBounds = function()
+	WPGMZA.DataTable.prototype.onAJAXRequest = function(data, settings)
 	{
-		var bounds = this.googleMap.getBounds();
-		var northEast = bounds.getNorthEast();
-		var southWest = bounds.getSouthWest();
-		
-		var nativeBounds = new WPGMZA.LatLngBounds({});
-		
-		nativeBounds.north = northEast.lat();
-		nativeBounds.south = southWest.lat();
-		nativeBounds.west = southWest.lng();
-		nativeBounds.east = northEast.lng();
-		
-		// Backward compatibility
-		nativeBounds.topLeft = {
-			lat: northEast.lat(),
-			lng: southWest.lng()
+		// TODO: Move this to the REST API module and add useCompressedPathVariable
+		var params = {
+			"phpClass":	this.phpClass
 		};
 		
-		nativeBounds.bottomRight = {
-			lat: southWest.lat(),
-			lng: northEast.lng()
-		};
+		var attr = $(this.element).attr("data-wpgmza-ajax-parameters");
+		if(attr)
+			$.extend(params, JSON.parse(attr));
 		
-		return nativeBounds;
+		return $.extend(data, params);
 	}
 	
-	/**
-	 * Fit to given boundaries
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.fitBounds = function(southWest, northEast)
-	{
-		if(southWest instanceof WPGMZA.LatLng)
-			southWest = {lat: southWest.lat, lng: southWest.lng};
-		if(northEast instanceof WPGMZA.LatLng)
-			northEast = {lat: northEast.lat, lng: northEast.lng};
-		else if(southWest instanceof WPGMZA.LatLngBounds)
-		{
-			var bounds = southWest;
-			
-			southWest = {
-				lat: bounds.south,
-				lng: bounds.west
-			};
-			
-			northEast = {
-				lat: bounds.north,
-				lng: bounds.east
-			};
-		}
+	WPGMZA.DataTable.prototype.onDataTableAjaxRequest = function(data, callback, settings) {
+		var self = this;
+		var element = this.element;
+		var route = $(element).attr("data-wpgmza-rest-api-route");
+		var params = this.onAJAXRequest(data, settings);
+		var draw = params.draw;
 		
-		var nativeBounds = new google.maps.LatLngBounds(southWest, northEast);
-		this.googleMap.fitBounds(nativeBounds);
-	}
-	
-	/**
-	 * Fit the map boundaries to visible markers
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.fitBoundsToVisibleMarkers = function()
-	{
-		var bounds = new google.maps.LatLngBounds();
-		for(var i = 0; i < this.markers.length; i++)
-		{
-			if(markers[i].getVisible())
-				bounds.extend(markers[i].getPosition());
-		}
-		this.googleMap.fitBounds(bounds);
-	}
-	
-	/**
-	 * Enables / disables the bicycle layer
-	 * @param enable boolean, enable or not
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.enableBicycleLayer = function(enable)
-	{
-		if(!this.bicycleLayer)
-			this.bicycleLayer = new google.maps.BicyclingLayer();
+		delete params.draw;
 		
-		this.bicycleLayer.setMap(
-			enable ? this.googleMap : null
-		);
-	}
-	
-	/**
-	 * Enables / disables the bicycle layer
-	 * @param enable boolean, enable or not
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.enableTrafficLayer = function(enable)
-	{
-		if(!this.trafficLayer)
-			this.trafficLayer = new google.maps.TrafficLayer();
+		if(!route)
+			throw new Error("No data-wpgmza-rest-api-route attribute specified");
 		
-		this.trafficLayer.setMap(
-			enable ? this.googleMap : null
-		);
-	}
-	
-	/**
-	 * Enables / disables the bicycle layer
-	 * @param enable boolean, enable or not
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.enablePublicTransportLayer = function(enable)
-	{
-		if(!this.publicTransportLayer)
-			this.publicTransportLayer = new google.maps.TransitLayer();
-		
-		this.publicTransportLayer.setMap(
-			enable ? this.googleMap : null
-		);
-	}
-	
-	/**
-	 * Shows / hides points of interest
-	 * @param show boolean, enable or not
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.showPointsOfInterest = function(show)
-	{
-		// TODO: This will bug the front end because there is no textarea with theme data
-		var text = $("textarea[name='theme_data']").val();
-		
-		if(!text)
-			return;
-		
-		var styles = JSON.parse(text);
-		
-		styles.push({
-			featureType: "poi",
-			stylers: [
-				{
-					visibility: (show ? "on" : "off")
-				}
-			]
-		});
-		
-		this.googleMap.setOptions({styles: styles});
-	}
-	
-	/**
-	 * Gets the min zoom of the map
-	 * @return int
-	 */
-	WPGMZA.GoogleMap.prototype.getMinZoom = function()
-	{
-		return parseInt(this.settings.min_zoom);
-	}
-	
-	/**
-	 * Sets the min zoom of the map
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.setMinZoom = function(value)
-	{
-		this.googleMap.setOptions({
-			minZoom: value,
-			maxZoom: this.getMaxZoom()
-		});
-	}
-	
-	/**
-	 * Gets the min zoom of the map
-	 * @return int
-	 */
-	WPGMZA.GoogleMap.prototype.getMaxZoom = function()
-	{
-		return parseInt(this.settings.max_zoom);
-	}
-	
-	/**
-	 * Sets the min zoom of the map
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.setMaxZoom = function(value)
-	{
-		this.googleMap.setOptions({
-			minZoom: this.getMinZoom(),
-			maxZoom: value
-		});
-	}
-	
-	WPGMZA.GoogleMap.prototype.latLngToPixels = function(latLng)
-	{
-		var map = this.googleMap;
-		var nativeLatLng = new google.maps.LatLng({
-			lat: parseFloat(latLng.lat),
-			lng: parseFloat(latLng.lng)
-		});
-		var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
-		var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
-		var scale = Math.pow(2, map.getZoom());
-		var worldPoint = map.getProjection().fromLatLngToPoint(nativeLatLng);
-		return {
-			x: (worldPoint.x - bottomLeft.x) * scale, 
-			y: (worldPoint.y - topRight.y) * scale
-		};
-	}
-	
-	WPGMZA.GoogleMap.prototype.pixelsToLatLng = function(x, y)
-	{
-		if(y == undefined)
-		{
-			if("x" in x && "y" in x)
-			{
-				y = x.y;
-				x = x.x;
+		var options = {
+			method: "POST",
+			useCompressedPathVariable: true,
+			data: params,
+			dataType: "json",
+			cache: !this.preventCaching,
+			beforeSend: function(xhr) {
+				// Put draw in header, for compressed requests
+				xhr.setRequestHeader("X-DataTables-Draw", draw);
+			},
+			success: function(response, status, xhr) {
+				
+				response.draw = draw;
+				self.lastResponse = response;
+				
+				callback(response);
+				self.onAJAXResponse(response);
+				
 			}
-			else
-				console.warn("Y coordinate undefined in pixelsToLatLng (did you mean to pass 2 arguments?)");
-		}
-		
-		var map = this.googleMap;
-		var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
-		var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
-		var scale = Math.pow(2, map.getZoom());
-		var worldPoint = new google.maps.Point(x / scale + bottomLeft.x, y / scale + topRight.y);
-		var latLng = map.getProjection().fromPointToLatLng(worldPoint);
-		return {
-			lat: latLng.lat(),
-			lng: latLng.lng()
 		};
+		
+
+
+		return WPGMZA.restAPI.call(route, options);
 	}
 	
-	/**
-	 * Handle the map element resizing
-	 * @return void
-	 */
-	WPGMZA.GoogleMap.prototype.onElementResized = function(event)
+	WPGMZA.DataTable.prototype.getDataTableSettings = function()
 	{
-		if(!this.googleMap)
-			return;
-		google.maps.event.trigger(this.googleMap, "resize");
-	}
-
-	WPGMZA.GoogleMap.prototype.enableAllInteractions = function()
-	{	
+		var self = this;
+		var element = this.element;
 		var options = {};
-
-		options.scrollwheel				= true;
-		options.draggable				= true;
-		options.disableDoubleClickZoom	= false;
 		
-		this.googleMap.setOptions(options);
+		if($(element).attr("data-wpgmza-datatable-options"))
+			options = JSON.parse($(element).attr("data-wpgmza-datatable-options"));
+	
+		options.deferLoading = true;
+		options.processing = true;
+		options.serverSide = true;
+		options.ajax = function(data, callback, settings) { 
+			return WPGMZA.DataTable.prototype.onDataTableAjaxRequest.apply(self, arguments); 
+		}
+		
+		if(WPGMZA.AdvancedTableDataTable && this instanceof WPGMZA.AdvancedTableDataTable && WPGMZA.settings.wpgmza_default_items)
+			options.iDisplayLength = parseInt(WPGMZA.settings.wpgmza_default_items);
+		
+		options.aLengthMenu = [[5, 10, 25, 50, 100, -1], ["5", "10", "25", "50", "100", WPGMZA.localized_strings.all]];
+		
+		var languageURL = this.getLanguageURL();
+		if(languageURL)
+			options.language = {
+				"url": languageURL
+			};
+		
+		return options;
+	}
+	
+	WPGMZA.DataTable.prototype.getLanguageURL = function()
+	{
+		if(!WPGMZA.locale)
+			return null;
+		
+		var languageURL;
+		
+		switch(WPGMZA.locale.substr(0, 2))
+		{
+			case "af":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Afrikaans.json";
+				break;
+
+			case "sq":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Albanian.json";
+				break;
+
+			case "am":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Amharic.json";
+				break;
+
+			case "ar":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Arabic.json";
+				break;
+
+			case "hy":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Armenian.json";
+				break;
+
+			case "az":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Azerbaijan.json";
+				break;
+
+			case "bn":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Bangla.json";
+				break;
+
+			case "eu":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Basque.json";
+				break;
+
+			case "be":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Belarusian.json";
+				break;
+
+			case "bg":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Bulgarian.json";
+				break;
+
+			case "ca":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Catalan.json";
+				break;
+
+			case "zh":
+				if(WPGMZA.locale == "zh_TW")
+					languageURL = WPGMZA.pluginDirURL + "languages/datatables/Chinese-traditional.json";
+				else
+					languageURL = "//cdn.datatables.net/plug-ins/1.10.12/i18n/Chinese.json";
+				break;
+
+			case "hr":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Croatian.json";
+				break;
+
+			case "cs":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Czech.json";
+				break;
+
+			case "da":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Danish.json";
+				break;
+
+			case "nl":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Dutch.json";
+				break;
+
+			/*case "en":
+				languageURL = "//cdn.datatables.net/plug-ins/1.10.12/i18n/English.json";
+				break;*/
+
+			case "et":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Estonian.json";
+				break;
+
+			case "fi":
+				if(WPGMZA.locale.match(/^fil/))
+					languageURL = WPGMZA.pluginDirURL + "languages/datatables/Filipino.json";
+				else
+					languageURL = WPGMZA.pluginDirURL + "languages/datatables/Finnish.json";
+				break;
+
+			case "fr":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/French.json";
+				break;
+
+			case "gl":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Galician.json";
+				break;
+
+			case "ka":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Georgian.json";
+				break;
+
+			case "de":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/German.json";
+				break;
+
+			case "el":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Greek.json";
+				break;
+
+			case "gu":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Gujarati.json";
+				break;
+
+			case "he":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Hebrew.json";
+				break;
+
+			case "hi":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Hindi.json";
+				break;
+
+			case "hu":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Hungarian.json";
+				break;
+
+			case "is":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Icelandic.json";
+				break;
+
+			/*case "id":
+				languageURL = "//cdn.datatables.net/plug-ins/1.10.12/i18n/Indonesian-Alternative.json";
+				break;*/
+			
+			case "id":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Indonesian.json";
+				break;
+
+			case "ga":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Irish.json";
+				break;
+
+			case "it":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Italian.json";
+				break;
+
+			case "ja":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Japanese.json";
+				break;
+
+			case "kk":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Kazakh.json";
+				break;
+
+			case "ko":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Korean.json";
+				break;
+
+			case "ky":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Kyrgyz.json";
+				break;
+
+			case "lv":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Latvian.json";
+				break;
+
+			case "lt":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Lithuanian.json";
+				break;
+
+			case "mk":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Macedonian.json";
+				break;
+
+			case "ml":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Malay.json";
+				break;
+
+			case "mn":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Mongolian.json";
+				break;
+
+			case "ne":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Nepali.json";
+				break;
+
+			case "nb":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Norwegian-Bokmal.json";
+				break;
+			
+			case "nn":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Norwegian-Nynorsk.json";
+				break;
+			
+			case "ps":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Pashto.json";
+				break;
+
+			case "fa":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Persian.json";
+				break;
+
+			case "pl":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Polish.json";
+				break;
+
+			case "pt":
+				if(WPGMZA.locale == "pt_BR")
+					languageURL = WPGMZA.pluginDirURL + "languages/datatables/Portuguese-Brasil.json";
+				else
+					languageURL = "//cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese.json";
+				break;
+			
+			case "ro":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Romanian.json";
+				break;
+
+			case "ru":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Russian.json";
+				break;
+
+			case "sr":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Serbian.json";
+				break;
+
+			case "si":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Sinhala.json";
+				break;
+
+			case "sk":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Slovak.json";
+				break;
+
+			case "sl":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Slovenian.json";
+				break;
+
+			case "es":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Spanish.json";
+				break;
+
+			case "sw":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Swahili.json";
+				break;
+
+			case "sv":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Swedish.json";
+				break;
+
+			case "ta":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Tamil.json";
+				break;
+
+			case "te":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/telugu.json";
+				break;
+
+			case "th":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Thai.json";
+				break;
+
+			case "tr":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Turkish.json";
+				break;
+
+			case "uk":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Ukrainian.json";
+				break;
+
+			case "ur":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Urdu.json";
+				break;
+
+			case "uz":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Uzbek.json";
+				break;
+
+			case "vi":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Vietnamese.json";
+				break;
+
+			case "cy":
+				languageURL = WPGMZA.pluginDirURL + "languages/datatables/Welsh.json";
+				break;
+		}
+		
+		return languageURL;
+	}
+	
+	WPGMZA.DataTable.prototype.onAJAXResponse = function(response)
+	{
+		
+	}
+	
+	WPGMZA.DataTable.prototype.reload = function()
+	{
+		this.dataTable.ajax.reload(null, false); // null callback, false for resetPaging
 	}
 	
 });
 
-// js/v8/google-maps/google-marker.js
+// js/v8/tables/admin-marker-datatable.js
 /**
  * @namespace WPGMZA
- * @module GoogleMarker
- * @requires WPGMZA.Marker
- * @pro-requires WPGMZA.ProMarker
+ * @module AdminMarkerDataTable
+ * @requires WPGMZA.DataTable
  */
 jQuery(function($) {
 	
-	var Parent;
-	
-	WPGMZA.GoogleMarker = function(row)
+	WPGMZA.AdminMarkerDataTable = function(element)
 	{
 		var self = this;
 		
-		Parent.call(this, row);
+		this.preventCaching = true;
 		
-		this._opacity = 1.0;
+		WPGMZA.DataTable.call(this, element);
 		
-		var settings = {};
-		if(row)
-		{
-			for(var name in row)
-			{
-				if(row[name] instanceof WPGMZA.LatLng)
-				{
-					settings[name] = row[name].toGoogleLatLng();
-				}
-				else if(row[name] instanceof WPGMZA.Map || name == "icon")
-				{
-					// NB: Ignore map here, it's not a google.maps.Map, Google would throw an exception
-					// NB: Ignore icon here, it conflicts with updateIcon in Pro
-				}
-				else
-					settings[name] = row[name];
-			}
-		}
+		// NB: Pro marker panel currently manages edit marker buttons
 		
-		this.googleMarker = new google.maps.Marker(settings);
-		this.googleMarker.wpgmzaMarker = this;
-		
-		this.googleMarker.setPosition(new google.maps.LatLng({
-			lat: parseFloat(this.lat),
-			lng: parseFloat(this.lng)
-		}));
-			
-		// this.googleMarker.setLabel(this.settings.label);
-		
-		if(this.anim)
-			this.googleMarker.setAnimation(this.anim);
-		if(this.animation)
-			this.googleMarker.setAnimation(this.animation);
-			
-		google.maps.event.addListener(this.googleMarker, "click", function() {
-			self.dispatchEvent("click");
-			self.dispatchEvent("select");
+		$(element).on("click", "[data-delete-marker-id]", function(event) {
+			self.onDeleteMarker(event);
 		});
 		
-		google.maps.event.addListener(this.googleMarker, "mouseover", function() {
-			self.dispatchEvent("mouseover");
+		$(element).find(".wpgmza.select_all_markers").on("click", function(event) {
+			self.onSelectAll(event);
 		});
 		
-		google.maps.event.addListener(this.googleMarker, "dragend", function() {
-			var googleMarkerPosition = self.googleMarker.getPosition();
-			
-			self.setPosition({
-				lat: googleMarkerPosition.lat(),
-				lng: googleMarkerPosition.lng()
-			});
-			
-			self.dispatchEvent({
-				type: "dragend",
-				latLng: self.getPosition()
-			});
+		$(element).find(".wpgmza.bulk_delete").on("click", function(event) {
+			self.onBulkDelete(event);
 		});
-		
-		this.trigger("init");
+
+		$(element).on("click", "[data-center-marker-id]", function(event) {
+			self.onCenterMarker(event);
+		});
 	}
 	
-	if(WPGMZA.isProVersion())
-		Parent = WPGMZA.ProMarker;
-	else
-		Parent = WPGMZA.Marker;
-	WPGMZA.GoogleMarker.prototype = Object.create(Parent.prototype);
-	WPGMZA.GoogleMarker.prototype.constructor = WPGMZA.GoogleMarker;
+	WPGMZA.AdminMarkerDataTable.prototype = Object.create(WPGMZA.DataTable.prototype);
+	WPGMZA.AdminMarkerDataTable.prototype.constructor = WPGMZA.AdminMarkerDataTable;
 	
-	Object.defineProperty(WPGMZA.GoogleMarker.prototype, "opacity", {
+	WPGMZA.AdminMarkerDataTable.createInstance = function(element)
+	{
+		return new WPGMZA.AdminMarkerDataTable(element);
+	}
+	
+	WPGMZA.AdminMarkerDataTable.prototype.getDataTableSettings = function()
+	{
+		var self = this;
+		var options = WPGMZA.DataTable.prototype.getDataTableSettings.call(this);
 		
-		"get": function() {
-			return this._opacity;
-		},
-		
-		"set": function(value) {
-			this._opacity = value;
-			this.googleMarker.setOpacity(value);
+		options.createdRow = function(row, data, index)
+		{
+			var meta = self.lastResponse.meta[index];
+			row.wpgmzaMarkerData = meta;
 		}
+		
+		return options;
+	}
+	
+	WPGMZA.AdminMarkerDataTable.prototype.onEditMarker = function(event)
+	{
+		WPGMZA.animatedScroll("#wpgmaps_tabs_markers");
+	}
+	
+	WPGMZA.AdminMarkerDataTable.prototype.onDeleteMarker = function(event)
+	{
+		var self	= this;
+		var id		= $(event.currentTarget).attr("data-delete-marker-id");
+		
+		var data	= {
+			action: 'delete_marker',
+			security: WPGMZA.legacyajaxnonce,
+			map_id: WPGMZA.mapEditPage.map.id,
+			marker_id: id
+		};
+		
+		$.post(ajaxurl, data, function(response) {
+			
+			WPGMZA.mapEditPage.map.removeMarkerByID(id);
+			self.reload();
+			
+		});
+	}
+	
+	// NB: Move this to UGM
+	WPGMZA.AdminMarkerDataTable.prototype.onApproveMarker = function(event)
+	{
+		var self	= this;
+		var cur_id	= $(this).attr("id");
+		
+		var data = {
+			action:		'approve_marker',
+			security:	WPGMZA.legacyajaxnonce,
+			map_id:		WPGMZA.mapEditPage.map.id,
+			marker_id:	cur_id
+		};
+		$.post(ajaxurl, data, function (response) {
+			
+			
+			wpgmza_InitMap();
+			wpgmza_reinitialisetbl();
+
+		});
+	}
+	
+	WPGMZA.AdminMarkerDataTable.prototype.onSelectAll = function(event)
+	{
+		$(this.element).find("input[name='mark']").prop("checked", true);
+	}
+	
+	WPGMZA.AdminMarkerDataTable.prototype.onBulkDelete = function(event)
+	{
+		var self = this;
+		var ids = [];
+		var map = WPGMZA.maps[0];
+		
+		$(this.element).find("input[name='mark']:checked").each(function(index, el) {
+			var row = $(el).closest("tr")[0];
+			ids.push(row.wpgmzaMarkerData.id);
+		});
+		
+		ids.forEach(function(marker_id) {
+			var marker = map.getMarkerByID(marker_id);
+			
+			if(marker)
+				map.removeMarker(marker);
+		});
+		
+		WPGMZA.restAPI.call("/markers/", {
+			method: "DELETE",
+			data: {
+				ids: ids
+			},
+			complete: function() {
+				self.reload();
+			}
+		});
+	}
+
+	WPGMZA.AdminMarkerDataTable.prototype.onCenterMarker = function(event)
+	{
+		var id;
+
+		//Check if we have selected the center on marker button or called this function elsewhere 
+		if(event.currentTarget == undefined)
+		{
+			id = event;
+		}
+		else{
+			id = $(event.currentTarget).attr("data-center-marker-id");
+		}
+
+		var marker = WPGMZA.mapEditPage.map.getMarkerByID(id);
+		
+		if(marker){
+			var latLng = new WPGMZA.LatLng({
+				lat: marker.lat,
+				lng: marker.lng
+			});
+			
+			//Set a static zoom level
+			var zoom_value = 6;
+			WPGMZA.mapEditPage.map.setCenter(latLng);
+			WPGMZA.mapEditPage.map.setZoom(zoom_value);
+			WPGMZA.animateScroll("#wpgmaps_tabs_markers");
+		}
+
+
+	}
+	
+	$(document).ready(function(event) {
+		
+		$("[data-wpgmza-admin-marker-datatable]").each(function(index, el) {
+			WPGMZA.adminMarkerDataTable = WPGMZA.AdminMarkerDataTable.createInstance(el);
+		});
 		
 	});
-	
-	WPGMZA.GoogleMarker.prototype.setLabel = function(label)
-	{
-		if(!label)
-		{
-			this.googleMarker.setLabel(null);
-			return;
-		}
-		
-		this.googleMarker.setLabel({
-			text: label
-		});
-		
-		if(!this.googleMarker.getIcon())
-			this.googleMarker.setIcon(WPGMZA.settings.default_marker_icon);
-	}
-	
-	/**
-	 * Sets the position of the marker
-	 * @return void
-	 */
-	WPGMZA.GoogleMarker.prototype.setPosition = function(latLng)
-	{
-		Parent.prototype.setPosition.call(this, latLng);
-		this.googleMarker.setPosition({
-			lat: this.lat,
-			lng: this.lng
-		});
-	}
-	
-	/**
-	 * Sets the position offset of a marker
-	 * @return void
-	 */
-	WPGMZA.GoogleMarker.prototype.updateOffset = function()
-	{
-		var self = this;
-		var icon = this.googleMarker.getIcon();
-		var img = new Image();
-		var params;
-		var x = this._offset.x;
-		var y = this._offset.y;
-		
-		if(!icon)
-			icon = WPGMZA.settings.default_marker_icon;
-		
-		if(typeof icon == "string")
-			params = {
-				url: icon
-			};
-		else
-			params = icon;
-		
-		img.onload = function()
-		{
-			var defaultAnchor = {
-				x: img.width / 2,
-				y: img.height
-			};
-			
-			params.anchor = new google.maps.Point(defaultAnchor.x - x, defaultAnchor.y - y);
-			
-			self.googleMarker.setIcon(params);
-		}
-		
-		img.src = params.url;
-	}
-	
-	WPGMZA.GoogleMarker.prototype.setOptions = function(options)
-	{
-		this.googleMarker.setOptions(options);
-	}
-	
-	/**
-	 * Set the marker animation
-	 * @return void
-	 */
-	WPGMZA.GoogleMarker.prototype.setAnimation = function(animation)
-	{
-		Parent.prototype.setAnimation.call(this, animation);
-		this.googleMarker.setAnimation(animation);
-	}
-	
-	/**
-	 * Sets the visibility of the marker
-	 * @return void
-	 */
-	WPGMZA.GoogleMarker.prototype.setVisible = function(visible)
-	{
-		Parent.prototype.setVisible.call(this, visible);
-		
-		this.googleMarker.setVisible(visible ? true : false);
-	}
-	
-	WPGMZA.GoogleMarker.prototype.getVisible = function(visible)
-	{
-		return this.googleMarker.getVisible();
-	}
-	
-	WPGMZA.GoogleMarker.prototype.setDraggable = function(draggable)
-	{
-		this.googleMarker.setDraggable(draggable);
-	}
-	
-	WPGMZA.GoogleMarker.prototype.setOpacity = function(opacity)
-	{
-		this.googleMarker.setOpacity(opacity);
-	}
-	
-});
-
-// js/v8/google-maps/google-modern-store-locator-circle.js
-/**
- * @namespace WPGMZA
- * @module GoogleModernStoreLocatorCircle
- * @requires WPGMZA.ModernStoreLocatorCircle
- */
-jQuery(function($) {
-	
-	WPGMZA.GoogleModernStoreLocatorCircle = function(map, settings)
-	{
-		var self = this;
-		
-		WPGMZA.ModernStoreLocatorCircle.call(this, map, settings);
-		
-		this.intervalID = setInterval(function() {
-			
-			var mapSize = {
-				width: $(self.mapElement).width(),
-				height: $(self.mapElement).height()
-			};
-			
-			if(mapSize.width == self.mapSize.width && mapSize.height == self.mapSize.height)
-				return;
-			
-			self.canvasLayer.resize_();
-			self.canvasLayer.draw();
-			
-			self.mapSize = mapSize;
-			
-		}, 1000);
-		
-		$(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function() {
-			
-			self.canvasLayer.resize_();
-			self.canvasLayer.draw();
-			
-		});
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype = Object.create(WPGMZA.ModernStoreLocatorCircle.prototype);
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.constructor = WPGMZA.GoogleModernStoreLocatorCircle;
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.initCanvasLayer = function()
-	{
-		var self = this;
-		
-		if(this.canvasLayer)
-		{
-			this.canvasLayer.setMap(null);
-			this.canvasLayer.setAnimate(false);
-		}
-		
-		this.canvasLayer = new CanvasLayer({
-			map: this.map.googleMap,
-			resizeHandler: function(event) {
-				self.onResize(event);
-			},
-			updateHandler: function(event) {
-				self.onUpdate(event);
-			},
-			animate: true,
-			resolutionScale: this.getResolutionScale()
-        });
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setOptions = function(options)
-	{
-		WPGMZA.ModernStoreLocatorCircle.prototype.setOptions.call(this, options);
-		
-		this.canvasLayer.scheduleUpdate();
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setPosition = function(position)
-	{
-		WPGMZA.ModernStoreLocatorCircle.prototype.setPosition.call(this, position);
-		
-		this.canvasLayer.scheduleUpdate();
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setRadius = function(radius)
-	{
-		WPGMZA.ModernStoreLocatorCircle.prototype.setRadius.call(this, radius);
-		
-		this.canvasLayer.scheduleUpdate();
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getTransformedRadius = function(km)
-	{
-		var multiplierAtEquator = 0.006395;
-		var spherical = google.maps.geometry.spherical;
-		
-		var center = this.settings.center;
-		var equator = new WPGMZA.LatLng({
-			lat: 0.0,
-			lng: 0.0
-		});
-		var latitude = new WPGMZA.LatLng({
-			lat: center.lat,
-			lng: 0.0
-		});
-		
-		var offsetAtEquator = spherical.computeOffset(equator.toGoogleLatLng(), km * 1000, 90);
-		var offsetAtLatitude = spherical.computeOffset(latitude.toGoogleLatLng(), km * 1000, 90);
-		
-		var factor = offsetAtLatitude.lng() / offsetAtEquator.lng();
-		var result = km * multiplierAtEquator * factor;
-		
-		if(isNaN(result))
-			throw new Error("here");
-		
-		return result;
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getCanvasDimensions = function()
-	{
-		return {
-			width: this.canvasLayer.canvas.width,
-			height: this.canvasLayer.canvas.height
-		};
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getWorldOriginOffset = function()
-	{
-		var projection = this.map.googleMap.getProjection();
-		var position = projection.fromLatLngToPoint(this.canvasLayer.getTopLeft());
-		
-		return {
-			x: -position.x,
-			y: -position.y
-		};
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getCenterPixels = function()
-	{
-		var center = new WPGMZA.LatLng(this.settings.center);
-		var projection = this.map.googleMap.getProjection();
-		return projection.fromLatLngToPoint(center.toGoogleLatLng());
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getContext = function(type)
-	{
-		return this.canvasLayer.canvas.getContext("2d");
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getScale = function()
-	{
-		return Math.pow(2, this.map.getZoom()) * this.getResolutionScale();
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setVisible = function(visible)
-	{
-		WPGMZA.ModernStoreLocatorCircle.prototype.setVisible.call(this, visible);
-		
-		this.canvasLayer.scheduleUpdate();
-	}
-	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.destroy = function()
-	{
-		this.canvasLayer.setMap(null);
-		this.canvasLayer = null;
-		
-		clearInterval(this.intervalID);
-	}
-	
-});
-
-// js/v8/google-maps/google-modern-store-locator.js
-/**
- * @namespace WPGMZA
- * @module GoogleModernStoreLocator
- * @requires WPGMZA.ModernStoreLocator
- */
-jQuery(function($) {
-	
-	WPGMZA.GoogleModernStoreLocator = function(map_id)
-	{
-		var googleMap, self = this;
-		
-		this.map = WPGMZA.getMapByID(map_id);
-		
-		WPGMZA.ModernStoreLocator.call(this, map_id);
-
-		var options = {
-			fields: ["name", "formatted_address"],
-			types: ["geocode"]
-		};
-		var restrict = wpgmaps_localize[map_id]["other_settings"]["wpgmza_store_locator_restrict"];
-		
-		this.addressInput = $(this.element).find(".addressInput, #addressInput")[0];
-		
-		if(this.addressInput)
-		{
-			if(restrict && restrict.length)
-				options.componentRestrictions = {
-					country: restrict
-				};
-			
-			this.autoComplete = new google.maps.places.Autocomplete(
-				this.addressInput,
-				options
-			);
-		}
-		
-		// Positioning for Google
-		this.map.googleMap.controls[google.maps.ControlPosition.TOP_CENTER].push(this.element);
-	}
-	
-	WPGMZA.GoogleModernStoreLocator.prototype = Object.create(WPGMZA.ModernStoreLocator.prototype);
-	WPGMZA.GoogleModernStoreLocator.prototype.constructor = WPGMZA.GoogleModernStoreLocator;
-	
-});
-
-// js/v8/google-maps/google-polygon.js
-/**
- * @namespace WPGMZA
- * @module GooglePolygon
- * @requires WPGMZA.Polygon
- * @pro-requires WPGMZA.ProPolygon
- */
-jQuery(function($) {
-	
-	var Parent;
-	
-	WPGMZA.GooglePolygon = function(options, googlePolygon)
-	{
-		var self = this;
-		
-		Parent.call(this, options, googlePolygon);
-		
-		if(googlePolygon)
-		{
-			this.googlePolygon = googlePolygon;
-		}
-		else
-		{
-			this.googlePolygon = new google.maps.Polygon();
-			
-			if(options)
-			{
-				var googleOptions = $.extend({}, options);
-				
-				if(options.polydata)
-					googleOptions.paths = this.parseGeometry(options.polydata);
-				
-				if(options.linecolor)
-					googleOptions.strokeColor = "#" + options.linecolor;
-				
-				if(options.lineopacity)
-					googleOptions.strokeOpacity = parseFloat(options.lineopacity);
-				
-				if(options.fillcolor)
-					googleOptions.fillColor = "#" + options.fillcolor;
-				
-				if(options.opacity)
-					googleOptions.fillOpacity = parseFloat(options.opacity);
-				
-				this.googlePolygon.setOptions(googleOptions);
-			}
-		}
-		
-		this.googlePolygon.wpgmzaPolygon = this;
-			
-		google.maps.event.addListener(this.googlePolygon, "click", function() {
-			self.dispatchEvent({type: "click"});
-		});
-	}
-	
-	if(WPGMZA.isProVersion())
-		Parent = WPGMZA.ProPolygon;
-	else
-		Parent = WPGMZA.Polygon;
-		
-	WPGMZA.GooglePolygon.prototype = Object.create(Parent.prototype);
-	WPGMZA.GooglePolygon.prototype.constructor = WPGMZA.GooglePolygon;
-	
-	/**
-	 * Returns true if the polygon is editable
-	 * @return void
-	 */
-	WPGMZA.GooglePolygon.prototype.getEditable = function()
-	{
-		return this.googlePolygon.getOptions().editable;
-	}
-	
-	/**
-	 * Sets the editable state of the polygon
-	 * @return void
-	 */
-	WPGMZA.GooglePolygon.prototype.setEditable = function(value)
-	{
-		this.googlePolygon.setOptions({editable: value});
-	}
-	
-	/**
-	 * Returns the polygon represented by a JSON object
-	 * @return object
-	 */
-	WPGMZA.GooglePolygon.prototype.toJSON = function()
-	{
-		var result = WPGMZA.Polygon.prototype.toJSON.call(this);
-		
-		result.points = [];
-		
-		// TODO: Support holes using multiple paths
-		var path = this.googlePolygon.getPath();
-		for(var i = 0; i < path.getLength(); i++)
-		{
-			var latLng = path.getAt(i);
-			result.points.push({
-				lat: latLng.lat(),
-				lng: latLng.lng()
-			});
-		}
-		
-		return result;
-	}
-	
-});
-
-// js/v8/google-maps/google-polyline.js
-/**
- * @namespace WPGMZA
- * @module GooglePolyline
- * @requires WPGMZA.Polyline
- */
-jQuery(function($) {
-	
-	WPGMZA.GooglePolyline = function(options, googlePolyline)
-	{
-		var self = this;
-		
-		WPGMZA.Polyline.call(this, options, googlePolyline);
-		
-		if(googlePolyline)
-		{
-			this.googlePolyline = googlePolyline;
-		}
-		else
-		{
-			this.googlePolyline = new google.maps.Polyline(this.settings);			
-			
-			if(options)
-			{
-				var googleOptions = $.extend({}, options);
-				
-				if(options.polydata)
-					googleOptions.path = this.parseGeometry(options.polydata);
-				
-				if(options.linecolor)
-					googleOptions.strokeColor = "#" + options.linecolor;
-				
-				if(options.linethickness)
-					googleOptions.strokeWeight = parseInt(options.linethickness);
-				
-				if(options.opacity)
-					googleOptions.strokeOpacity = parseFloat(options.opacity);
-			}
-			
-			if(options && options.polydata)
-			{
-				var path = this.parseGeometry(options.polydata);
-				this.setPoints(path);
-			}
-		}
-		
-		this.googlePolyline.wpgmzaPolyline = this;
-		
-		google.maps.event.addListener(this.googlePolyline, "click", function() {
-			self.dispatchEvent({type: "click"});
-		});
-	}
-	
-	WPGMZA.GooglePolyline.prototype = Object.create(WPGMZA.Polyline.prototype);
-	WPGMZA.GooglePolyline.prototype.constructor = WPGMZA.GooglePolyline;
-	
-	WPGMZA.GooglePolyline.prototype.setEditable = function(value)
-	{
-		this.googlePolyline.setOptions({editable: value});
-	}
-	
-	WPGMZA.GooglePolyline.prototype.setPoints = function(points)
-	{
-		this.googlePolyline.setOptions({path: points});
-	}
-	
-	WPGMZA.GooglePolyline.prototype.toJSON = function()
-	{
-		var result = WPGMZA.Polyline.prototype.toJSON.call(this);
-		
-		result.points = [];
-		
-		var path = this.googlePolyline.getPath();
-		for(var i = 0; i < path.getLength(); i++)
-		{
-			var latLng = path.getAt(i);
-			result.points.push({
-				lat: latLng.lat(),
-				lng: latLng.lng()
-			});
-		}
-		
-		return result;
-	}
-	
-});
-
-// js/v8/google-maps/google-text.js
-/**
- * @namespace WPGMZA
- * @module GoogleText
- * @requires WPGMZA.Text
- */
-jQuery(function($) {
-	
-	WPGMZA.GoogleText = function(options)
-	{
-		WPGMZA.Text.apply(this, arguments);
-		
-		this.overlay = new WPGMZA.GoogleTextOverlay(options);
-	}
-	
-	WPGMZA.extend(WPGMZA.GoogleText, WPGMZA.Text);
-	
-});
-
-// js/v8/google-maps/google-text-overlay.js
-/**
- * @namespace WPGMZA
- * @module GoogleTextOverlay
- * @requires WPGMZA.GoogleText
- */
-jQuery(function($) {
-	
-	WPGMZA.GoogleTextOverlay = function(options)
-	{
-		this.element = $("<div class='wpgmza-google-text-overlay'><div class='wpgmza-inner'></div></div>");
-		
-		if(!options)
-			options = {};
-		
-		if(options.position)
-			this.position = options.position;
-		
-		if(options.text)
-			this.element.find(".wpgmza-inner").text(options.text);
-		
-		if(options.map)
-			this.setMap(options.map.googleMap);
-	}
-	
-	if(window.google && google.maps && google.maps.OverlayView)
-		WPGMZA.GoogleTextOverlay.prototype = new google.maps.OverlayView();
-	
-	WPGMZA.GoogleTextOverlay.prototype.onAdd = function()
-	{
-		var overlayProjection = this.getProjection();
-		var position = overlayProjection.fromLatLngToDivPixel(this.position.toGoogleLatLng());
-		
-		this.element.css({
-			position: "absolute",
-			left: position.x + "px",
-			top: position.y + "px"
-		});
-
-		var panes = this.getPanes();
-		panes.floatPane.appendChild(this.element[0]);
-	}
-	
-	WPGMZA.GoogleTextOverlay.prototype.draw = function()
-	{
-		var overlayProjection = this.getProjection();
-		var position = overlayProjection.fromLatLngToDivPixel(this.position.toGoogleLatLng());
-		
-		this.element.css({
-			position: "absolute",
-			left: position.x + "px",
-			top: position.y + "px"
-		});
-	}
-	
-	WPGMZA.GoogleTextOverlay.prototype.onRemove = function()
-	{
-		this.element.remove();
-	}
-	
-	WPGMZA.GoogleTextOverlay.prototype.hide = function()
-	{
-		this.element.hide();
-	}
-	
-	WPGMZA.GoogleTextOverlay.prototype.show = function()
-	{
-		this.element.show();
-	}
-	
-	WPGMZA.GoogleTextOverlay.prototype.toggle = function()
-	{
-		if(this.element.is(":visible"))
-			this.element.hide();
-		else
-			this.element.show();
-	}
-	
-});
-
-// js/v8/google-maps/google-vertex-context-menu.js
-/**
- * @namespace WPGMZA
- * @module GoogleVertexContextMenu
- * @requires wpgmza_api_call
- */
-jQuery(function($) {
-	
-	if(WPGMZA.settings.engine != "google-maps")
-		return;
-	
-	if(WPGMZA.googleAPIStatus && WPGMZA.googleAPIStatus.code == "USER_CONSENT_NOT_GIVEN")
-		return;
-	
-	WPGMZA.GoogleVertexContextMenu = function(mapEditPage)
-	{
-		var self = this;
-		
-		this.mapEditPage = mapEditPage;
-		
-		this.element = document.createElement("div");
-		this.element.className = "wpgmza-vertex-context-menu";
-		this.element.innerHTML = "Delete";
-		
-		google.maps.event.addDomListener(this.element, "click", function(event) {
-			self.removeVertex();
-			event.preventDefault();
-			event.stopPropagation();
-			return false;
-		});
-	}
-	
-	WPGMZA.GoogleVertexContextMenu.prototype = new google.maps.OverlayView();
-	
-	WPGMZA.GoogleVertexContextMenu.prototype.onAdd = function()
-	{
-		var self = this;
-		var map = this.getMap();
-		
-		this.getPanes().floatPane.appendChild(this.element);
-		this.divListener = google.maps.event.addDomListener(map.getDiv(), "mousedown", function(e) {
-			if(e.target != self.element)
-				self.close();
-		}, true);
-	}
-	
-	WPGMZA.GoogleVertexContextMenu.prototype.onRemove = function()
-	{
-		google.maps.event.removeListener(this.divListener);
-		this.element.parentNode.removeChild(this.element);
-		
-		this.set("position");
-		this.set("path");
-		this.set("vertex");
-	}
-	
-	WPGMZA.GoogleVertexContextMenu.prototype.open = function(map, path, vertex)
-	{
-		this.set('position', path.getAt(vertex));
-		this.set('path', path);
-		this.set('vertex', vertex);
-		this.setMap(map);
-		this.draw();
-	}
-	
-	WPGMZA.GoogleVertexContextMenu.prototype.close = function()
-	{
-		this.setMap(null);
-	}
-	
-	WPGMZA.GoogleVertexContextMenu.prototype.draw = function()
-	{
-		var position = this.get('position');
-		var projection = this.getProjection();
-
-		if (!position || !projection)
-		  return;
-
-		var point = projection.fromLatLngToDivPixel(position);
-		this.element.style.top = point.y + 'px';
-		this.element.style.left = point.x + 'px';
-	}
-	
-	WPGMZA.GoogleVertexContextMenu.prototype.removeVertex = function()
-	{
-		var path = this.get('path');
-		var vertex = this.get('vertex');
-
-		if (!path || vertex == undefined) {
-		  this.close();
-		  return;
-		}
-
-		path.removeAt(vertex);
-		this.close();
-	}
 	
 });

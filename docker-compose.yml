@@ -36,7 +36,11 @@ services:
     ports:
       - '80:80'
     restart: always
-    volumes: ['./wordpress:/var/www/html']
+    volumes: 
+      - ./wordpress:/var/www/html
+        #- ./varLogApache2:/var/log/apache2
+        #- ./etcApache2:/etc/apache2
+        #- ./varLibApache2:/var/lib/apache2
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: root
